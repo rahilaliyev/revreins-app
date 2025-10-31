@@ -6,9 +6,7 @@ import './App.css';
 const App = (): JSX.Element => {
   const [count, setCount] = useState(0);
 
-  const handleClick = (): void => setCount(0);
-
-  console.log('salam');
+  const handleClick = (): void => setCount(4);
 
   return (
     <>

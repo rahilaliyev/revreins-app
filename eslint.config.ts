@@ -25,7 +25,7 @@ export default defineConfig([
       eqeqeq: ['error', 'always'],
       'max-params': ['error', 3],
       'no-console': 'warn',
-      'no-alert': 'warn',
+      'no-alert': 'error',
       'no-unused-vars': 'error',
       'no-duplicate-imports': 'error',
       'no-var': 'error',

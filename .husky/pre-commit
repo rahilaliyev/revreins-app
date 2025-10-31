@@ -1,1 +1,35 @@
-npx lint-staged
+echo 'Husky started working.'
+# Check Prettier standards
+npm run format ||
+(
+    echo 'PRETTIER FAILED
+    You have Prettier errors. Fix them in the indicated file, then git commit again!';
+    false;
+)
+echo 'Codes passed Prettier successfully'
+# Check ESLint Standards
+npm run lint ||
+(
+        echo 'ESLINT FAILED
+        You have ESLint errors. Fix them in the indicated file, then git commit again!
+        If you are getting simple-import-sort errors, run the command NPM RUN LINT_FIX'
+        false;
+)
+echo 'Codes passed ESLint successfully'
+# Check tsconfig standards
+npm run type-check ||
+(
+    echo 'TYPESCIRPT FAILED
+            You have TypeScript errors. Fix them in the indicated file, then git commit again!';
+    false;
+)
+# If everything passes... Now we can commit
+npm run build ||
+(
+    echo 'BUILD FAILED
+            Your build failed. Fix the errors in the indicated file, then git commit again!
+    '
+    false;
+)
+# If everything passes... Now we can commit
+echo 'All checks passed. You can push your code now!'
