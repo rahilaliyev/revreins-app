@@ -8,6 +8,8 @@ const App = (): JSX.Element => {
 
   const handleClick = (): void => setCount(0);
 
+  console.log('salam');
+
   return (
     <>
       <div>

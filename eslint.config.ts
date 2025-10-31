@@ -3,19 +3,23 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import { defineConfig } from 'eslint/config';
-import prettier from 'eslint-config-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
+
+const reactPlugin = pluginReact.configs.flat.recommended;
 
 export default defineConfig([
   js.configs.recommended,
   tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
-  prettier,
+  ...(Array.isArray(reactPlugin) ? reactPlugin : [reactPlugin]),
+  prettierConfig,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: { js },
+    plugins: { js, prettier: prettierPlugin },
     extends: ['js/recommended'],
     languageOptions: { globals: globals.browser },
     rules: {
+      'prettier/prettier': 'error',
       'arrow-body-style': ['error', 'as-needed'],
       curly: ['error', 'all'],
       eqeqeq: ['error', 'always'],
