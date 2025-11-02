@@ -1,21 +1,26 @@
 import js from '@eslint/js';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
 import { defineConfig } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
+import pluginReact from 'eslint-plugin-react';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 const reactPlugin = pluginReact.configs.flat.recommended;
+const IGNORES_FOLDERS = ['dist', 'node_modules', 'build', 'coverage'];
 
 export default defineConfig([
+  {
+    ignores: IGNORES_FOLDERS,
+  },
   js.configs.recommended,
   tseslint.configs.recommended,
   ...(Array.isArray(reactPlugin) ? reactPlugin : [reactPlugin]),
   prettierConfig,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: { js, prettier: prettierPlugin },
+    plugins: { js, prettier: prettierPlugin, 'simple-import-sort': simpleImportSort },
     extends: ['js/recommended'],
     languageOptions: { globals: globals.browser },
     rules: {
@@ -31,6 +36,23 @@ export default defineConfig([
       'no-var': 'error',
       'prefer-const': 'error',
       semi: ['off'],
+      'simple-import-sort/exports': 'error',
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^react', '^@?\\w'],
+            ['^src/api'],
+            ['^@mui'],
+            ['^(src/components|src/pages)'],
+            ['^(\\.\\.)'],
+            ['^(\\.)'],
+            ['^(src/constants|src/contexts|src/hooks|src/routes|src/ts|src/utils)'],
+            ['^(src/assets)'],
+            ['(.s?css)$'],
+          ],
+        },
+      ],
 
       '@typescript-eslint/array-type': ['error'],
       '@typescript-eslint/explicit-function-return-type': 'error',
