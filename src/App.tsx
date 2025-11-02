@@ -1,36 +1,12 @@
-import { type JSX, useState } from 'react';
+import type { JSX } from 'react';
 
-import reactLogo from './assets/react.svg';
+import { Button, ThemeProvider } from '@mui/material';
 
-import './App.css';
+import { theme } from './theme';
 
-import viteLogo from '/vite.svg';
-
-const App = (): JSX.Element => {
-  const [count, setCount] = useState(0);
-
-  const handleClick = (): void => setCount(4);
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" rel="noreferrer" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" rel="noreferrer" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={handleClick}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
-};
-
+const App = (): JSX.Element => (
+  <ThemeProvider theme={theme}>
+    <Button />
+  </ThemeProvider>
+);
 export default App;
