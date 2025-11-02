@@ -4,7 +4,7 @@ export const iconButtonTheme: Components = {
   MuiIconButton: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         padding: 0,
         margin: 0,
       },

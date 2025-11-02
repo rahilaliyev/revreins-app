@@ -6,14 +6,14 @@ export const tableTheme: Components = {
   MuiTable: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
       },
     },
   },
   MuiTableCell: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         fontSize: 14,
       },
       head: {

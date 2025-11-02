@@ -48,7 +48,7 @@ export const buttonTheme: Components = {
     },
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         borderRadius: 4,
         textTransform: 'unset',
         minWidth: 'auto',

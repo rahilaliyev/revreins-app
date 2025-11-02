@@ -7,7 +7,7 @@ export const datepickerTheme: Components = {
     styleOverrides: {
       root: {
         '& .MuiPickersLayout-contentWrapper *': {
-          fontFamily: 'Gilroy, sans-serif',
+          fontFamily: 'Noto Sans, sans-serif',
         },
         '& .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersDay-root.Mui-selected': {
           color: colorPalette.common.white,

@@ -4,7 +4,7 @@ export const tooltipTheme: Components = {
   MuiTooltip: {
     styleOverrides: {
       tooltip: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
       },
     },
   },

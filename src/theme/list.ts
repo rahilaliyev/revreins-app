@@ -4,7 +4,7 @@ export const listTheme: Components = {
   MuiList: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         padding: 0,
         margin: 0,
       },
@@ -13,7 +13,7 @@ export const listTheme: Components = {
   MuiListItem: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         padding: 0,
         margin: '0 !important',
       },

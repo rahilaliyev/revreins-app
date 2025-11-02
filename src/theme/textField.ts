@@ -6,7 +6,7 @@ export const textFieldTheme: Components = {
   MuiInputBase: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         width: '100%',
 
         '&.Mui-disabled': {
@@ -32,7 +32,7 @@ export const textFieldTheme: Components = {
     },
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         '& fieldset': {
           borderColor: colorPalette.secondary.main,
         },
@@ -66,7 +66,7 @@ export const textFieldTheme: Components = {
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         fontSize: '14px',
         fontWeight: 600,
         lineHeight: '20px',
@@ -86,7 +86,7 @@ export const textFieldTheme: Components = {
   MuiFormControlLabel: {
     styleOverrides: {
       label: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
       },
     },
   },

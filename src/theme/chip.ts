@@ -6,7 +6,7 @@ export const chipTheme: Components = {
   MuiChip: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         backgroundColor: colorPalette.secondary.light,
         color: colorPalette.secondary.dark,
       },

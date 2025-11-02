@@ -11,7 +11,7 @@ export const selectTheme: Components = {
     },
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         backgroundColor: 'transparent',
         border: 'none',
 
@@ -43,7 +43,7 @@ export const selectTheme: Components = {
   MuiMenuItem: {
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         color: colorPalette.common.black,
       },
     },

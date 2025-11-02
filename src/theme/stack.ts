@@ -8,7 +8,7 @@ export const stackTheme: Components = {
     },
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
       },
     },
   },

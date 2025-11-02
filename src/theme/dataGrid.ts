@@ -14,7 +14,7 @@ export const dataGridTheme: DataGridComponents = {
     },
     styleOverrides: {
       root: {
-        fontFamily: 'Gilroy, sans-serif',
+        fontFamily: 'Noto Sans, sans-serif',
         backgroundColor: colorPalette.primary.light,
         border: 'none',
         '& .MuiDataGrid-row--borderBottom ': {
