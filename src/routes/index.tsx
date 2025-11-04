@@ -1,6 +1,7 @@
 import { type JSX, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
+import { PublicLayout } from 'src/layouts';
 
 import { suspenseFallback } from '../hoc';
 
@@ -29,9 +30,9 @@ const RouteComponents = (): JSX.Element => {
 
   return (
     <Routes>
-      {/* <Route path={ROUTES.AUTH.PATH} element={<PublicLayout />}> */}
-      <Route index path={ROUTES.AUTH.LOGIN.PATH} element={suspenseFallback(Login)} />
-      {/* </Route> */}
+      <Route path={ROUTES.AUTH.PATH} element={<PublicLayout />}>
+        <Route index path={ROUTES.AUTH.LOGIN.PATH} element={suspenseFallback(Login)} />
+      </Route>
     </Routes>
   );
 };

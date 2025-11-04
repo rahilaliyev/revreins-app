@@ -4,9 +4,9 @@ import { SnackbarProvider } from 'notistack';
 
 import { ThemeProvider } from '@mui/material';
 
-import { theme } from './theme';
-
 import RouteComponents from 'src/routes';
+
+import { theme } from './theme';
 
 import 'src/styles/font.css';
 import 'src/styles/global.css';
