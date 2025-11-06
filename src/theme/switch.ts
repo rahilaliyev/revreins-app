@@ -30,7 +30,7 @@ export const switchTheme: Components = {
             height: '9px !important',
           },
           '& + .MuiSwitch-track': {
-            backgroundColor: colorPalette.common.black,
+            backgroundColor: colorPalette.primary.main,
             opacity: 1,
             border: 'none',
           },
@@ -44,7 +44,7 @@ export const switchTheme: Components = {
       },
       track: {
         borderRadius: 26 / 2,
-        backgroundColor: colorPalette.common.white,
+        backgroundColor: colorPalette.primary.main,
         opacity: 1,
         transition: 'background-color 0.3s',
         border: '1px solid #000',

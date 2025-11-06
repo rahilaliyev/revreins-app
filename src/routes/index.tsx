@@ -7,7 +7,7 @@ import { suspenseFallback } from '../hoc';
 
 import { ROUTES } from './paths';
 
-const Login = lazy(() => import('../pages/LoginPage'));
+const Login = lazy(() => import('src/pages/LoginPage'));
 
 const RouteComponents = (): JSX.Element => {
   useEffect(() => {

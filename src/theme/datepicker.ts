@@ -10,10 +10,10 @@ export const datepickerTheme: Components = {
           fontFamily: 'Noto Sans, sans-serif',
         },
         '& .MuiPickersYear-yearButton.Mui-selected, & .MuiPickersDay-root.Mui-selected': {
-          color: colorPalette.common.white,
+          color: colorPalette.secondary.main,
         },
         '& .MuiDayCalendar-weekDayLabel': {
-          color: colorPalette.common.black,
+          color: colorPalette.secondary.main,
         },
       },
     },

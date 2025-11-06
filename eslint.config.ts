@@ -29,7 +29,7 @@ export default defineConfig([
       curly: ['error', 'all'],
       eqeqeq: ['error', 'always'],
       'max-params': ['error', 3],
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn'] }],
       'no-alert': 'error',
       'no-unused-vars': 'error',
       'no-duplicate-imports': 'error',

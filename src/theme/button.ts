@@ -6,37 +6,224 @@ export const buttonTheme: Components = {
   MuiButton: {
     variants: [
       {
-        props: { variant: 'outlined', size: 'small' },
+        props: { size: 'small' },
         style: {
-          height: '40px',
-          padding: '4px 12px',
-          fontSize: '14px',
+          height: '32px',
+          padding: '6px 12px',
+          fontSize: '13px',
           lineHeight: '20px',
+          fontWeight: 500,
         },
       },
       {
-        props: { variant: 'outlined', size: 'medium' },
+        props: { size: 'medium' },
         style: {
           height: '40px',
+          padding: '9px 14px',
+          fontSize: '14px',
+          lineHeight: '22px',
+          fontWeight: 500,
+        },
+      },
+      {
+        props: { size: 'large' },
+        style: {
+          height: '48px',
           padding: '8px 16px',
           fontSize: '18px',
           lineHeight: '24px',
         },
       },
       {
-        props: { variant: 'outlined', size: 'large' },
+        props: { variant: 'contained', color: 'primary' },
         style: {
-          height: '40px',
-          padding: '8px 16px',
-          fontSize: '18px',
-          lineHeight: '24px',
+          backgroundColor: colorPalette.primary.main,
+          color: colorPalette.text.textInverse,
+          '&:hover': {
+            backgroundColor: colorPalette.primary.hover,
+          },
         },
       },
       {
         props: { variant: 'contained', color: 'secondary' },
         style: {
-          color: colorPalette.common.black,
-          boxShadow: 'none',
+          backgroundColor: colorPalette.secondary.main,
+          color: colorPalette.text.main,
+          '&:hover': {
+            backgroundColor: colorPalette.secondary.hover,
+          },
+        },
+      },
+      {
+        props: { variant: 'contained', color: 'inherit' },
+        style: {
+          backgroundColor: colorPalette.accent.main,
+          color: colorPalette.text.textInverse,
+          '&:hover': {
+            backgroundColor: colorPalette.accent.hover,
+          },
+        },
+      },
+      {
+        props: { variant: 'contained', color: 'error' },
+        style: {
+          backgroundColor: colorPalette.error.main,
+          color: colorPalette.text.textInverse,
+          '&:hover': {
+            backgroundColor: colorPalette.error.hover,
+          },
+        },
+      },
+      {
+        props: { variant: 'contained', color: 'success' },
+        style: {
+          backgroundColor: colorPalette.success.main,
+          color: colorPalette.text.textInverse,
+          '&:hover': {
+            backgroundColor: colorPalette.success.hover,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined', color: 'primary' },
+        style: {
+          border: `1px solid ${colorPalette.primary.bg}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.primary.main,
+          '&:hover': {
+            border: `1px solid ${colorPalette.primary.bg}`,
+            backgroundColor: colorPalette.primary.bg,
+            color: colorPalette.primary.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined', color: 'secondary' },
+        style: {
+          border: `1px solid ${colorPalette.other.stroke}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.text.main,
+          '&:hover': {
+            border: `1px solid ${colorPalette.secondary.bg}`,
+            backgroundColor: colorPalette.secondary.bg,
+            color: colorPalette.text.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined', color: 'inherit' },
+        style: {
+          border: `1px solid ${colorPalette.accent.bg}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.accent.main,
+          '&:hover': {
+            border: `1px solid ${colorPalette.accent.bg}`,
+            backgroundColor: colorPalette.accent.bg,
+            color: colorPalette.accent.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined', color: 'error' },
+        style: {
+          border: `1px solid ${colorPalette.error.bg}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.error.main,
+          '&:hover': {
+            border: `1px solid ${colorPalette.error.bg}`,
+            backgroundColor: colorPalette.error.bg,
+            color: colorPalette.error.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined', color: 'success' },
+        style: {
+          border: `1px solid ${colorPalette.success.bg}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.success.main,
+          '&:hover': {
+            border: `1px solid ${colorPalette.success.bg}`,
+            backgroundColor: colorPalette.success.bg,
+            color: colorPalette.success.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'text', color: 'primary' },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.primary.main,
+          '&:hover': {
+            backgroundColor: colorPalette.primary.bg,
+            color: colorPalette.primary.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'text', color: 'secondary' },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.text.main,
+          '&:hover': {
+            backgroundColor: colorPalette.secondary.bg,
+            color: colorPalette.text.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'text', color: 'inherit' },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.accent.main,
+          '&:hover': {
+            backgroundColor: colorPalette.accent.bg,
+            color: colorPalette.accent.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'text', color: 'error' },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.error.main,
+          '&:hover': {
+            backgroundColor: colorPalette.error.bg,
+            color: colorPalette.error.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'text', color: 'success' },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.success.main,
+          '&:hover': {
+            backgroundColor: colorPalette.success.bg,
+            color: colorPalette.success.main,
+          },
+        },
+      },
+      {
+        props: { variant: 'contained', disabled: true },
+        style: {
+          backgroundColor: colorPalette.secondary.main,
+          color: colorPalette.text.disable,
+        },
+      },
+      {
+        props: { variant: 'outlined', disabled: true },
+        style: {
+          border: `1px solid ${colorPalette.secondary.main}`,
+          backgroundColor: 'transparent',
+          color: colorPalette.text.disable,
+        },
+      },
+      {
+        props: { variant: 'text', disabled: true },
+        style: {
+          backgroundColor: 'transparent',
+          color: colorPalette.text.disable,
         },
       },
     ],
@@ -49,72 +236,10 @@ export const buttonTheme: Components = {
     styleOverrides: {
       root: {
         fontFamily: 'Noto Sans, sans-serif',
-        borderRadius: 4,
+        borderRadius: '8px',
         textTransform: 'unset',
         minWidth: 'auto',
         whiteSpace: 'nowrap',
-
-        '&.MuiButton-sizeSmall': {
-          height: 26,
-          fontSize: '12px',
-          lineHeight: '18px',
-          borderRadius: 4,
-        },
-
-        '&.MuiButton-sizeMedium': {
-          height: 44,
-          padding: '8px 8px',
-          fontSize: '14px',
-          lineHeight: '20px',
-          borderRadius: 8,
-        },
-
-        '&.MuiButton-sizeLarge': {
-          height: 56,
-          padding: '14px 24px',
-          borderRadius: 10,
-        },
-
-        '& .MuiChip-root': {
-          width: 18,
-          height: 18,
-          borderRadius: '50%',
-          marginLeft: 8,
-        },
-
-        '& .MuiChip-label': {
-          padding: 0,
-        },
-      },
-      outlined: {
-        fontSize: '14px !important',
-        lineHeight: '20px !important',
-        transition: '0.25s',
-
-        '&:hover': {
-          background: '#000',
-          color: '#fff',
-        },
-      },
-      contained: {
-        color: colorPalette.common.white,
-      },
-      text: {
-        '&:hover': {
-          backgroundColor: 'transparent',
-        },
-      },
-      sizeSmall: {
-        height: 38,
-        fontSize: 14,
-      },
-      sizeMedium: {
-        height: 44,
-        fontSize: 16,
-      },
-      sizeLarge: {
-        height: 52,
-        fontSize: 16,
       },
     },
   },

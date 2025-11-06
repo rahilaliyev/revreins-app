@@ -15,10 +15,10 @@ export const dataGridTheme: DataGridComponents = {
     styleOverrides: {
       root: {
         fontFamily: 'Noto Sans, sans-serif',
-        backgroundColor: colorPalette.primary.light,
+        backgroundColor: colorPalette.primary.main,
         border: 'none',
         '& .MuiDataGrid-row--borderBottom ': {
-          backgroundColor: `${colorPalette.primary.light} !important`,
+          backgroundColor: `${colorPalette.primary.main} !important`,
         },
       },
       main: {
@@ -30,7 +30,7 @@ export const dataGridTheme: DataGridComponents = {
           backgroundColor: 'transparent',
         },
         '&:not(:last-child)': {
-          borderBottom: `1px solid ${colorPalette.secondary.light}`,
+          borderBottom: `1px solid ${colorPalette.secondary.main}`,
         },
       },
       cell: {
@@ -41,7 +41,7 @@ export const dataGridTheme: DataGridComponents = {
         lineHeight: '18px',
         fontWeight: 400,
         borderColor: 'transparent',
-        color: colorPalette.common.black,
+        color: colorPalette.primary.main,
         overflowX: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -60,12 +60,12 @@ export const dataGridTheme: DataGridComponents = {
       },
       columnHeader: {
         height: 'auto !important',
-        backgroundColor: colorPalette.primary.light,
+        backgroundColor: colorPalette.primary.main,
         padding: '8px 12px',
         fontSize: '12px',
         lineHeight: '18px',
-        color: colorPalette.secondary.dark,
-        borderBottom: `1px solid ${colorPalette.secondary.light}`,
+        color: colorPalette.secondary.main,
+        borderBottom: `1px solid ${colorPalette.secondary.main}`,
 
         '&:focus-within': {
           outline: 'none',

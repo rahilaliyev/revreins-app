@@ -32,7 +32,7 @@ export const selectTheme: Components = {
         padding: '4px 12px !important',
       },
       select: {
-        color: colorPalette.common.black,
+        color: colorPalette.primary.main,
         display: 'flex',
         alignItems: 'center',
         padding: '0 !important',
@@ -44,7 +44,7 @@ export const selectTheme: Components = {
     styleOverrides: {
       root: {
         fontFamily: 'Noto Sans, sans-serif',
-        color: colorPalette.common.black,
+        color: colorPalette.primary.main,
       },
     },
   },

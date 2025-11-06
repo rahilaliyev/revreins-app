@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, type PaletteOptions } from '@mui/material/styles';
 
 import { accordionTheme } from './accordion';
 import { buttonTheme } from './button';
@@ -10,7 +10,6 @@ import { dialogTheme } from './dialog';
 import { iconButtonTheme } from './iconButton';
 import { listTheme } from './list';
 import { menuTheme } from './menu';
-import { modal } from './modal';
 import { selectTheme } from './select';
 import { stackTheme } from './stack';
 import { switchTheme } from './switch';
@@ -22,7 +21,7 @@ import { typographyOptions, typographyTheme } from './typography';
 // A custom theme for this app.
 export const theme = createTheme({
   spacing: 4,
-  palette: { ...colorPalette },
+  palette: colorPalette as PaletteOptions,
   typography: { ...typographyOptions },
   components: {
     ...accordionTheme,
@@ -31,30 +30,6 @@ export const theme = createTheme({
     ...dataGridTheme,
     ...datepickerTheme,
     ...dialogTheme,
-    ...listTheme,
-    ...menuTheme,
-    ...iconButtonTheme,
-    ...selectTheme,
-    ...stackTheme,
-    ...switchTheme,
-    ...tableTheme,
-    ...textFieldTheme,
-    ...tooltipTheme,
-    ...typographyTheme,
-  },
-});
-
-export const modalTheme = createTheme({
-  spacing: 4,
-  palette: { ...colorPalette },
-  typography: { ...typographyOptions },
-  components: {
-    ...modal,
-    ...accordionTheme,
-    ...buttonTheme,
-    ...chipTheme,
-    ...dataGridTheme,
-    ...datepickerTheme,
     ...listTheme,
     ...menuTheme,
     ...iconButtonTheme,

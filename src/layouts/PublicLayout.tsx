@@ -12,7 +12,14 @@ export const PublicLayout = (): JSX.Element => {
   const token = getAccessToken();
   return !token ? (
     <Stack minHeight="100vh">
-      <Stack width="55vw" position="relative" flexDirection="column" height="100vh">
+      <Stack
+        width="55vw"
+        position="relative"
+        flexDirection="column"
+        height="100vh"
+        justifyContent="center"
+        alignItems="center"
+      >
         <Outlet />
         <StyledTypography>
           Have a problem? <Link to="#">Email Support</Link>

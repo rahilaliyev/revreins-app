@@ -44,7 +44,7 @@ export const textFieldTheme: Components = {
       root: {
         marginTop: '0 !important',
         '& .MuiTypography-root': {
-          color: `${colorPalette.common.black} !important`,
+          color: `${colorPalette.primary.main} !important`,
         },
       },
     },
@@ -52,7 +52,7 @@ export const textFieldTheme: Components = {
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        color: colorPalette.secondary.dark,
+        color: colorPalette.secondary.main,
       },
     },
   },
@@ -73,7 +73,7 @@ export const textFieldTheme: Components = {
         marginBottom: '6px',
         position: 'unset',
         transform: 'none',
-        color: colorPalette.common.black,
+        color: colorPalette.primary.main,
         overflow: 'unset',
         whiteSpace: 'wrap',
         textAlign: 'left',
