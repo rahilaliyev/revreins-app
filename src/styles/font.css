@@ -1,62 +1,62 @@
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Thin.woff2');
+  src: url('src/assets/fonts/NotoSans-Thin.woff2');
   font-weight: 100;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-ExtraLight.woff2');
+  src: url('src/assets/fonts/NotoSans-ExtraLight.woff2');
   font-weight: 200;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Light.woff2');
+  src: url('src/assets/fonts/NotoSans-Light.woff2');
   font-weight: 300;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Regular.woff2');
+  src: url('src/assets/fonts/NotoSans-Regular.woff2');
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Medium.woff2');
+  src: url('src/assets/fonts/NotoSans-Medium.woff2');
   font-weight: 500;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-SemiBold.woff2');
+  src: url('src/assets/fonts/NotoSans-SemiBold.woff2');
   font-weight: 600;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Bold.woff2');
+  src: url('src/assets/fonts/NotoSans-Bold.woff2');
   font-weight: 700;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-ExtraBold.woff2');
+  src: url('src/assets/fonts/NotoSans-ExtraBold.woff2');
   font-weight: 800;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Noto Sans';
-  src: url('src/assets/fonts/NotoSans_Condensed-Black.woff2');
+  src: url('src/assets/fonts/NotoSans-Black.woff2');
   font-weight: 900;
   font-display: swap;
 }

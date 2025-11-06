@@ -4,22 +4,30 @@ import { colorPalette } from './colorpalette';
 
 export const textFieldTheme: Components = {
   MuiInputBase: {
+    variants: [
+      {
+        props: { size: 'small' },
+        style: { height: '40px', padding: '10px 12px', fontSize: '14px', lineHeight: '20px' },
+      },
+      {
+        props: { size: 'medium' },
+        style: { height: '48px', padding: '11px 16px', fontSize: '16px', lineHeight: '26px' },
+      },
+    ],
     styleOverrides: {
       root: {
-        fontFamily: 'Noto Sans, sans-serif',
-        width: '100%',
-
-        '&.Mui-disabled': {
-          backgroundColor: '#eee',
-        },
-
         '& legend': {
           width: '0',
         },
+        '& fieldset': {
+          borderRadius: '8px',
+        },
+        '&.Mui-error': {
+          color: colorPalette.error.main,
+        },
       },
       input: {
-        padding: '4px 12px !important',
-        height: '36px',
+        padding: '0 !important',
       },
     },
   },
@@ -27,7 +35,7 @@ export const textFieldTheme: Components = {
     defaultProps: {
       fullWidth: true,
       InputLabelProps: {
-        shrink: false,
+        shrink: true,
       },
     },
     styleOverrides: {
@@ -36,30 +44,6 @@ export const textFieldTheme: Components = {
         '& fieldset': {
           borderColor: colorPalette.secondary.main,
         },
-      },
-    },
-  },
-  MuiInputAdornment: {
-    styleOverrides: {
-      root: {
-        marginTop: '0 !important',
-        '& .MuiTypography-root': {
-          color: `${colorPalette.primary.main} !important`,
-        },
-      },
-    },
-  },
-  MuiCheckbox: {
-    styleOverrides: {
-      root: {
-        color: colorPalette.secondary.main,
-      },
-    },
-  },
-  MuiFormControl: {
-    styleOverrides: {
-      root: {
-        width: '100%',
       },
     },
   },
@@ -73,41 +57,35 @@ export const textFieldTheme: Components = {
         marginBottom: '6px',
         position: 'unset',
         transform: 'none',
-        color: colorPalette.primary.main,
+        color: colorPalette.text.main,
         overflow: 'unset',
         whiteSpace: 'wrap',
         textAlign: 'left',
+        '&.Mui-focused': {
+          color: colorPalette.text.main,
+        },
+        '&.Mui-error': {
+          color: colorPalette.text.main,
+        },
       },
       filled: {
         transform: 'translate(12px, 12px) scale(1)',
       },
     },
   },
-  MuiFormControlLabel: {
+  MuiFormHelperText: {
     styleOverrides: {
-      label: {
-        fontFamily: 'Noto Sans, sans-serif',
+      root: {
+        color: colorPalette.text.secondary,
+        margin: 0,
+        marginTop: '12px',
       },
     },
   },
-  MuiFilledInput: {
+  MuiFormLabel: {
     styleOverrides: {
       root: {
-        borderRadius: 4,
-        '&::before': {
-          border: 'none',
-        },
-      },
-      input: {
-        padding: 0,
-      },
-    },
-  },
-  MuiOutlinedInput: {
-    styleOverrides: {
-      root: {
-        paddingTop: '0 !important',
-        paddingBottom: '0 !important',
+        marginBottom: '8px !important',
       },
     },
   },

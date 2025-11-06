@@ -3,7 +3,7 @@ import { type FieldValues, FormProvider, type UseFormReturn } from 'react-hook-f
 
 import { Box } from '@mui/material';
 
-interface ICustomFormProvider<T extends FieldValues> {
+export interface ICustomFormProvider<T extends FieldValues> {
   form: UseFormReturn<T>;
   onSubmit: (data: T) => void;
   children: ReactNode;
@@ -29,6 +29,7 @@ export const CustomFormProvider = <T extends FieldValues>(props: ICustomFormProv
         sx={{
           pointerEvents: isDisabled ? 'none' : 'auto',
           minHeight: 'inherit',
+          width: '100%',
         }}
         noValidate={novalidate}
       >
@@ -36,6 +37,7 @@ export const CustomFormProvider = <T extends FieldValues>(props: ICustomFormProv
           component="fieldset"
           disabled={isDisabled}
           sx={{
+            width: '100%',
             minHeight: 'inherit',
             border: 'none',
             padding: 0,

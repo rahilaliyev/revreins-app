@@ -1,7 +1,34 @@
-import type { Components } from '@mui/material';
+import type React from 'react';
+
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    caption1: React.CSSProperties;
+    caption2: React.CSSProperties;
+    caption3: React.CSSProperties;
+    caption4: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme()`
+  interface TypographyVariantsOptions {
+    caption1?: React.CSSProperties;
+    caption2?: React.CSSProperties;
+    caption3?: React.CSSProperties;
+    caption4?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    caption1: true;
+    caption2: true;
+    caption3: true;
+    caption4: true;
+  }
+}
 
 export const typographyOptions = {
-  fontFamily: 'Gilroy',
+  fontFamily: 'Noto Sans, sans-serif',
   h1: {
     fontFamily: 'Noto Sans, sans-serif',
     fontSize: '80px',
@@ -38,7 +65,7 @@ export const typographyOptions = {
     lineHeight: '28px',
     fontWeight: 400,
   },
-  subtitle: {
+  subtitle1: {
     fontFamily: 'Noto Sans, sans-serif',
     fontSize: '18px',
     lineHeight: '28px',
@@ -82,13 +109,17 @@ export const typographyOptions = {
   },
 };
 
-export const typographyTheme: Components = {
+export const typographyTheme = {
   MuiTypography: {
     defaultProps: {
       variant: 'body2',
       variantMapping: {
         body2: 'p',
         subtitle2: 'p',
+        caption1: 'span',
+        caption2: 'span',
+        caption3: 'span',
+        caption4: 'span',
       },
     },
   },

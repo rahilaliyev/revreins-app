@@ -20,8 +20,6 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   '& a': {
     color: '#3B82F6',
     textDecoration: 'underline',
-    fontWeight: 500,
-    cursor: 'pointer',
     transition: 'color 0.2s ease',
 
     '&:hover': {

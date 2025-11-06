@@ -21,7 +21,7 @@ export const PublicLayout = (): JSX.Element => {
         alignItems="center"
       >
         <Outlet />
-        <StyledTypography>
+        <StyledTypography variant="caption1">
           Have a problem? <Link to="#">Email Support</Link>
         </StyledTypography>
       </Stack>

@@ -12,7 +12,7 @@ import { type ButtonProps, Typography } from '@mui/material';
 
 import { StyledGoogleButton } from './styled';
 
-import { GoogleIcon } from 'src/assets/icons/googleIcon';
+import { GoogleIcon } from 'src/assets/icons';
 
 interface IProps {
   text: string;

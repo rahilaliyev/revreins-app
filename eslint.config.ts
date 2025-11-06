@@ -73,7 +73,15 @@ export default defineConfig([
         },
         { selector: ['function', 'parameter'], format: ['camelCase'], leadingUnderscore: 'allow' },
         { selector: 'typeLike', format: ['PascalCase'] },
-        { selector: 'interface', format: ['PascalCase'], prefix: ['I'] },
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+          filter: {
+            regex: '^(TypographyVariants|TypographyVariantsOptions|TypographyPropsVariantOverrides)$',
+            match: false,
+          },
+        },
         { selector: ['typeAlias', 'typeParameter'], format: ['PascalCase'], prefix: ['T'] },
         { selector: 'enum', format: ['PascalCase'], prefix: ['E'] },
         { selector: 'enumMember', format: ['UPPER_CASE'] },

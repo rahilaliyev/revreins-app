@@ -30,8 +30,9 @@ export const buttonTheme: Components = {
         style: {
           height: '48px',
           padding: '8px 16px',
-          fontSize: '18px',
-          lineHeight: '24px',
+          fontSize: '16px',
+          lineHeight: '25px',
+          fontWeight: 500,
         },
       },
       {
@@ -58,7 +59,7 @@ export const buttonTheme: Components = {
         props: { variant: 'contained', color: 'inherit' },
         style: {
           backgroundColor: colorPalette.accent.main,
-          color: colorPalette.text.textInverse,
+          color: colorPalette.text.main,
           '&:hover': {
             backgroundColor: colorPalette.accent.hover,
           },
@@ -229,7 +230,6 @@ export const buttonTheme: Components = {
     ],
     defaultProps: {
       variant: 'contained',
-      fullWidth: true,
       disableElevation: true,
       disableFocusRipple: true,
     },

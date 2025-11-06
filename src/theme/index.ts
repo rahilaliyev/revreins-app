@@ -1,3 +1,4 @@
+import type { TypographyVariantsOptions } from '@mui/material';
 import { createTheme, type PaletteOptions } from '@mui/material/styles';
 
 import { accordionTheme } from './accordion';
@@ -39,6 +40,6 @@ export const theme = createTheme({
     ...tableTheme,
     ...textFieldTheme,
     ...tooltipTheme,
-    ...typographyTheme,
+    ...(typographyTheme as TypographyVariantsOptions),
   },
 });
