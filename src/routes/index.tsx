@@ -8,6 +8,7 @@ import { suspenseFallback } from '../hoc';
 import { ROUTES } from './paths';
 
 const SignUpPage = lazy(() => import('src/pages/SignUpPage'));
+const SignInPage = lazy(() => import('src/pages/SignInPage'));
 
 const RouteComponents = (): JSX.Element => {
   useEffect(() => {
@@ -32,6 +33,7 @@ const RouteComponents = (): JSX.Element => {
     <Routes>
       <Route path={ROUTES.AUTH.PATH} element={<PublicLayout />}>
         <Route index path={ROUTES.AUTH.SIGNUP.PATH} element={suspenseFallback(SignUpPage)} />
+        <Route index path={ROUTES.AUTH.SIGNIN.PATH} element={suspenseFallback(SignInPage)} />
       </Route>
     </Routes>
   );

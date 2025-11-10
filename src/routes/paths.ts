@@ -10,6 +10,9 @@ export const ROUTES = {
     SIGNUP: {
       PATH: `${BASE_AUTH_PATH}/signup`,
     },
+    SIGNIN: {
+      PATH: `${BASE_AUTH_PATH}/signin`,
+    },
     FORGOT_PASSWORD: {
       PATH: `${BASE_AUTH_PATH}/forgot-password`,
     },
