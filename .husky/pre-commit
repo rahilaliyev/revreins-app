@@ -6,7 +6,7 @@ npm run format ||
     You have Prettier errors. Fix them in the indicated file, then git commit again!';
     false;
 )
-echo 'Codes passed Prettier successfully'
+echo 'Codes passed from Prettier successfully'
 # Check ESLint Standards
 npm run lint ||
 (
@@ -15,7 +15,7 @@ npm run lint ||
         If you are getting simple-import-sort errors, run the command NPM RUN LINT_FIX'
         false;
 )
-echo 'Codes passed ESLint successfully'
+echo 'Codes passed from ESLint successfully'
 # Check tsconfig standards
 npm run type-check ||
 (
@@ -23,6 +23,7 @@ npm run type-check ||
             You have TypeScript errors. Fix them in the indicated file, then git commit again!';
     false;
 )
+echo 'Codes passed from TypeScript successfully'
 # If everything passes... Now we can commit
 npm run build ||
 (
