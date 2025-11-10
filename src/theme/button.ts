@@ -240,6 +240,7 @@ export const buttonTheme: Components = {
         textTransform: 'unset',
         minWidth: 'auto',
         whiteSpace: 'nowrap',
+        transition: '0.5s',
       },
     },
   },

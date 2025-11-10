@@ -4,7 +4,7 @@
 
 html,
 body {
-  font-family: 'Noto Sans', 'Arial', 'Helvetica', 'Noto Sans', sans-serif;
+  font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
@@ -27,4 +27,8 @@ body,
 a {
   text-decoration: none;
   color: inherit;
+}
+
+input {
+  outline: none;
 }

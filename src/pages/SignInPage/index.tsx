@@ -1,21 +1,30 @@
 import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, Stack, Typography } from '@mui/material';
 
 import { CustomTextField, GoogleButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
+import { ROUTES } from 'src/routes/paths';
 
+import { StyledSignInButton } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
+import { UserAddLineIcon } from 'src/assets/icons';
 import Logo from 'src/assets/images/logo.svg?react';
 
 const SignInPage = (): JSX.Element => {
+  const navigate = useNavigate();
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: { email: '', password: '' },
   });
+
+  const handleNavigateSignUp = (): void => {
+    navigate(ROUTES.AUTH.SIGNUP.PATH);
+  };
 
   const handleSubmit = (data: TFormData): void => {
     console.log(data);
@@ -58,11 +67,19 @@ const SignInPage = (): JSX.Element => {
                   color="inherit"
                   size="large"
                 >
-                  Create an Account
+                  Sign in
                 </Button>
               </Stack>
             </CustomFormProvider>
           </Stack>
+        </Stack>
+        <Stack gap={2.5} mb={6}>
+          <Typography variant="body2" color="textSecondary">
+            Don’t have an account?
+          </Typography>
+          <StyledSignInButton endIcon={<UserAddLineIcon />} variant="text" onClick={handleNavigateSignUp}>
+            Sign up
+          </StyledSignInButton>
         </Stack>
       </Stack>
     </Stack>

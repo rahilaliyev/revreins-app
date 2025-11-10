@@ -9,7 +9,7 @@ import { CustomTextField, GoogleButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { ROUTES } from 'src/routes/paths';
 
-import { StyledSignInButton } from './styled';
+import { StyledSignUpButton } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
 import { SignInIcon } from 'src/assets/icons';
@@ -23,7 +23,9 @@ const SignUpPage = (): JSX.Element => {
     defaultValues: { email: '' },
   });
 
-  const handleNavigateSignIn = async (): Promise<void> => await navigate(ROUTES.AUTH.SIGNIN.PATH);
+  const handleNavigateSignIn = (): void => {
+    navigate(ROUTES.AUTH.SIGNIN.PATH);
+  };
 
   const handleSubmit = (data: TFormData): void => {
     console.log(data);
@@ -83,9 +85,9 @@ const SignUpPage = (): JSX.Element => {
         <Typography variant="body2" color="textSecondary">
           Already have an account?
         </Typography>
-        <StyledSignInButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
+        <StyledSignUpButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
           Sign in
-        </StyledSignInButton>
+        </StyledSignUpButton>
       </Stack>
       <Stack>
         <Typography variant="caption1" color="textSecondary" textAlign="center">

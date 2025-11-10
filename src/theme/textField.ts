@@ -20,6 +20,7 @@ export const textFieldTheme: Components = {
           width: '0',
         },
         '& fieldset': {
+          transition: 'border-color 0.5s ease',
           borderRadius: '8px',
         },
         '&.Mui-error': {
