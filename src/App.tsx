@@ -19,7 +19,7 @@ const App = (): JSX.Element => (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <ThemeProvider theme={theme}>
         <RouteComponents />
-        <SnackbarProvider />
+        <SnackbarProvider anchorOrigin={{ horizontal: 'right', vertical: 'top' }} />
       </ThemeProvider>
     </GoogleOAuthProvider>
   </BrowserRouter>

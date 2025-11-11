@@ -10,7 +10,12 @@ import { StyledPublicLayout, StyledTypography } from './styled';
 
 export const PublicLayout = (): JSX.Element => {
   const token = getAccessToken();
-  return !token ? (
+
+  if (token) {
+    return <Navigate to={ROUTES.DEFAULT.PATH} />;
+  }
+
+  return (
     <Stack minHeight="100vh">
       <Stack
         width="55vw"
@@ -29,7 +34,5 @@ export const PublicLayout = (): JSX.Element => {
         <StyledPublicLayout />
       </Stack>
     </Stack>
-  ) : (
-    <Navigate to={ROUTES.DEFAULT.PATH} />
   );
 };
