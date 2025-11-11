@@ -21,8 +21,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // Disabled to allow unused imports for side effects. ESLint (typescript eslint) handles unuthis.
+    "noUnusedParameters": false, // Disabled to allow unused parameters. ESLint (typescript eslint) handles this.
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true

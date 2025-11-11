@@ -31,7 +31,7 @@ export default defineConfig([
       'max-params': ['error', 3],
       'no-console': ['warn', { allow: ['warn'] }],
       'no-alert': 'error',
-      'no-unused-vars': 'error',
+      'no-unused-vars': 'off',
       'no-duplicate-imports': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
