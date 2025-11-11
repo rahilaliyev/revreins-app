@@ -1,0 +1,19 @@
+stages:
+  - deploy_proj
+
+deploy_proj:
+  stage: deploy_proj
+  script:
+    - printf "VITE_BASE_URL=https://api.revreins.io\n" >> .env
+    - printf "VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}\n" >> .env
+    - docker stop forecasting-app || true
+    - docker rm forecasting-app || true
+    - docker rmi forecasting-app:latest --force || true
+    - docker build -t forecasting-app:latest .
+    - docker run -p 3001:80 -d --restart always --name=forecasting-app forecasting-app
+
+  only:
+    - dev
+  tags:
+    - forecasting
+    - shell
