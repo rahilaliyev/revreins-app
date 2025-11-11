@@ -7,7 +7,7 @@ import { Button, Stack, Typography } from '@mui/material';
 import { CustomTextField, GoogleButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 
-import { type TFormData, validationSchema } from '../validationSchema';
+import { type TSignUpFormData, validationSignUpSchema } from '../validationSchema';
 
 interface IProps {
   setEmailValue: (email: string) => void;
@@ -15,8 +15,8 @@ interface IProps {
 }
 
 export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element => {
-  const formBag = useForm<TFormData>({
-    resolver: zodResolver(validationSchema),
+  const formBag = useForm<TSignUpFormData>({
+    resolver: zodResolver(validationSignUpSchema),
     defaultValues: { email: '' },
   });
 
@@ -29,7 +29,7 @@ export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element
     setEmailValue(emailValue);
   }, [emailValue]);
 
-  const handleSubmit = (data: TFormData): void => {
+  const handleSubmit = (data: TSignUpFormData): void => {
     console.log(data);
     setIsVerify(true);
   };

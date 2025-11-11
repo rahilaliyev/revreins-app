@@ -9,6 +9,7 @@ import {
   InputAdornment,
   TextField,
   type TextFieldProps,
+  Typography,
 } from '@mui/material';
 
 import { EyeLineIcon, EyeOffLineIcon } from 'src/assets/icons';
@@ -49,7 +50,13 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
         {...rest}
         type={isPasswordField && isShowPassword ? 'text' : type}
         error={!!error?.message}
-        helperText={error?.message ?? helperText ?? ''}
+        helperText={
+          typeof error?.message === 'string' ? (
+            <Typography variant="caption2" dangerouslySetInnerHTML={{ __html: error.message }} />
+          ) : (
+            (error?.message ?? helperText ?? '')
+          )
+        }
         onWheel={(e) => {
           if (type === 'number') {
             (e.target as HTMLElement).blur();

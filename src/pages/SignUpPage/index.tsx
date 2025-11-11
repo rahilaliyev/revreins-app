@@ -38,14 +38,16 @@ const SignUpPage = (): JSX.Element => {
           <NotVerified setEmailValue={setEmailValue} setIsVerify={setIsVerify} />
         )}
       </Stack>
-      <Stack gap={2.5} mb={6}>
-        <Typography variant="body2" color="textSecondary">
-          Already have an account?
-        </Typography>
-        <StyledSignUpButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
-          Sign in
-        </StyledSignUpButton>
-      </Stack>
+      {!isVerifiedUser && (
+        <Stack gap={2.5} mb={6}>
+          <Typography variant="body2" color="textSecondary">
+            Already have an account?
+          </Typography>
+          <StyledSignUpButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
+            Sign in
+          </StyledSignUpButton>
+        </Stack>
+      )}
       <Stack>
         <Typography variant="caption1" color="textSecondary" textAlign="center">
           By signing up you agree to{' '}
