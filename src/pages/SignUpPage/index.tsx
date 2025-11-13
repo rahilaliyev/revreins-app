@@ -15,7 +15,7 @@ const SignUpPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [isVerify, setIsVerify] = useState(false);
   const [emailValue, setEmailValue] = useState('');
-  const [isVerifiedUser, setIsVerifiedUser] = useState(false);
+  const [isVerifiedUser, setIsVerifiedUser] = useState(true);
 
   const handleNavigateSignIn = (): void => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);

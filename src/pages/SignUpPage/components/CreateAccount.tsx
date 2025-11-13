@@ -1,13 +1,18 @@
 import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { colorPalette } from 'src/theme/colorpalette';
 
-import { Button, Grid, Stack } from '@mui/material';
+import { Button, Grid, Stack, Tooltip, Typography } from '@mui/material';
 
 import { CustomTextField } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 
 import { type TCreateAccountFormData, validationCreateAccountSchema } from '../validationSchema';
+
+import { TooltipTitle } from './PasswordTooltipTitle';
+
+import { InformationLineIcon } from 'src/assets/icons';
 
 export const CreateAccount = (): JSX.Element => {
   const formBag = useForm<TCreateAccountFormData>({
@@ -44,6 +49,20 @@ export const CreateAccount = (): JSX.Element => {
               name="password"
               label="Password"
               placeholder="Create a strong password"
+              helperText={
+                formBag.formState.errors.password?.message ? (
+                  <Stack direction="row" alignItems="center" spacing={0.5}>
+                    <Tooltip open placement="bottom-start" title={<TooltipTitle />}>
+                      <InformationLineIcon width={18} height={18} pathFill={colorPalette.error.main} />
+                    </Tooltip>
+                    <Typography variant="caption2" color="error">
+                      Password does not meet security requirements
+                    </Typography>
+                  </Stack>
+                ) : (
+                  ''
+                )
+              }
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 12 }}>

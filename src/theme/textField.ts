@@ -25,6 +25,9 @@ export const textFieldTheme: Components = {
         },
         '&.Mui-error': {
           color: colorPalette.error.main,
+          '& fieldset': {
+            borderWidth: '2px',
+          },
         },
       },
       input: {
