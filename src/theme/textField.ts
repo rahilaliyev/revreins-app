@@ -21,6 +21,7 @@ export const textFieldTheme: Components = {
         },
         '& fieldset': {
           transition: 'border-color 0.5s ease',
+          borderColor: colorPalette.other.stroke,
           borderRadius: '8px',
         },
         '&.Mui-error': {

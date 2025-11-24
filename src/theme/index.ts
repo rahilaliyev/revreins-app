@@ -13,6 +13,7 @@ import { listTheme } from './list';
 import { menuTheme } from './menu';
 import { selectTheme } from './select';
 import { stackTheme } from './stack';
+import { stepperTheme } from './stepper';
 import { switchTheme } from './switch';
 import { tableTheme } from './table';
 import { textFieldTheme } from './textField';
@@ -36,6 +37,7 @@ export const theme = createTheme({
     ...iconButtonTheme,
     ...selectTheme,
     ...stackTheme,
+    ...stepperTheme,
     ...switchTheme,
     ...tableTheme,
     ...textFieldTheme,

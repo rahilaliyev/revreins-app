@@ -11,6 +11,7 @@ import { ROUTES } from './paths';
 const SignUpPage = lazy(() => import('src/pages/SignUpPage'));
 const SignInPage = lazy(() => import('src/pages/SignInPage'));
 const HomePage = lazy(() => import('src/pages/HomePage'));
+const AccountSetupPage = lazy(() => import('src/pages/AccountSetupPage'));
 
 const RouteComponents = (): JSX.Element => {
   useEffect(() => {
@@ -37,6 +38,7 @@ const RouteComponents = (): JSX.Element => {
         <Route index path={ROUTES.AUTH.SIGNIN.PATH} element={suspenseFallback(SignInPage)} />
         <Route path={ROUTES.AUTH.SIGNUP.PATH} element={suspenseFallback(SignUpPage)} />
       </Route>
+      <Route path={ROUTES.AUTH.ACCOUNT_SETUP.PATH} element={suspenseFallback(AccountSetupPage)} />
       <Route path={ROUTES.DEFAULT.PATH} element={<PrivateLayout />}>
         <Route index element={suspenseFallback(HomePage)} />
       </Route>

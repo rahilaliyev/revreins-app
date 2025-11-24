@@ -1,7 +1,17 @@
+export { AddBoxLineIcon } from './addBoxLine';
+export { AddFillIcon } from './addFill';
+export { ArrowDownFillIcon } from './arrowDownFill';
+export { ArrowLeftLineIcon } from './arrowLeftLine';
+export { CheckFillIcon } from './checkFill';
+export { CloseComIcon } from './closeCom';
+export { DeleteBin7LineIcon } from './deleteBin7Line';
+export { DeleteBinLineIcon } from './deleteBinLine';
 export { EyeLineIcon } from './eyeLine';
 export { EyeOffLineIcon } from './eyeOffLine';
+export { Filter2FillIcon } from './filter2Fill';
 export { GoogleIcon } from './googleIcon';
 export { InformationLineIcon } from './informationLine';
+export { LayoutLineIcon } from './layoutLine';
 export { LeftCenterTipIcon } from './leftCenterTip';
 export { SignInIcon } from './signInIcon';
 export { UserAddLineIcon } from './userAddLine';

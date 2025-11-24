@@ -1,4 +1,4 @@
-import type { Components } from '@mui/material';
+import { alpha, type Components, Fade } from '@mui/material';
 
 export const menuTheme: Components = {
   MuiMenu: {
@@ -10,6 +10,18 @@ export const menuTheme: Components = {
       transformOrigin: {
         vertical: 'top',
         horizontal: 'left',
+      },
+      slots: {
+        transition: Fade,
+      },
+      slotProps: {
+        paper: {
+          sx: {
+            boxShadow: `0 0 0 1px ${alpha('#000', 0.1)}`,
+            borderRadius: '8px',
+            background: 'white',
+          },
+        },
       },
     },
     styleOverrides: {
