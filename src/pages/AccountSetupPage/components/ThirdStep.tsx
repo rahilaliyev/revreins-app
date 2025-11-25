@@ -1,5 +1,5 @@
-import { type JSX, useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { type JSX, useEffect, useState } from 'react';
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TEMPLATES } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
@@ -28,7 +28,11 @@ import {
   LayoutLineIcon,
 } from 'src/assets/icons';
 
-const ThirdStep = (): JSX.Element => {
+interface IProps {
+  onValidityChange: (isValid: boolean) => void;
+}
+
+const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const formBag = useForm<TThirdStepFormData>({
@@ -40,6 +44,20 @@ const ThirdStep = (): JSX.Element => {
     name: 'stages',
     control: formBag.control,
   });
+
+  const [stages, name] = useWatch({
+    control: formBag.control,
+    name: ['stages', 'name'],
+  });
+
+  useEffect(() => {
+    const isValid =
+      !!name &&
+      !!selectedCard &&
+      ((selectedCard === ESetupCard.TEMPLATE && !!selectedTemplate) ||
+        (selectedCard === ESetupCard.SCRATCH && !!stages.length));
+    onValidityChange(isValid);
+  }, [selectedCard, name, stages]);
 
   const handleSelectedCard = (type: ESetupCard): void => setSelectedCard(type);
 

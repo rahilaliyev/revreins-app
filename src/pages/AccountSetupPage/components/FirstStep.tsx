@@ -1,4 +1,4 @@
-import React, { type JSX, useState } from 'react';
+import React, { type JSX, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
@@ -13,21 +13,28 @@ import { StyledApiKey, StyledCloseApiIconWrapper } from '../styled';
 import { AddFillIcon, CloseComIcon } from 'src/assets/icons';
 
 interface IProps {
-  onSkip: () => void;
+  onValidityChange: (isValid: boolean) => void;
 }
 
-const FirstStep = ({ onSkip }: IProps): JSX.Element => {
+const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
   const [isConnected, setIsConnected] = useState(false);
   const formBag = useForm({
+    mode: 'onChange',
     defaultValues: {
       key: '',
+      name: '',
     },
   });
 
-  const key = useWatch({
+  const [key, name] = useWatch({
     control: formBag.control,
-    name: 'key',
+    name: ['key', 'name'],
   });
+
+  useEffect(() => {
+    const isValid = !!key && !!name && isConnected;
+    onValidityChange(isValid);
+  }, [key, name, isConnected]);
 
   const handleSubmit = (): void => {};
 
@@ -85,22 +92,17 @@ const FirstStep = ({ onSkip }: IProps): JSX.Element => {
                 Disconnect CRM
               </Button>
             ) : (
-              <>
-                <Button
-                  disabled={!key}
-                  fullWidth
-                  variant="outlined"
-                  type="button"
-                  sx={{ gap: (theme) => theme.spacing(3) }}
-                  onClick={handleConnection}
-                >
-                  Connect CRM
-                  <AddFillIcon pathFill={key ? colorPalette.primary.main : colorPalette.other.icon} />
-                </Button>
-                <Button fullWidth variant="outlined" type="button" color="secondary" onClick={onSkip}>
-                  Skip for now
-                </Button>
-              </>
+              <Button
+                disabled={!key}
+                fullWidth
+                variant="outlined"
+                type="button"
+                sx={{ gap: (theme) => theme.spacing(3) }}
+                onClick={handleConnection}
+              >
+                Connect CRM
+                <AddFillIcon pathFill={key ? colorPalette.primary.main : colorPalette.other.icon} />
+              </Button>
             )}
           </Stack>
         </StyledApiKey>

@@ -17,6 +17,7 @@ const STEPPER_NAMES = ['Connect CRM', 'Set up your team', 'Chose a starting poin
 
 const AccountSetup = (): JSX.Element => {
   const [activeStep, setActiveStep] = useState(EAccountSetup.FIRST_STEP);
+  const [isStepValid, setIsStepValid] = useState(false);
 
   const handleNext = (): void => setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
@@ -58,9 +59,9 @@ const AccountSetup = (): JSX.Element => {
           p={6}
         >
           <Box width="100%">
-            {activeStep === EAccountSetup.FIRST_STEP && <FirstStep onSkip={handleNext} />}
+            {activeStep === EAccountSetup.FIRST_STEP && <FirstStep onValidityChange={setIsStepValid} />}
             {activeStep === EAccountSetup.SECOND_STEP && <SecontStep />}
-            {activeStep === EAccountSetup.THIRD_STEP && <ThirdStep />}
+            {activeStep === EAccountSetup.THIRD_STEP && <ThirdStep onValidityChange={setIsStepValid} />}
             {activeStep === EAccountSetup.FOURTH_STEP && <FourthStep />}
           </Box>
           <Stack width="100%">
@@ -72,12 +73,12 @@ const AccountSetup = (): JSX.Element => {
               )}
             </Stack>
             <Stack width="100%" justifyContent="flex-end" gap={4}>
-              {activeStep !== EAccountSetup.FIRST_STEP && (
-                <Button variant="outlined" color="secondary" onClick={handleNext}>
-                  Skip
-                </Button>
-              )}
-              <Button color="inherit">{submitButtonText}</Button>
+              <Button variant="outlined" color="secondary" onClick={handleNext}>
+                Skip
+              </Button>
+              <Button color="inherit" disabled={!isStepValid} onClick={handleNext}>
+                {submitButtonText}
+              </Button>
             </Stack>
           </Stack>
         </Stack>
