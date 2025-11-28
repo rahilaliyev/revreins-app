@@ -1,8 +1,9 @@
-import { type JSX, useState } from 'react';
+import { type JSX, type ReactNode, useState } from 'react';
 import { type ControllerProps, useController, useFormContext } from 'react-hook-form';
 import { colorPalette } from 'src/theme/colorpalette';
 
 import {
+  Box,
   FormControl,
   type FormControlProps,
   IconButton,
@@ -17,10 +18,11 @@ type TTextField = Omit<ControllerProps, 'render'> &
   FormControlProps &
   TextFieldProps & {
     loading?: boolean;
+    helperContent?: ReactNode;
   };
 
 export const CustomTextField = (props: TTextField): JSX.Element => {
-  const { type, name, rules, helperText, defaultValue, ...rest } = props;
+  const { type, name, rules, helperText, defaultValue, helperContent, ...rest } = props;
   const { control } = useFormContext();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -69,6 +71,7 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
           },
         }}
       />
+      {helperContent && <Box mt={3}>{helperContent}</Box>}
     </FormControl>
   );
 };

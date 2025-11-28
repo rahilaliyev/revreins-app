@@ -7,7 +7,6 @@ export const validationSchema = z.object({
     .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
       message: 'Please enter a valid email address',
     }),
-  password: z.string().min(1, 'Password is required'),
 });
 
 export type TFormData = z.infer<typeof validationSchema>;

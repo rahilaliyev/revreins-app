@@ -1,7 +1,8 @@
 import type { JSX } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { colorPalette } from 'src/theme/colorpalette';
 
 import { Button, Stack, Typography } from '@mui/material';
 
@@ -73,13 +74,20 @@ const SignInPage = (): JSX.Element => {
             </CustomFormProvider>
           </Stack>
         </Stack>
-        <Stack gap={2.5} mb={6}>
+        <Stack gap={2.5} mb={1}>
           <Typography variant="body2" color="textSecondary">
             Don’t have an account?
           </Typography>
           <StyledSignInButton endIcon={<UserAddLineIcon />} variant="text" onClick={handleNavigateSignUp}>
             Sign up
           </StyledSignInButton>
+        </Stack>
+        <Stack>
+          <Link to={ROUTES.AUTH.FORGOT_PASSWORD.PATH}>
+            <Typography variant="body2" sx={{ color: colorPalette.text.link, textDecoration: 'underline' }}>
+              Forgot Password?
+            </Typography>
+          </Link>
         </Stack>
       </Stack>
     </Stack>

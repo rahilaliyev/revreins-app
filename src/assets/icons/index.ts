@@ -1,6 +1,7 @@
 export { AddBoxLineIcon } from './addBoxLine';
 export { AddFillIcon } from './addFill';
 export { ArrowDownFillIcon } from './arrowDownFill';
+export { ArrowGoBackLineIcon } from './arrowGoBackLine';
 export { ArrowLeftLineIcon } from './arrowLeftLine';
 export { CheckFillIcon } from './checkFill';
 export { CloseComIcon } from './closeCom';
