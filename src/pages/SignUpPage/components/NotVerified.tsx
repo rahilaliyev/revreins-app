@@ -2,9 +2,11 @@ import { type JSX, useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Stack, Typography } from '@mui/material';
+import { useRegisterMutation } from 'src/apis/auth';
 
-import { CustomTextField, GoogleButton } from 'src/components';
+import { Stack, Typography } from '@mui/material';
+
+import { CustomTextField, GoogleButton, LoadingButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 
 import { type TSignUpFormData, validationSignUpSchema } from '../validationSchema';
@@ -15,6 +17,7 @@ interface IProps {
 }
 
 export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element => {
+  const { mutate, isPending } = useRegisterMutation();
   const formBag = useForm<TSignUpFormData>({
     resolver: zodResolver(validationSignUpSchema),
     defaultValues: { email: '' },
@@ -30,8 +33,11 @@ export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element
   }, [emailValue]);
 
   const handleSubmit = (data: TSignUpFormData): void => {
-    console.log(data);
-    setIsVerify(true);
+    mutate(data, {
+      onSuccess: () => {
+        setIsVerify(true);
+      },
+    });
   };
 
   return (
@@ -44,15 +50,16 @@ export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
           <Stack justifyContent="center" alignItems="center" flexDirection="column" minWidth={400}>
             <CustomTextField name="email" label="Your email" placeholder="you@company.com" />
-            <Button
+            <LoadingButton
               sx={{ marginTop: (theme) => theme.spacing(6) }}
               type="submit"
+              loading={isPending}
               disabled={!emailValue}
               color="inherit"
               size="large"
             >
               Create an Account
-            </Button>
+            </LoadingButton>
           </Stack>
         </CustomFormProvider>
       </Stack>

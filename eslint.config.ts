@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import { defineConfig } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -18,6 +19,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   ...(Array.isArray(reactPlugin) ? reactPlugin : [reactPlugin]),
   prettierConfig,
+  ...pluginQuery.configs['flat/recommended'],
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     plugins: { js, prettier: prettierPlugin, 'simple-import-sort': simpleImportSort },

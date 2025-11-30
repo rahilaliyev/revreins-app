@@ -15,7 +15,7 @@ const SignUpPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [isVerify, setIsVerify] = useState(false);
   const [emailValue, setEmailValue] = useState('');
-  const [isVerifiedUser, setIsVerifiedUser] = useState(true);
+  const [isVerifiedUser, setIsVerifiedUser] = useState(false);
 
   const handleNavigateSignIn = (): void => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);
@@ -27,7 +27,12 @@ const SignUpPage = (): JSX.Element => {
       <Stack flexDirection="column">
         <Stack mt={0.5} mb={6} flexDirection="column" gap={0.5}>
           <Typography variant="h5">{isVerify ? 'Let’s verify your email' : 'Create Your Account'}</Typography>
-          <Typography variant="body1" color="textSecondary">
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            width={isVerify ? '90%' : '100%'}
+            textAlign="center"
+          >
             {isVerify
               ? `Check ${emailValue} to verify your account and get started`
               : 'Get started with RevReins.io'}

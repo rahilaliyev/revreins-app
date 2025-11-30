@@ -4,9 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Button, Stack, Typography } from '@mui/material';
+import { useLoginMutation } from 'src/apis/auth';
 
-import { CustomTextField, GoogleButton } from 'src/components';
+import { Stack, Typography } from '@mui/material';
+
+import { CustomTextField, GoogleButton, LoadingButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { ROUTES } from 'src/routes/paths';
 
@@ -18,6 +20,7 @@ import Logo from 'src/assets/images/logo.svg?react';
 
 const SignInPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const { mutate, isPending } = useLoginMutation();
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: { email: '', password: '' },
@@ -28,7 +31,7 @@ const SignInPage = (): JSX.Element => {
   };
 
   const handleSubmit = (data: TFormData): void => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -61,15 +64,16 @@ const SignInPage = (): JSX.Element => {
                     type="password"
                   />
                 </Stack>
-                <Button
+                <LoadingButton
                   sx={{ marginTop: (theme) => theme.spacing(6) }}
                   type="submit"
+                  loading={isPending}
                   disabled={!formBag.formState.isDirty}
                   color="inherit"
                   size="large"
                 >
-                  Sign in
-                </Button>
+                  Create an Account
+                </LoadingButton>
               </Stack>
             </CustomFormProvider>
           </Stack>
