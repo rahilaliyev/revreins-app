@@ -3,7 +3,7 @@ import { endpoints } from 'src/contants';
 
 import { axiosLogin } from '../axiosInstance';
 
-import type { ILoginPayload, ILoginResponse, IRegisterPayload } from './types';
+import type { ILoginPayload, ILoginResponse, IRegisterPayload, IVerifyEmail } from './types';
 
 export const useLoginMutation = (): UseMutationResult<ILoginResponse, Error, ILoginPayload, unknown> =>
   useMutation<ILoginResponse, Error, ILoginPayload>({
@@ -17,6 +17,14 @@ export const useRegisterMutation = (): UseMutationResult<void, Error, IRegisterP
   useMutation<void, Error, IRegisterPayload>({
     mutationFn: async (data: IRegisterPayload) => {
       const res = await axiosLogin.post<void>(endpoints.auth.register, data);
+      return res.data;
+    },
+  });
+
+export const useVerifyEmailMutation = (): UseMutationResult<void, Error, IVerifyEmail, unknown> =>
+  useMutation<void, Error, IVerifyEmail>({
+    mutationFn: async (data: IVerifyEmail) => {
+      const res = await axiosLogin.post<void>(endpoints.auth.verifyEmail, data, { skipNotification: true });
       return res.data;
     },
   });

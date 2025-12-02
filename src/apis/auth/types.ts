@@ -10,3 +10,7 @@ export interface ILoginResponse {
   access_token: string;
   expires_in: number;
 }
+
+export interface IVerifyEmail extends IRegisterPayload {
+  token: string;
+}

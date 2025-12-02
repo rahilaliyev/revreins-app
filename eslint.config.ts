@@ -9,11 +9,11 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 const reactPlugin = pluginReact.configs.flat.recommended;
-const IGNORES_FOLDERS = ['dist', 'node_modules', 'build', 'coverage'];
+const IGNORES_FOLDERS_OR_FILES = ['dist', 'node_modules', 'build', 'coverage', '**/*.d.ts'];
 
 export default defineConfig([
   {
-    ignores: IGNORES_FOLDERS,
+    ignores: IGNORES_FOLDERS_OR_FILES,
   },
   js.configs.recommended,
   tseslint.configs.recommended,

@@ -44,8 +44,11 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => Promise.rejec
 const onResponseSuccess = (res: AxiosResponse): Promise<AxiosResponse> => {
   const mutationMethods: Method[] = ['put', 'delete', 'post', 'PUT', 'DELETE', 'POST'];
 
-  if (mutationMethods.includes(res.config.method as Method)) {
-    enqueueSnackbar({ message: 'Succesfull operation', variant: 'success' });
+  const method = res.config.method as Method;
+  const shouldNotify = mutationMethods.includes(method) && !res.config.skipNotification;
+
+  if (shouldNotify) {
+    enqueueSnackbar({ message: 'Successful operation', variant: 'success' });
   }
 
   return Promise.resolve(res);

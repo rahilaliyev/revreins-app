@@ -13,6 +13,9 @@ export const ROUTES = {
     SIGNIN: {
       PATH: `${BASE_AUTH_PATH}/signin`,
     },
+    CREATE_ACCOUNT: {
+      PATH: `${BASE_AUTH_PATH}/create-account`,
+    },
     ACCOUNT_SETUP: {
       PATH: `${BASE_AUTH_PATH}/account-setup`,
     },

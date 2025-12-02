@@ -5,7 +5,7 @@ import { Stack, Typography } from '@mui/material';
 
 import { ROUTES } from 'src/routes/paths';
 
-import { CreateAccount, NotVerified } from './components';
+import { NotVerified } from './components';
 import { StyledSignUpButton } from './styled';
 
 import { SignInIcon } from 'src/assets/icons';
@@ -15,7 +15,6 @@ const SignUpPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [isVerify, setIsVerify] = useState(false);
   const [emailValue, setEmailValue] = useState('');
-  const [isVerifiedUser, setIsVerifiedUser] = useState(false);
 
   const handleNavigateSignIn = (): void => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);
@@ -38,21 +37,16 @@ const SignUpPage = (): JSX.Element => {
               : 'Get started with RevReins.io'}
           </Typography>
         </Stack>
-        {isVerifiedUser && <CreateAccount />}
-        {!isVerify && !isVerifiedUser && (
-          <NotVerified setEmailValue={setEmailValue} setIsVerify={setIsVerify} />
-        )}
+        {!isVerify && <NotVerified setEmailValue={setEmailValue} setIsVerify={setIsVerify} />}
       </Stack>
-      {!isVerifiedUser && (
-        <Stack gap={2.5} mb={6}>
-          <Typography variant="body2" color="textSecondary">
-            Already have an account?
-          </Typography>
-          <StyledSignUpButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
-            Sign in
-          </StyledSignUpButton>
-        </Stack>
-      )}
+      <Stack gap={2.5} mb={6}>
+        <Typography variant="body2" color="textSecondary">
+          Already have an account?
+        </Typography>
+        <StyledSignUpButton endIcon={<SignInIcon />} variant="text" onClick={handleNavigateSignIn}>
+          Sign in
+        </StyledSignUpButton>
+      </Stack>
       <Stack>
         <Typography variant="caption1" color="textSecondary" textAlign="center">
           By signing up you agree to{' '}

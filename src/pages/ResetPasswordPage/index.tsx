@@ -1,5 +1,5 @@
 import { type JSX, useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
