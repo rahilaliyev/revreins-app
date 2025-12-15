@@ -1,4 +1,4 @@
-import React, { Fragment, type JSX, type MouseEvent, useState } from 'react';
+import React, { Fragment, type JSX, type MouseEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { USER_ROLES } from 'src/contants';
@@ -33,7 +33,11 @@ import { type TSecondStepFormData, validationSecondStepSchema } from './validati
 
 import { AddFillIcon, ArrowDownFillIcon, DeleteBin7LineIcon, InformationLineIcon } from 'src/assets/icons';
 
-const SecontStep = (): JSX.Element => {
+interface IProps {
+  onValidityChange: (isValid: boolean) => void;
+}
+
+const SecontStep = ({ onValidityChange }: IProps): JSX.Element => {
   const [selectedRole, setSelectedRole] = useState<EUserRole>(EUserRole.USER);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [invitingMembers, setInvitingMembers] = useState<IInvitingMembers[]>([]);
@@ -45,6 +49,18 @@ const SecontStep = (): JSX.Element => {
   });
 
   const handleSubmit = ({ email }: TSecondStepFormData): void => {
+    const alreadyExists = invitingMembers.some(
+      (member) => member.email.toLowerCase() === email.toLowerCase(),
+    );
+
+    if (alreadyExists) {
+      formBag.setError('email', {
+        type: 'manual',
+        message: 'You already added this email',
+      });
+      return;
+    }
+
     setInvitingMembers((prev) => [
       ...prev,
       {
@@ -56,6 +72,12 @@ const SecontStep = (): JSX.Element => {
     formBag.reset();
   };
 
+  useEffect(() => {
+    if (invitingMembers.length > 0) {
+      onValidityChange(true);
+    }
+  }, [invitingMembers]);
+
   const handleDelete = (key: number): void => {
     setInvitingMembers((prev) => prev.filter((_, index) => index !== key));
   };
@@ -64,6 +86,11 @@ const SecontStep = (): JSX.Element => {
 
   const handleClose = (value: EUserRole): void => {
     setAnchorEl(null);
+
+    if (typeof value !== 'string') {
+      return;
+    }
+
     setSelectedRole(value);
   };
 
@@ -164,7 +191,7 @@ const SecontStep = (): JSX.Element => {
             color="primary"
             endIcon={<AddFillIcon pathFill={colorPalette.primary.main} />}
           >
-            Invite Member
+            Add Member
           </Button>
         </CustomFormProvider>
       </Box>

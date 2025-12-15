@@ -1,4 +1,4 @@
-import { type JSX, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { EAccountSetup } from 'src/types/enums';
 
 import { Box, Button, Stack, Step, StepLabel, Stepper, Typography } from '@mui/material';
@@ -22,6 +22,10 @@ const AccountSetup = (): JSX.Element => {
   const handleNext = (): void => setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
   const handleBack = (): void => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+  useEffect(() => {
+    setIsStepValid(false);
+  }, [activeStep]);
 
   const submitButtonText =
     activeStep === EAccountSetup.SECOND_STEP
@@ -60,7 +64,7 @@ const AccountSetup = (): JSX.Element => {
         >
           <Box width="100%">
             {activeStep === EAccountSetup.FIRST_STEP && <FirstStep onValidityChange={setIsStepValid} />}
-            {activeStep === EAccountSetup.SECOND_STEP && <SecontStep />}
+            {activeStep === EAccountSetup.SECOND_STEP && <SecontStep onValidityChange={setIsStepValid} />}
             {activeStep === EAccountSetup.THIRD_STEP && <ThirdStep onValidityChange={setIsStepValid} />}
             {activeStep === EAccountSetup.FOURTH_STEP && <FourthStep />}
           </Box>

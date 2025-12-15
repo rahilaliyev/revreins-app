@@ -22,7 +22,7 @@ type TTextField = Omit<ControllerProps, 'render'> &
   };
 
 export const CustomTextField = (props: TTextField): JSX.Element => {
-  const { type, name, rules, helperText, defaultValue, helperContent, ...rest } = props;
+  const { type, name, rules, helperText, defaultValue, helperContent, inputRef, ...rest } = props;
   const { control } = useFormContext();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -47,6 +47,7 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
       <TextField
         {...field}
         {...rest}
+        inputRef={inputRef}
         type={isPasswordField && isShowPassword ? 'text' : type}
         error={!!error?.message}
         helperText={helperText ?? error?.message ?? ''}

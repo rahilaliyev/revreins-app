@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TEMPLATES } from 'src/contants';
@@ -35,18 +35,22 @@ interface IProps {
 const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
+  const lastInputRef = useRef<HTMLInputElement>(null);
   const formBag = useForm<TThirdStepFormData>({
     resolver: zodResolver(validationThirdStepSchema),
+    mode: 'onChange',
     defaultValues: { name: '', type: '', stages: [{ value: '' }] },
   });
 
+  const { control, trigger } = formBag;
+
   const { fields, append, remove } = useFieldArray({
     name: 'stages',
-    control: formBag.control,
+    control,
   });
 
   const [stages, name] = useWatch({
-    control: formBag.control,
+    control,
     name: ['stages', 'name'],
   });
 
@@ -59,7 +63,16 @@ const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
     onValidityChange(isValid);
   }, [selectedCard, name, stages]);
 
-  const handleSelectedCard = (type: ESetupCard): void => setSelectedCard(type);
+  useEffect(() => {
+    if (lastInputRef.current) {
+      lastInputRef.current.focus();
+    }
+  }, [fields.length, selectedCard]);
+
+  const handleSelectedCard = (type: ESetupCard): void => {
+    setSelectedCard(type);
+    trigger('name');
+  };
 
   const handleSelectedTemplate = (template: string): void => setSelectedTemplate(template);
 
@@ -186,6 +199,7 @@ const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
                             name={`stages.${index}.value`}
                             placeholder={`Stage ${index + 1}`}
                             size="small"
+                            inputRef={index === fields.length - 1 ? lastInputRef : undefined}
                           />
 
                           <Button variant="outlined" color="error" onClick={() => remove(index)}>
@@ -200,7 +214,9 @@ const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
                         variant="outlined"
                         color="secondary"
                         sx={{ gap: 2 }}
-                        onClick={() => append({ value: '' })}
+                        onClick={() => {
+                          append({ value: '' });
+                        }}
                       >
                         New Stage <AddFillIcon />
                       </Button>

@@ -1,6 +1,7 @@
-import React, { type JSX, useEffect, useState } from 'react';
+import React, { type ChangeEvent, type JSX, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
 
 import { Box, Button, Chip, Stack, Typography } from '@mui/material';
@@ -10,6 +11,8 @@ import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 
 import { StyledApiKey, StyledCloseApiIconWrapper } from '../styled';
 
+import { type TFirstStepFormData, validationFirstStepSchema } from './validationSchema';
+
 import { AddFillIcon, CloseComIcon } from 'src/assets/icons';
 
 interface IProps {
@@ -18,8 +21,9 @@ interface IProps {
 
 const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
   const [isConnected, setIsConnected] = useState(false);
-  const formBag = useForm({
-    mode: 'onChange',
+  const formBag = useForm<TFirstStepFormData>({
+    resolver: zodResolver(validationFirstStepSchema),
+    mode: 'onTouched',
     defaultValues: {
       key: '',
       name: '',
@@ -35,6 +39,16 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
     const isValid = !!key && !!name && isConnected;
     onValidityChange(isValid);
   }, [key, name, isConnected]);
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    formBag.setValue('name', e.target.value, { shouldValidate: true });
+    formBag.trigger();
+  };
+
+  const handleKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    formBag.setValue('key', e.target.value, { shouldValidate: true });
+    formBag.trigger();
+  };
 
   const handleSubmit = (): void => {};
 
@@ -57,7 +71,12 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
       </Box>
       <CustomFormProvider onSubmit={handleSubmit} form={formBag}>
         <Box my={6}>
-          <CustomTextField name="name" label="Name your CRM connection" placeholder="Connection name" />
+          <CustomTextField
+            name="name"
+            label="Name your CRM connection"
+            placeholder="Connection name"
+            onChange={handleNameChange}
+          />
         </Box>
         <StyledApiKey>
           <Stack justifyContent="space-between">
@@ -84,7 +103,12 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
             </Stack>
           </Stack>
           <Stack my={6}>
-            <CustomTextField name="key" label="Insert your Close.com API key" type="password" />
+            <CustomTextField
+              name="key"
+              label="Insert your Close.com API key"
+              type="password"
+              onChange={handleKeyChange}
+            />
           </Stack>
           <Stack gap={3}>
             {isConnected ? (
