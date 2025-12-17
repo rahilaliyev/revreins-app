@@ -5,7 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { enqueueSnackbar } from 'notistack';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { useVerifyEmailMutation } from 'src/apis/auth';
+import {
+  useTenantProfileUpdateMutation,
+  useTenantUserUpdateMutation,
+  useVerifyEmailMutation,
+} from 'src/apis/auth';
+import type { ITenantUserUpdatePayload } from 'src/apis/auth/types';
 
 import { Button, CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material';
 
@@ -27,6 +32,8 @@ const CreateAccountPage = (): JSX.Element => {
   const [searchParams] = useCustomSearchParams();
   const { token, email } = searchParams;
   const { mutate, isPending } = useVerifyEmailMutation();
+  const { mutateAsync: updateTenantProfileMutate } = useTenantProfileUpdateMutation();
+  const { mutateAsync: updateTenantUserMutate } = useTenantUserUpdateMutation();
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -60,7 +67,17 @@ const CreateAccountPage = (): JSX.Element => {
   };
 
   const handleSubmit = (data: TFormData): void => {
-    console.log(data);
+    const payload: ITenantUserUpdatePayload = {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      company_name: data.companyName,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+    };
+
+    updateTenantProfileMutate(payload)
+      .then(() => updateTenantUserMutate(payload))
+      .then(() => navigate(ROUTES.AUTH.ACCOUNT_SETUP.PATH));
   };
 
   if (isPending) {

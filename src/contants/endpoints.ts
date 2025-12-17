@@ -10,5 +10,11 @@ export const endpoints = {
     get verifyEmail(): string {
       return `${this.base}/verify-email`;
     },
+    get tenantProfileUpdate(): string {
+      return `${this.base}/tenant_profile/update`;
+    },
+    get tenantUserUpdate(): string {
+      return `${this.base}/tenant/user/update`;
+    },
   },
 };

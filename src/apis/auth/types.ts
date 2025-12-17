@@ -14,3 +14,11 @@ export interface ILoginResponse {
 export interface IVerifyEmail extends IRegisterPayload {
   token: string;
 }
+
+export interface ITenantUserUpdatePayload {
+  first_name: string;
+  last_name: string;
+  company_name: string;
+  password: string;
+  confirm_password: string;
+}
