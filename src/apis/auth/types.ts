@@ -1,3 +1,5 @@
+import type { ICommonTokenRequest } from 'src/types/interfaces';
+
 export interface IRegisterPayload {
   email: string;
 }
@@ -21,4 +23,10 @@ export interface ITenantUserUpdatePayload {
   company_name: string;
   password: string;
   confirm_password: string;
+}
+
+export type TUpdateTenantUserVariables = ICommonTokenRequest<ITenantUserUpdatePayload>;
+
+export interface IVerifyEmailResponse {
+  access_token: string;
 }

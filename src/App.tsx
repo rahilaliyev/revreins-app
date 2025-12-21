@@ -16,7 +16,15 @@ import 'src/styles/font.css';
 import 'src/styles/global.css';
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: Infinity,
+      retryDelay: (failureCount): number => failureCount * 1000,
+    },
+  },
+});
 
 const renderSnackbar = (props: CustomContentProps): JSX.Element => <CustomSnackbar {...props} />;
 

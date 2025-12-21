@@ -10,11 +10,29 @@ export const endpoints = {
     get verifyEmail(): string {
       return `${this.base}/verify-email`;
     },
-    get tenantProfileUpdate(): string {
-      return `${this.base}/tenant_profile/update`;
-    },
     get tenantUserUpdate(): string {
       return `${this.base}/tenant/user/update`;
+    },
+  },
+  tenant_profile: {
+    base: 'api/tenant_profile',
+    get updateTenantProfile(): string {
+      return `${this.base}/update`;
+    },
+  },
+  tenant: {
+    base: 'api/tenant',
+    get updateTenantUser(): string {
+      return `${this.base}/user/update`;
+    },
+    get crmIntegrations(): string {
+      return `${this.base}/crm-integrations`;
+    },
+  },
+  crmProviders: {
+    base: 'api/crm-providers',
+    get getCrmProviders(): string {
+      return this.base;
     },
   },
 };

@@ -1,5 +1,9 @@
 import type { EUserRole } from './enums';
 
+export interface ID {
+  id: number;
+}
+
 export interface IIconProps {
   width?: number;
   height?: number;
@@ -10,4 +14,9 @@ export interface IIconProps {
 export interface IInvitingMembers {
   email: string;
   type: EUserRole;
+}
+
+export interface ICommonTokenRequest<T> {
+  payload: T;
+  token: string;
 }

@@ -3,6 +3,7 @@ import z from 'zod';
 export const validationFirstStepSchema = z.object({
   name: z.string().min(1, 'Please name your CRM connection'),
   key: z.string().min(1, 'API key is required'),
+  id: z.string(),
 });
 
 export const validationSecondStepSchema = z.object({

@@ -7,8 +7,9 @@ import type {
   ILoginPayload,
   ILoginResponse,
   IRegisterPayload,
-  ITenantUserUpdatePayload,
   IVerifyEmail,
+  IVerifyEmailResponse,
+  TUpdateTenantUserVariables,
 } from './types';
 
 export const useLoginMutation = (): UseMutationResult<ILoginResponse, Error, ILoginPayload> =>
@@ -27,28 +28,41 @@ export const useRegisterMutation = (): UseMutationResult<void, Error, IRegisterP
     },
   });
 
-export const useVerifyEmailMutation = (): UseMutationResult<void, Error, IVerifyEmail> =>
-  useMutation<void, Error, IVerifyEmail>({
+export const useVerifyEmailMutation = (): UseMutationResult<IVerifyEmailResponse, Error, IVerifyEmail> =>
+  useMutation<IVerifyEmailResponse, Error, IVerifyEmail>({
     mutationFn: async (data: IVerifyEmail) => {
-      const res = await axiosLogin.post<void>(endpoints.auth.verifyEmail, data, { skipNotification: true });
-      return res.data;
-    },
-  });
-
-export const useTenantProfileUpdateMutation = (): UseMutationResult<void, Error, ITenantUserUpdatePayload> =>
-  useMutation<void, Error, ITenantUserUpdatePayload>({
-    mutationFn: async (data: ITenantUserUpdatePayload) => {
-      const res = await axiosLogin.post<void>(endpoints.auth.tenantProfileUpdate, data, {
+      const res = await axiosLogin.post<IVerifyEmailResponse>(endpoints.auth.verifyEmail, data, {
         skipNotification: true,
       });
       return res.data;
     },
   });
 
-export const useTenantUserUpdateMutation = (): UseMutationResult<void, Error, ITenantUserUpdatePayload> =>
-  useMutation<void, Error, ITenantUserUpdatePayload>({
-    mutationFn: async (data: ITenantUserUpdatePayload) => {
-      const res = await axiosLogin.post<void>(endpoints.auth.tenantUserUpdate, data);
+export const useTenantProfileUpdateMutation = (): UseMutationResult<
+  void,
+  Error,
+  TUpdateTenantUserVariables
+> =>
+  useMutation<void, Error, TUpdateTenantUserVariables>({
+    mutationFn: async ({ payload, token }: TUpdateTenantUserVariables) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant_profile.updateTenantProfile, payload, {
+        skipNotification: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    },
+  });
+
+export const useTenantUserUpdateMutation = (): UseMutationResult<void, Error, TUpdateTenantUserVariables> =>
+  useMutation<void, Error, TUpdateTenantUserVariables>({
+    mutationFn: async ({ payload, token }: TUpdateTenantUserVariables) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant.updateTenantUser, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     },
   });

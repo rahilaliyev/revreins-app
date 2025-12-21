@@ -1,9 +1,13 @@
 import { type JSX, useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { enqueueSnackbar } from 'notistack';
 import { EAccountSetup } from 'src/types/enums';
 
 import { Box, Button, Stack, Step, StepLabel, Stepper, Typography } from '@mui/material';
 
 import { CustomStepIcon } from 'src/components';
+import { useCustomSearchParams } from 'src/hooks';
+import { ROUTES } from 'src/routes/paths';
 
 import FirstStep from './components/FirstStep';
 import FourthStep from './components/FourthStep';
@@ -16,8 +20,11 @@ import { ArrowLeftLineIcon } from 'src/assets/icons';
 const STEPPER_NAMES = ['Connect CRM', 'Set up your team', 'Chose a starting point', 'Review'];
 
 const AccountSetup = (): JSX.Element => {
+  const [searchParams] = useCustomSearchParams();
   const [activeStep, setActiveStep] = useState(EAccountSetup.FIRST_STEP);
   const [isStepValid, setIsStepValid] = useState(false);
+
+  const { token, email } = searchParams;
 
   const handleNext = (): void => setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
@@ -27,12 +34,22 @@ const AccountSetup = (): JSX.Element => {
     setIsStepValid(false);
   }, [activeStep]);
 
+  useEffect(() => {
+    if (!token || !email) {
+      enqueueSnackbar({ message: 'Something went wrong', variant: 'error' });
+    }
+  }, [token, email]);
+
   const submitButtonText =
     activeStep === EAccountSetup.SECOND_STEP
       ? 'Invite'
       : activeStep === EAccountSetup.FOURTH_STEP
         ? 'Complete'
         : 'Continue';
+
+  if (!token || !email) {
+    return <Navigate to={ROUTES.AUTH.SIGNIN.PATH} />;
+  }
 
   return (
     <Stack width="100vw" height="100vh" justifyContent="center" alignItems="center" bgcolor="primary.hover">

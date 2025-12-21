@@ -1,6 +1,6 @@
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Box, Stack, styled } from '@mui/material';
+import { Stack, styled } from '@mui/material';
 
 export const StyledWrapper = styled(Stack)(({ theme }) => ({
   borderRadius: theme.spacing(6),
@@ -87,19 +87,4 @@ export const StyledTrialBadge = styled(Stack)(({ theme }) => ({
   padding: theme.spacing(0.5, 2),
   borderRadius: theme.spacing(5),
   border: `1px solid ${colorPalette.other.stroke}`,
-}));
-
-export const StyledApiKey = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(6),
-  borderRadius: theme.spacing(3.5),
-  border: `1px solid ${colorPalette.secondary.bg}`,
-}));
-
-export const StyledCloseApiIconWrapper = styled(Stack)(({ theme }) => ({
-  width: theme.spacing(12),
-  height: theme.spacing(12),
-  borderRadius: theme.spacing(2.5),
-  background: '#E5E7EB',
-  justifyContent: 'center',
-  alignItems: 'center',
 }));

@@ -1,4 +1,4 @@
-import { type JSX, useEffect } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,6 +30,7 @@ import Logo from 'src/assets/images/logo.svg?react';
 const CreateAccountPage = (): JSX.Element => {
   const navigate = useNavigate();
   const [searchParams] = useCustomSearchParams();
+  const [accessToken, setAccessToken] = useState('');
   const { token, email } = searchParams;
   const { mutate, isPending } = useVerifyEmailMutation();
   const { mutateAsync: updateTenantProfileMutate } = useTenantProfileUpdateMutation();
@@ -51,7 +52,11 @@ const CreateAccountPage = (): JSX.Element => {
       mutate(
         { token, email },
         {
-          onSuccess: () => enqueueSnackbar({ message: 'Email verified', variant: 'success' }),
+          onSuccess: (res) => {
+            sessionStorage.setItem('temporaryToken', res.access_token);
+            setAccessToken(res.access_token);
+            enqueueSnackbar({ message: 'Email verified', variant: 'success' });
+          },
           onError: handleNavigateSignIn,
         },
       );
@@ -75,9 +80,9 @@ const CreateAccountPage = (): JSX.Element => {
       confirm_password: data.confirmPassword,
     };
 
-    updateTenantProfileMutate(payload)
-      .then(() => updateTenantUserMutate(payload))
-      .then(() => navigate(ROUTES.AUTH.ACCOUNT_SETUP.PATH));
+    updateTenantProfileMutate({ payload, token: accessToken })
+      .then(() => updateTenantUserMutate({ payload, token: accessToken }))
+      .then(() => navigate(`${ROUTES.AUTH.ACCOUNT_SETUP.PATH}/?token=${accessToken}&email=${email}`));
   };
 
   if (isPending) {
