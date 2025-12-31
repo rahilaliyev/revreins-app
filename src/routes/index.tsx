@@ -1,8 +1,7 @@
 import { type JSX, lazy, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
-import { PublicLayout } from 'src/layouts';
-import PrivateLayout from 'src/layouts/PrivateLayout';
+import { PrivateLayout, PublicLayout } from 'src/layouts';
 
 import { suspenseFallback } from '../hoc';
 
@@ -12,9 +11,14 @@ const SignUpPage = lazy(() => import('src/pages/SignUpPage'));
 const SignInPage = lazy(() => import('src/pages/SignInPage'));
 const ForgotPasswordPage = lazy(() => import('src/pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('src/pages/ResetPasswordPage'));
-const HomePage = lazy(() => import('src/pages/HomePage'));
 const CreateAccountPage = lazy(() => import('src/pages/CreateAccountPage'));
 const AccountSetupPage = lazy(() => import('src/pages/AccountSetupPage'));
+
+const HomePage = lazy(() => import('src/pages/HomePage'));
+const ProjectsPage = lazy(() => import('src/pages/ProjectsPage'));
+const CRMDataPage = lazy(() => import('src/pages/CRMDataPage'));
+const SettingPage = lazy(() => import('src/pages/SettingPage'));
+const TeamBillingPage = lazy(() => import('src/pages/TeamBillingPage'));
 
 const RouteComponents = (): JSX.Element => {
   useEffect(() => {
@@ -26,12 +30,12 @@ const RouteComponents = (): JSX.Element => {
       enqueueSnackbar({ message: 'You are offline', variant: 'error' });
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    globalThis.addEventListener('online', handleOnline);
+    globalThis.addEventListener('offline', handleOffline);
 
     return (): void => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      globalThis.removeEventListener('online', handleOnline);
+      globalThis.removeEventListener('offline', handleOffline);
     };
   }, []);
 
@@ -47,6 +51,10 @@ const RouteComponents = (): JSX.Element => {
       <Route path={ROUTES.AUTH.ACCOUNT_SETUP.PATH} element={suspenseFallback(AccountSetupPage)} />
       <Route path={ROUTES.DEFAULT.PATH} element={<PrivateLayout />}>
         <Route index element={suspenseFallback(HomePage)} />
+        <Route path={ROUTES.DEFAULT.PROJECTS.PATH} element={suspenseFallback(ProjectsPage)} />
+        <Route path={ROUTES.DEFAULT.CRM_DATA.PATH} element={suspenseFallback(CRMDataPage)} />
+        <Route path={ROUTES.DEFAULT.SETTING.PATH} element={suspenseFallback(SettingPage)} />
+        <Route path={ROUTES.DEFAULT.TEAM_BILLING.PATH} element={suspenseFallback(TeamBillingPage)} />
       </Route>
     </Routes>
   );

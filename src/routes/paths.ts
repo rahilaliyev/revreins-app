@@ -4,6 +4,18 @@ const BASE_AUTH_PATH = '/auth';
 export const ROUTES = {
   DEFAULT: {
     PATH: BASE_PATH,
+    PROJECTS: {
+      PATH: `${BASE_AUTH_PATH}/projects`,
+    },
+    CRM_DATA: {
+      PATH: `${BASE_AUTH_PATH}/crm-data`,
+    },
+    SETTING: {
+      PATH: `${BASE_AUTH_PATH}/setting`,
+    },
+    TEAM_BILLING: {
+      PATH: `${BASE_AUTH_PATH}/team-and-billing`,
+    },
   },
   AUTH: {
     PATH: BASE_AUTH_PATH,

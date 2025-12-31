@@ -11,6 +11,7 @@ import { Stack, Typography } from '@mui/material';
 import { CustomTextField, GoogleButton, LoadingButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { ROUTES } from 'src/routes/paths';
+import { setAuthCookies } from 'src/utils';
 
 import { StyledSignInButton } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
@@ -31,7 +32,12 @@ const SignInPage = (): JSX.Element => {
   };
 
   const handleSubmit = (data: TFormData): void => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: (res) => {
+        setAuthCookies(res.access_token);
+        navigate(ROUTES.DEFAULT.PATH);
+      },
+    });
   };
 
   return (

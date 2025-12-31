@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import type { EUserRole } from './enums';
 
 export interface ID {
@@ -19,4 +21,10 @@ export interface IInvitingMembers {
 export interface ICommonTokenRequest<T> {
   payload: T;
   token: string;
+}
+
+export interface IMenuItem {
+  text: string;
+  icon: JSX.Element;
+  path: string;
 }
