@@ -6,7 +6,6 @@ import type { IMenuItem } from 'src/types/interfaces';
 import {
   Box,
   Button,
-  Icon,
   IconButton,
   LinearProgress,
   List,
@@ -73,16 +72,20 @@ const MenuItems = ({ items, isExpanded }: IMenuItemsProps): JSX.Element => (
     {items.map((item) => (
       <StyledMenuListItem key={item.text} component={NavLink} to={item.path} isExpanded={isExpanded}>
         <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>{item.icon}</ListItemIcon>
-        {isExpanded && (
-          <ListItemText
-            primary={item.text}
-            slotProps={{
-              primary: {
-                variant: 'body1',
-              },
-            }}
-          />
-        )}
+        <ListItemText
+          sx={{
+            opacity: isExpanded ? 1 : 0,
+            height: isExpanded ? 'auto' : 0,
+            whiteSpace: 'nowrap',
+            transition: '0.5s',
+          }}
+          primary={item.text}
+          slotProps={{
+            primary: {
+              variant: 'body1',
+            },
+          }}
+        />
       </StyledMenuListItem>
     ))}
   </Stack>
