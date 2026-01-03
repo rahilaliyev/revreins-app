@@ -24,5 +24,6 @@ export { InformationLineIcon } from './informationLine';
 export { LayoutLineIcon } from './layoutLine';
 export { LeftCenterTipIcon } from './leftCenterTip';
 export { Setting5LineIcon } from './settings5Line';
+export { SidebarLineIcon } from './sidebarLine';
 export { SignInIcon } from './signInIcon';
 export { UserAddLineIcon } from './userAddLine';

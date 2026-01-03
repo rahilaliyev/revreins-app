@@ -9,6 +9,7 @@ import { dataGridTheme } from './dataGrid';
 import { datepickerTheme } from './datepicker';
 import { dialogTheme } from './dialog';
 import { iconButtonTheme } from './iconButton';
+import { linearProgress } from './linearProgress';
 import { listTheme } from './list';
 import { menuTheme } from './menu';
 import { selectTheme } from './select';
@@ -33,6 +34,7 @@ export const theme = createTheme({
     ...datepickerTheme,
     ...dialogTheme,
     ...listTheme,
+    ...linearProgress,
     ...menuTheme,
     ...iconButtonTheme,
     ...selectTheme,
