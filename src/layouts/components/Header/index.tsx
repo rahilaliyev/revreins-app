@@ -28,10 +28,14 @@ const Header = (): JSX.Element => {
 
   const handleMenu = (event: MouseEvent<HTMLElement>): void => setAnchorEl(event.currentTarget);
 
-  const handleClose = (): void => {
-    setAnchorEl(null);
+  const handleLogout = (): void => {
+    handleClose();
     removeAuthCookies();
     navigate(ROUTES.AUTH.SIGNIN.PATH);
+  };
+
+  const handleClose = (): void => {
+    setAnchorEl(null);
   };
 
   return (
@@ -59,23 +63,6 @@ const Header = (): JSX.Element => {
             <Avatar sx={{ bgcolor: colorPalette.primary.bg }}>
               <User6LineIcon pathFill={colorPalette.primary.main} />
             </Avatar>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
           </Button>
           <Divider orientation="vertical" flexItem />
           <IconButton sx={{ ml: 6, mr: 3 }}>
@@ -85,6 +72,23 @@ const Header = (): JSX.Element => {
             <QuestionLineIcon />
           </IconButton>
         </Stack>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        </Menu>
       </Stack>
     </AppBar>
   );

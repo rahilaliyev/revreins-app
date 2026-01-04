@@ -8,6 +8,7 @@ import { getAccessToken } from 'src/utils';
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import { StyledMainSection } from './styled';
 
 export const PrivateLayout = (): JSX.Element => {
   const token = getAccessToken();
@@ -21,9 +22,9 @@ export const PrivateLayout = (): JSX.Element => {
       <Sidebar />
       <Box width="100%">
         <Header />
-        <Box component="main" width="100%">
+        <StyledMainSection component="main">
           <Outlet />
-        </Box>
+        </StyledMainSection>
       </Box>
     </Stack>
   );
