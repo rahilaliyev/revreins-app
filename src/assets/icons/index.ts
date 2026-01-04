@@ -24,6 +24,7 @@ export { InformationFillIcon } from './informationFill';
 export { InformationLineIcon } from './informationLine';
 export { LayoutLineIcon } from './layoutLine';
 export { LeftCenterTipIcon } from './leftCenterTip';
+export { MagicFillIcon } from './magicFill';
 export { Notification3LineIcon } from './notification3Line';
 export { QuestionLineIcon } from './questionLine';
 export { Setting5LineIcon } from './settings5Line';

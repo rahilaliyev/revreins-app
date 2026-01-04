@@ -13,6 +13,7 @@ const ForgotPasswordPage = lazy(() => import('src/pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('src/pages/ResetPasswordPage'));
 const CreateAccountPage = lazy(() => import('src/pages/CreateAccountPage'));
 const AccountSetupPage = lazy(() => import('src/pages/AccountSetupPage'));
+const InviteUserPage = lazy(() => import('src/pages/InviteUserPage'));
 
 const HomePage = lazy(() => import('src/pages/HomePage'));
 const ProjectsPage = lazy(() => import('src/pages/ProjectsPage'));
@@ -49,6 +50,7 @@ const RouteComponents = (): JSX.Element => {
         <Route path={ROUTES.AUTH.CREATE_ACCOUNT.PATH} element={suspenseFallback(CreateAccountPage)} />
       </Route>
       <Route path={ROUTES.AUTH.ACCOUNT_SETUP.PATH} element={suspenseFallback(AccountSetupPage)} />
+      <Route path={ROUTES.AUTH.INVITE_USER.PATH} element={suspenseFallback(InviteUserPage)} />
       <Route path={ROUTES.DEFAULT.PATH} element={<PrivateLayout />}>
         <Route index element={suspenseFallback(HomePage)} />
         <Route path={ROUTES.DEFAULT.PROJECTS.PATH} element={suspenseFallback(ProjectsPage)} />
