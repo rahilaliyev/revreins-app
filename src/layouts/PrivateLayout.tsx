@@ -6,6 +6,7 @@ import { Box, Stack } from '@mui/material';
 import { ROUTES } from 'src/routes/paths';
 import { getAccessToken } from 'src/utils';
 
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
 export const PrivateLayout = (): JSX.Element => {
@@ -18,8 +19,8 @@ export const PrivateLayout = (): JSX.Element => {
   return (
     <Stack height="100%" alignItems="flex-start">
       <Sidebar />
-      <Box>
-        <Box>Header</Box>
+      <Box width="100%">
+        <Header />
         <Box component="main" width="100%">
           <Outlet />
         </Box>
