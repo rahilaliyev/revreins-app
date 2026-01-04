@@ -18,9 +18,9 @@ export const PrivateLayout = (): JSX.Element => {
   }
 
   return (
-    <Stack height="100%" alignItems="flex-start">
+    <Stack direction="row" height="100vh" alignItems="flex-start">
       <Sidebar />
-      <Box width="100%">
+      <Box width="100%" height="100vh" overflow="hidden">
         <Header />
         <StyledMainSection component="main">
           <Outlet />

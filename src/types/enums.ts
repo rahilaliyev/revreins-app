@@ -16,3 +16,9 @@ export enum ESetupCard {
   TEMPLATE = 'TEMPLATE',
   SCRATCH = 'SCRATCH',
 }
+
+export enum ECRMStatus {
+  CONNECTED = 'CONNECTED',
+  ERROR = 'ERROR',
+  NOT_CONFIGURATED = 'NOT_CONFIGURATED',
+}

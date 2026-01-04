@@ -1,4 +1,4 @@
-import { EUserRole } from 'src/types/enums';
+import { ECRMStatus, EUserRole } from 'src/types/enums';
 
 export const TEMPLATES = [
   {
@@ -29,3 +29,9 @@ export const USER_ROLES = [
   },
   { value: EUserRole.ADMIN, label: 'Admin', description: 'Full access to managing projects and users' },
 ];
+
+export const CRM_STATUS_COLOR_MAP: Record<ECRMStatus, 'success' | 'error' | 'default'> = {
+  [ECRMStatus.CONNECTED]: 'success',
+  [ECRMStatus.ERROR]: 'error',
+  [ECRMStatus.NOT_CONFIGURATED]: 'default',
+};

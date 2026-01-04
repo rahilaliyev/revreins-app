@@ -1,5 +1,14 @@
 import type { JSX } from 'react';
 
-const HomePage = (): JSX.Element => <div>Home Page</div>;
+import ProjectOverview from './components/ProjectOverview';
+import Widgets from './components/Widgets';
+import { StyledHomePageContainer } from './styled';
+
+const HomePage = (): JSX.Element => (
+  <StyledHomePageContainer>
+    <Widgets />
+    <ProjectOverview />
+  </StyledHomePageContainer>
+);
 
 export default HomePage;

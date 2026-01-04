@@ -1,5 +1,3 @@
-import { colorPalette } from 'src/theme/colorpalette';
-
 import { Box, type BoxProps, styled, Typography } from '@mui/material';
 
 import BgImage from 'src/assets/images/login-bg-image.webp';
@@ -30,9 +28,9 @@ export const StyledTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-export const StyledMainSection = styled(Box)<BoxProps>(({ theme }) => ({
+export const StyledMainSection = styled(Box)<BoxProps>(() => ({
   width: '100%',
-  padding: theme.spacing(6),
-  background: colorPalette.primary.bgSecondary,
   height: `calc(100vh - 56px)`,
+  overflowY: 'auto',
+  overflowX: 'hidden',
 }));
