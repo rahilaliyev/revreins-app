@@ -5,13 +5,16 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 
 import { StyledAddIconButton, StyledCreateProject } from '../styled';
 
+import CreateNewProjectModal from './CreateNewProjectModal';
+
 import { AddFillIcon } from 'src/assets/icons';
 
 const ProjectOverview = (): JSX.Element => {
   const [projectCount] = useState(0);
-  const [isOpenNewProjectModal, setIsOpenNewProjectModal] = useState(false);
+  const [isOpenNewProjectModal, setIsOpenNewProjectModal] = useState(true);
 
   const handleOpen = (): void => setIsOpenNewProjectModal(true);
+  const handleClose = (): void => setIsOpenNewProjectModal(false);
 
   return (
     <Box component="section" my={6}>
@@ -49,6 +52,7 @@ const ProjectOverview = (): JSX.Element => {
           </StyledCreateProject>
         </Grid>
       </Grid>
+      <CreateNewProjectModal isOpenNewProjectModal={isOpenNewProjectModal} handleClose={handleClose} />
     </Box>
   );
 };

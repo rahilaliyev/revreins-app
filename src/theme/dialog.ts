@@ -1,7 +1,5 @@
 import type { Components } from '@mui/material';
 
-import { colorPalette } from './colorpalette';
-
 export const dialogTheme: Components = {
   MuiModal: {
     styleOverrides: {
@@ -19,52 +17,30 @@ export const dialogTheme: Components = {
         width: '100%',
         height: '100%',
       },
-      paperWidthSm: {
-        width: '348px',
-        maxHeight: '278px !important',
-        padding: '8px',
-        '& .MuiDialogTitle-root, & .MuiDialogContent-root': {
-          padding: '8px',
-        },
-        '& .MuiDialogActions-root': {
-          padding: 0,
-        },
+      paper: {
+        width: '600px',
+        borderRadius: '8px',
       },
-      paperWidthMd: {
-        width: '418px',
-        maxHeight: '190px !important',
-        padding: '24px',
-        '& .MuiDialogTitle-root': {
-          padding: `0 0 16px 0`,
-        },
-        '& .MuiDialogContent-root': {
-          paddingTop: '16px!important',
-          paddingBottom: '16px !important',
-          padding: 0,
-          borderBottom: `1px solid ${colorPalette.secondary.main}`,
-          borderTop: `1px solid ${colorPalette.secondary.main}`,
-        },
-        '& .MuiDialogActions-root': {
-          paddingTop: '16px',
-        },
+    },
+  },
+  MuiDialogContent: {
+    styleOverrides: {
+      root: {
+        padding: '20px',
       },
-      paperWidthLg: {
-        width: '630px',
-        maxHeight: '390px !important',
-        padding: '24px',
-        '& .MuiDialogTitle-root': {
-          padding: `0 0 16px 0`,
-        },
-        '& .MuiDialogContent-root': {
-          paddingTop: '16px!important',
-          paddingBottom: '16px !important',
-          padding: 0,
-          borderBottom: `1px solid ${colorPalette.secondary.main}`,
-          borderTop: `1px solid ${colorPalette.secondary.main}`,
-        },
-        '& .MuiDialogActions-root': {
-          paddingTop: '16px',
-        },
+    },
+  },
+  MuiDialogTitle: {
+    styleOverrides: {
+      root: {
+        padding: '0',
+      },
+    },
+  },
+  MuiDialogActions: {
+    styleOverrides: {
+      root: {
+        padding: '20px',
       },
     },
   },
