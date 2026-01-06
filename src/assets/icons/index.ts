@@ -4,6 +4,7 @@ export { AlertLineIcon } from './alertLine';
 export { ArrowDownFillIcon } from './arrowDownFill';
 export { ArrowGoBackLineIcon } from './arrowGoBackLine';
 export { ArrowLeftLineIcon } from './arrowLeftLine';
+export { ArrowLeftSLineIcon } from './arrowLeftSLine';
 export { CheckboxCircleFillIcon } from './checkboxCircleFill';
 export { CheckboxCircleLineIcon } from './checkboxCircleLine';
 export { CheckFillIcon } from './checkFill';

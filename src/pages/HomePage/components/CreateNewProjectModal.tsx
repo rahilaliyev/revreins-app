@@ -1,5 +1,6 @@
 import { type JSX, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TEMPLATES } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
@@ -15,6 +16,7 @@ import {
   StyledTemplateCard,
   StyledTemplateCardIconWrapper,
 } from 'src/pages/AccountSetupPage/styled';
+import { ROUTES } from 'src/routes/paths';
 
 import { type TFormData, validationSchema } from './validationSchema';
 
@@ -33,10 +35,11 @@ interface IProps {
 }
 
 const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): JSX.Element => {
+  const navigate = useNavigate();
+  const lastInputRef = useRef<HTMLInputElement>(null);
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
-  const lastInputRef = useRef<HTMLInputElement>(null);
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     mode: 'onChange',
@@ -79,7 +82,15 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
 
   const handleSelectedTemplate = (template: string): void => setSelectedTemplate(template);
 
-  const handleSubmit = (data: TFormData): void => {};
+  const handleSubmit = (data: TFormData): void => {
+    navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH, {
+      state: { name: data.name },
+    });
+  };
+
+  const onModalSubmit = (): void => {
+    formBag.handleSubmit(handleSubmit)();
+  };
 
   return (
     <CustomModal
@@ -88,6 +99,7 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
       title="New Project"
       submitText="Create Project"
       isSubmitButtonDisabled={isDisabled}
+      onClickSubmitButton={onModalSubmit}
     >
       <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
         <Box pb={4}>

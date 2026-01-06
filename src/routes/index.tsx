@@ -17,6 +17,7 @@ const InviteUserPage = lazy(() => import('src/pages/InviteUserPage'));
 
 const HomePage = lazy(() => import('src/pages/HomePage'));
 const ProjectsPage = lazy(() => import('src/pages/ProjectsPage'));
+const NewProjectPage = lazy(() => import('src/pages/NewProjectPage'));
 const CRMDataPage = lazy(() => import('src/pages/CRMDataPage'));
 const SettingPage = lazy(() => import('src/pages/SettingPage'));
 const TeamBillingPage = lazy(() => import('src/pages/TeamBillingPage'));
@@ -53,7 +54,10 @@ const RouteComponents = (): JSX.Element => {
       <Route path={ROUTES.AUTH.INVITE_USER.PATH} element={suspenseFallback(InviteUserPage)} />
       <Route path={ROUTES.DEFAULT.PATH} element={<PrivateLayout />}>
         <Route index element={suspenseFallback(HomePage)} />
-        <Route path={ROUTES.DEFAULT.PROJECTS.PATH} element={suspenseFallback(ProjectsPage)} />
+        <Route path={ROUTES.DEFAULT.PROJECTS.PATH}>
+          <Route index element={suspenseFallback(ProjectsPage)} />
+          <Route path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH} element={suspenseFallback(NewProjectPage)} />
+        </Route>
         <Route path={ROUTES.DEFAULT.CRM_DATA.PATH} element={suspenseFallback(CRMDataPage)} />
         <Route path={ROUTES.DEFAULT.SETTING.PATH} element={suspenseFallback(SettingPage)} />
         <Route path={ROUTES.DEFAULT.TEAM_BILLING.PATH} element={suspenseFallback(TeamBillingPage)} />

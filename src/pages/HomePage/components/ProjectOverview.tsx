@@ -11,7 +11,7 @@ import { AddFillIcon } from 'src/assets/icons';
 
 const ProjectOverview = (): JSX.Element => {
   const [projectCount] = useState(0);
-  const [isOpenNewProjectModal, setIsOpenNewProjectModal] = useState(true);
+  const [isOpenNewProjectModal, setIsOpenNewProjectModal] = useState(false);
 
   const handleOpen = (): void => setIsOpenNewProjectModal(true);
   const handleClose = (): void => setIsOpenNewProjectModal(false);

@@ -78,7 +78,7 @@ const SignInPage = (): JSX.Element => {
                   color="inherit"
                   size="large"
                 >
-                  Create an Account
+                  Sign in
                 </LoadingButton>
               </Stack>
             </CustomFormProvider>
