@@ -1,5 +1,5 @@
-import { type JSX, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { type JSX, type PropsWithChildren, useEffect, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 import { EAccountSetup } from 'src/types/enums';
 
@@ -8,6 +8,7 @@ import { Box, Button, Stack, Step, StepLabel, Stepper, Typography } from '@mui/m
 import { CustomStepIcon } from 'src/components';
 import { useCustomSearchParams } from 'src/hooks';
 import { ROUTES } from 'src/routes/paths';
+import { setAuthCookies } from 'src/utils';
 
 import FirstStep from './components/FirstStep';
 import FourthStep from './components/FourthStep';
@@ -19,14 +20,35 @@ import { ArrowLeftLineIcon } from 'src/assets/icons';
 
 const STEPPER_NAMES = ['Connect CRM', 'Set up your team', 'Chose a starting point', 'Review'];
 
+interface IStepWrapperProps extends PropsWithChildren {
+  isActive: boolean;
+}
+
+const StepWrapper = ({ isActive, children }: IStepWrapperProps): JSX.Element => (
+  <Box sx={{ display: isActive ? 'block' : 'none', width: '100%' }}>{children}</Box>
+);
+
 const AccountSetup = (): JSX.Element => {
+  const navigate = useNavigate();
   const [searchParams] = useCustomSearchParams();
   const [activeStep, setActiveStep] = useState(EAccountSetup.FIRST_STEP);
   const [isStepValid, setIsStepValid] = useState(false);
 
   const { token, email } = searchParams;
 
-  const handleNext = (): void => setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = (): void => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+    if (activeStep === EAccountSetup.FOURTH_STEP) {
+      enqueueSnackbar({ message: 'Account setup completed successfully', variant: 'success' });
+      const token = sessionStorage.getItem('temporaryToken');
+      if (token) {
+        setAuthCookies(token);
+        sessionStorage.removeItem('temporaryToken');
+        navigate(ROUTES.DEFAULT.PATH);
+      }
+    }
+  };
 
   const handleBack = (): void => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
@@ -80,10 +102,21 @@ const AccountSetup = (): JSX.Element => {
           p={6}
         >
           <Box width="100%">
-            {activeStep === EAccountSetup.FIRST_STEP && <FirstStep onValidityChange={setIsStepValid} />}
-            {activeStep === EAccountSetup.SECOND_STEP && <SecontStep onValidityChange={setIsStepValid} />}
-            {activeStep === EAccountSetup.THIRD_STEP && <ThirdStep onValidityChange={setIsStepValid} />}
-            {activeStep === EAccountSetup.FOURTH_STEP && <FourthStep />}
+            <StepWrapper isActive={activeStep === EAccountSetup.FIRST_STEP}>
+              <FirstStep onValidityChange={setIsStepValid} />
+            </StepWrapper>
+
+            <StepWrapper isActive={activeStep === EAccountSetup.SECOND_STEP}>
+              <SecontStep onValidityChange={setIsStepValid} />
+            </StepWrapper>
+
+            <StepWrapper isActive={activeStep === EAccountSetup.THIRD_STEP}>
+              <ThirdStep onValidityChange={setIsStepValid} />
+            </StepWrapper>
+
+            <StepWrapper isActive={activeStep === EAccountSetup.FOURTH_STEP}>
+              <FourthStep />
+            </StepWrapper>
           </Box>
           <Stack width="100%">
             <Stack width="100%">

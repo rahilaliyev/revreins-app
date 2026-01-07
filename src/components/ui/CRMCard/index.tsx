@@ -1,4 +1,4 @@
-import type { ChangeEvent, JSX } from 'react';
+import { type ChangeEvent, type JSX, useEffect } from 'react';
 import { type UseFormReturn, useWatch } from 'react-hook-form';
 import { colorPalette } from 'src/theme/colorpalette';
 
@@ -9,6 +9,8 @@ import { Button, Chip, Stack, Typography } from '@mui/material';
 import { CustomTextField } from 'src/components/form/CustomTextField';
 import type { TFirstStepFormData } from 'src/pages/AccountSetupPage/components/validationSchema';
 
+import { LoadingButton } from '../LoadingButton';
+
 import { StyledApiKey, StyledIconWrapper, StyledImg } from './styled';
 
 import { AddFillIcon } from 'src/assets/icons';
@@ -18,15 +20,32 @@ interface IProps {
   form: UseFormReturn<TFirstStepFormData>;
   isSuccess?: boolean;
   isError?: boolean;
+  isPending?: boolean;
+  setIsSuccessConnection: (value: boolean) => void;
 }
 
-export const CRMCard = ({ provider, form, isSuccess, isError }: IProps): JSX.Element => {
+export const CRMCard = ({
+  provider,
+  form,
+  isSuccess,
+  isError,
+  isPending,
+  setIsSuccessConnection,
+}: IProps): JSX.Element => {
   const { control, setValue, trigger } = form;
 
   const key = useWatch({
     control,
     name: 'key',
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsSuccessConnection(true);
+    } else {
+      setIsSuccessConnection(false);
+    }
+  }, [isSuccess]);
 
   const handleKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue('key', e.target.value, { shouldValidate: true });
@@ -72,11 +91,12 @@ export const CRMCard = ({ provider, form, isSuccess, isError }: IProps): JSX.Ele
       </Stack>
       <Stack gap={3}>
         {isSuccess ? (
-          <Button variant="outlined" color="error" fullWidth>
+          <Button variant="outlined" color="error" fullWidth onClick={() => setIsSuccessConnection(false)}>
             Disconnect CRM
           </Button>
         ) : (
-          <Button
+          <LoadingButton
+            loading={isPending}
             disabled={!key}
             fullWidth
             variant="outlined"
@@ -85,7 +105,7 @@ export const CRMCard = ({ provider, form, isSuccess, isError }: IProps): JSX.Ele
           >
             Connect CRM
             <AddFillIcon pathFill={key ? colorPalette.primary.main : colorPalette.other.icon} />
-          </Button>
+          </LoadingButton>
         )}
       </Stack>
     </StyledApiKey>

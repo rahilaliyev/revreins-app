@@ -1,4 +1,4 @@
-import { type ChangeEvent, type JSX, useEffect } from 'react';
+import { type ChangeEvent, type JSX, useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,7 +21,8 @@ interface IProps {
 const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
   const token = sessionStorage.getItem('temporaryToken') || '';
   const { data } = useGetCrmProviders(token);
-  const { mutate, isSuccess, isError } = useTenantCRMIntegrationMutation();
+  const { mutate, isSuccess, isError, isPending } = useTenantCRMIntegrationMutation();
+  const [isSuccessConnection, setIsSuccessConnection] = useState(false);
 
   const formBag = useForm<TFirstStepFormData>({
     resolver: zodResolver(validationFirstStepSchema),
@@ -38,9 +39,9 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
   });
 
   useEffect(() => {
-    const isValid = !!key && !!name;
+    const isValid = !!key && !!name && isSuccessConnection;
     onValidityChange(isValid);
-  }, [key, name]);
+  }, [key, name, isSuccessConnection]);
 
   useEffect(() => {
     if (data && data?.length > 0) {
@@ -99,6 +100,8 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
                 form={formBag}
                 isSuccess={isSuccess}
                 isError={isError}
+                isPending={isPending}
+                setIsSuccessConnection={setIsSuccessConnection}
               />
             ))}
         </Box>
