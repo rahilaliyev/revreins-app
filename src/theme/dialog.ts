@@ -18,8 +18,10 @@ export const dialogTheme: Components = {
         height: '100%',
       },
       paper: {
-        width: '600px',
         borderRadius: '8px',
+      },
+      paperWidthMd: {
+        width: '862px',
       },
     },
   },
@@ -27,6 +29,7 @@ export const dialogTheme: Components = {
     styleOverrides: {
       root: {
         padding: '20px',
+        borderBottom: 'none',
       },
     },
   },

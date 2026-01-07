@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import type { JSX, ReactNode } from 'react';
 
 import {
   Button,
@@ -19,7 +19,7 @@ export interface IModalProps extends Omit<DialogProps, 'onClose' | 'actions'> {
   title?: string;
   onClose?: () => void;
   submitText?: string;
-  hideActionsBtns?: boolean;
+  customDialogAction?: ReactNode;
   loading?: boolean;
   onClickSubmitButton?: () => void;
   isSubmitButtonDisabled?: boolean;
@@ -32,11 +32,11 @@ export const CustomModal = (props: IModalProps): JSX.Element => {
     title,
     onClose,
     children,
-    maxWidth,
+    maxWidth = 'sm',
     submitText,
     fullScreen,
-    hideActionsBtns,
     loading = false,
+    customDialogAction,
     onClickSubmitButton,
     isSubmitButtonDisabled = false,
   } = props;
@@ -49,6 +49,7 @@ export const CustomModal = (props: IModalProps): JSX.Element => {
       onClose={onClose}
       data-testid="modal"
       maxWidth={maxWidth}
+      fullWidth={true}
       fullScreen={fullScreen}
       sx={sx}
     >
@@ -63,7 +64,9 @@ export const CustomModal = (props: IModalProps): JSX.Element => {
         </IconButton>
       </Stack>
       <DialogContent dividers>{children}</DialogContent>
-      {!hideActionsBtns && (
+      {customDialogAction ? (
+        <DialogActions>{customDialogAction}</DialogActions>
+      ) : (
         <DialogActions data-testid="modal-actions">
           <Button color="secondary" size="large" onClick={onClose}>
             Cancel

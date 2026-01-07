@@ -4,6 +4,7 @@ import { createTheme, type PaletteOptions } from '@mui/material/styles';
 import { accordionTheme } from './accordion';
 import { badgeTheme } from './badge';
 import { buttonTheme } from './button';
+import { checkboxTheme } from './checkbox';
 import { chipTheme } from './chip';
 import { colorPalette } from './colorpalette';
 import { dataGridTheme } from './dataGrid';
@@ -30,6 +31,7 @@ export const theme = createTheme({
   components: {
     ...accordionTheme,
     ...buttonTheme,
+    ...checkboxTheme,
     ...chipTheme,
     ...badgeTheme,
     ...dataGridTheme,

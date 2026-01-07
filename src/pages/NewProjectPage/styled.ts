@@ -16,4 +16,25 @@ export const StyledNavigateBackButton = styled(IconButton)(({ theme }) => ({
 export const StyledContainer = styled(Box)(({ theme }) => ({
   padding: theme.spacing(6),
   backgroundColor: colorPalette.primary.bgSecondary,
+  minHeight: `calc(100% - ${theme.spacing(25.5)})`,
+}));
+
+export const StyledInfoCard = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(4),
+  backgroundColor: colorPalette.primary.bgSecondary,
+  height: theme.spacing(72.25),
+  border: `1px solid ${colorPalette.other.stroke}`,
+  borderRadius: theme.spacing(3.5),
+}));
+
+export const StyledNumberWrapper = styled(Box)(({ theme }) => ({
+  width: theme.spacing(8),
+  height: theme.spacing(8),
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '50%',
+  backgroundColor: colorPalette.accent.main,
+  marginRight: theme.spacing(3),
+  fontWeight: 700,
 }));
