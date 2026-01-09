@@ -28,3 +28,9 @@ export interface IMenuItem {
   icon: JSX.Element;
   path: string;
 }
+
+export interface IStage {
+  id: string;
+  name: string;
+  creator: 'Lead';
+}

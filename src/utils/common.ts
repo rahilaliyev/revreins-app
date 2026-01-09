@@ -12,3 +12,10 @@ export const getPageTitle = (pathname: string): string => {
 
   return routeTitles[pathname] || 'Dashboard';
 };
+
+export const generateRandomId = (): string => Math.random().toString(36).substring(2, 10);
+
+export const a11yProps = (index: number): { id: string; 'aria-controls': string } => ({
+  id: `simple-tab-${index}`,
+  'aria-controls': `simple-tabpanel-${index}`,
+});

@@ -19,6 +19,7 @@ import { stackTheme } from './stack';
 import { stepperTheme } from './stepper';
 import { switchTheme } from './switch';
 import { tableTheme } from './table';
+import { tabTheme } from './tabs';
 import { textFieldTheme } from './textField';
 import { tooltipTheme } from './tooltip';
 import { typographyOptions, typographyTheme } from './typography';
@@ -46,6 +47,7 @@ export const theme = createTheme({
     ...stepperTheme,
     ...switchTheme,
     ...tableTheme,
+    ...tabTheme,
     ...textFieldTheme,
     ...tooltipTheme,
     ...(typographyTheme as TypographyVariantsOptions),
