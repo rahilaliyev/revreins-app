@@ -1,4 +1,12 @@
-import React, { Fragment, type JSX, type MouseEvent, useEffect, useState } from 'react';
+import React, {
+  type Dispatch,
+  Fragment,
+  type JSX,
+  type MouseEvent,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { USER_ROLES } from 'src/contants';
@@ -35,17 +43,18 @@ import { AddFillIcon, ArrowDownFillIcon, DeleteBin7LineIcon, InformationLineIcon
 
 interface IProps {
   onValidityChange: (isValid: boolean) => void;
+  invitingMembers: IInvitingMembers[];
+  setInvitingMembers: Dispatch<SetStateAction<IInvitingMembers[]>>;
 }
 
-const SecontStep = ({ onValidityChange }: IProps): JSX.Element => {
-  const [selectedRole, setSelectedRole] = useState<EUserRole>(EUserRole.USER);
+const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: IProps): JSX.Element => {
+  const [selectedRole, setSelectedRole] = useState<EUserRole>(EUserRole.MEMBER);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [invitingMembers, setInvitingMembers] = useState<IInvitingMembers[]>([]);
   const open = Boolean(anchorEl);
 
   const formBag = useForm<TSecondStepFormData>({
     resolver: zodResolver(validationSecondStepSchema),
-    defaultValues: { email: '', type: '' },
+    defaultValues: { email: '', role: '' },
   });
 
   const handleSubmit = ({ email }: TSecondStepFormData): void => {
@@ -65,10 +74,10 @@ const SecontStep = ({ onValidityChange }: IProps): JSX.Element => {
       ...prev,
       {
         email,
-        type: selectedRole,
+        role: selectedRole,
       },
     ]);
-    setSelectedRole(EUserRole.USER);
+    setSelectedRole(EUserRole.MEMBER);
     formBag.reset();
   };
 
@@ -144,7 +153,7 @@ const SecontStep = ({ onValidityChange }: IProps): JSX.Element => {
                   },
                 }}
               >
-                {USER_ROLES.map((el, key) => (
+                {USER_ROLES.slice(1, 3).map((el, key) => (
                   <MenuItem
                     key={key}
                     onClick={() => handleClose(el.value)}
@@ -242,10 +251,10 @@ const SecontStep = ({ onValidityChange }: IProps): JSX.Element => {
                     variant="outlined"
                     label={
                       <Typography variant="caption2" sx={{ marginLeft: '0 !important' }}>
-                        {USER_ROLES.find((data) => data.value === el.type)?.label}
+                        {USER_ROLES.find((data) => data.value === el.role)?.label}
                         <Tooltip
                           placement="bottom-start"
-                          title={USER_ROLES.find((data) => data.value === el.type)?.description}
+                          title={USER_ROLES.find((data) => data.value === el.role)?.description}
                         >
                           <IconButton sx={{ marginLeft: 1 }}>
                             <InformationLineIcon width={16} height={16} />

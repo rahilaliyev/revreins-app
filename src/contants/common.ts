@@ -21,12 +21,12 @@ export const TEMPLATES = [
 
 export const USER_ROLES = [
   { value: EUserRole.OWNER, label: 'Owner', description: '' },
-  { value: EUserRole.USER, label: 'User', description: 'Can view reports and forecasts' },
-  {
-    value: EUserRole.VIEWER,
-    label: 'Viewer',
-    description: 'Can read, write and delete entities inside the project',
-  },
+  { value: EUserRole.MEMBER, label: 'Member', description: 'Can view reports and forecasts' },
+  // {
+  //   value: EUserRole.EDITOR,
+  //   label: 'Editor',
+  //   description: 'Can read, write and delete entities inside the project',
+  // },
   { value: EUserRole.ADMIN, label: 'Admin', description: 'Full access to managing projects and users' },
 ];
 

@@ -1,5 +1,6 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { endpoints } from 'src/contants';
+import type { ICommonTokenRequest, IInvitingMembers } from 'src/types/interfaces';
 
 import { axiosLogin } from '../axiosInstance';
 
@@ -9,6 +10,7 @@ import type {
   IRegisterPayload,
   IVerifyEmail,
   IVerifyEmailResponse,
+  TTenantUserDetail,
   TUpdateTenantUserVariables,
 } from './types';
 
@@ -63,6 +65,38 @@ export const useTenantUserUpdateMutation = (): UseMutationResult<void, Error, TU
           Authorization: `Bearer ${token}`,
         },
       });
+      return res.data;
+    },
+  });
+
+export const useTenantTeamInviteMutation = (): UseMutationResult<
+  void,
+  Error,
+  ICommonTokenRequest<IInvitingMembers>
+> =>
+  useMutation<void, Error, ICommonTokenRequest<IInvitingMembers>>({
+    mutationFn: async ({ payload, token }: ICommonTokenRequest<IInvitingMembers>) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant.inviteTeamMembers, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    },
+  });
+
+export const useGetTenantTeamInviteDetails = (): UseMutationResult<void, Error, TTenantUserDetail> =>
+  useMutation<void, Error, TTenantUserDetail>({
+    mutationFn: async ({ email, token }: TTenantUserDetail) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant.inviteDetails, { email, token });
+      return res.data;
+    },
+  });
+
+export const useAcceptTeamInvite = (): UseMutationResult<void, Error, TTenantUserDetail> =>
+  useMutation<void, Error, TTenantUserDetail>({
+    mutationFn: async ({ email, token }: TTenantUserDetail) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant.acceptInvite, { email, token });
       return res.data;
     },
   });

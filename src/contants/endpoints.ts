@@ -28,6 +28,15 @@ export const endpoints = {
     get crmIntegrations(): string {
       return `${this.base}/crm-integrations`;
     },
+    get inviteTeamMembers(): string {
+      return `${this.base}/team/invite`;
+    },
+    get inviteDetails(): string {
+      return `${this.base}/public/team/invite/details`;
+    },
+    get acceptInvite(): string {
+      return `${this.base}/public/team/invite/accept`;
+    },
   },
   crmProviders: {
     base: 'api/crm-providers',

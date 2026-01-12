@@ -17,6 +17,8 @@ export interface IVerifyEmail extends IRegisterPayload {
   token: string;
 }
 
+export type TTenantUserDetail = IVerifyEmail;
+
 export interface ITenantUserUpdatePayload {
   first_name: string;
   last_name: string;

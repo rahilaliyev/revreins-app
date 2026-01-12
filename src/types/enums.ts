@@ -6,8 +6,8 @@ export enum EAccountSetup {
 }
 
 export enum EUserRole {
-  USER = 'user',
-  VIEWER = 'viewer',
+  MEMBER = 'member',
+  // EDITOR = 'editor',
   ADMIN = 'admin',
   OWNER = 'owner',
 }

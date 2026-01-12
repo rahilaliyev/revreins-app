@@ -10,7 +10,7 @@ export const validationSecondStepSchema = z.object({
   email: z.string().refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
     message: 'Please enter a valid email address',
   }),
-  type: z.string(),
+  role: z.string(),
 });
 
 export const validationThirdStepSchema = z.object({
