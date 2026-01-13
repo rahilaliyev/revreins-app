@@ -2,6 +2,7 @@ import type { TypographyVariantsOptions } from '@mui/material';
 import { createTheme, type PaletteOptions } from '@mui/material/styles';
 
 import { accordionTheme } from './accordion';
+import { alertTheme } from './alert';
 import { badgeTheme } from './badge';
 import { buttonTheme } from './button';
 import { checkboxTheme } from './checkbox';
@@ -31,6 +32,7 @@ export const theme = createTheme({
   typography: { ...typographyOptions },
   components: {
     ...accordionTheme,
+    ...alertTheme,
     ...buttonTheme,
     ...checkboxTheme,
     ...chipTheme,

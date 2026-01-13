@@ -24,6 +24,7 @@ export const colorPalette = {
   text: {
     main: '#000000',
     secondary: alpha('#000', 0.55),
+    third: alpha('#000', 0.2),
     disable: alpha('#000', 0.2),
     link: '#3B82F6',
     linkHover: '#2563EB',

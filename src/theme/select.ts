@@ -1,50 +1,51 @@
-import type { Components } from '@mui/material';
+import { alpha, type Components } from '@mui/material';
 
-import { colorPalette } from './colorpalette';
+import { typographyOptions } from './typography';
+
+import { ArrowDownSLineIcon } from 'src/assets/icons';
 
 export const selectTheme: Components = {
   MuiSelect: {
     defaultProps: {
-      displayEmpty: true,
-      fullWidth: true,
-      variant: 'outlined',
+      IconComponent: ArrowDownSLineIcon,
+      size: 'small',
     },
     styleOverrides: {
-      root: {
-        fontFamily: 'Noto Sans, sans-serif',
-        backgroundColor: 'transparent',
-        border: 'none',
-
-        '&::before': {
-          display: 'none',
-        },
-
-        '&.Mui-focused::after': {
-          display: 'none',
-        },
-      },
-      standard: {
-        border: 'none',
-        outline: 'none',
-      },
-      outlined: {
-        height: '36px',
-        padding: '4px 12px !important',
-      },
-      select: {
-        color: colorPalette.primary.main,
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 !important',
-        marginRight: '20px',
+      icon: {
+        top: '50%',
+        transform: 'translateY(-50%)',
       },
     },
+    variants: [
+      {
+        props: {
+          size: 'medium',
+        },
+        style: {
+          height: '48px',
+          fontSize: typographyOptions.body1.fontSize,
+          lineHeight: typographyOptions.body1.lineHeight,
+        },
+      },
+      {
+        props: {
+          size: 'small',
+        },
+        style: {
+          height: '40px',
+          fontSize: typographyOptions.body2.fontSize,
+          lineHeight: typographyOptions.body2.lineHeight,
+          padding: '10px 12px',
+        },
+      },
+    ],
   },
-  MuiMenuItem: {
+  MuiMenu: {
     styleOverrides: {
-      root: {
-        fontFamily: 'Noto Sans, sans-serif',
-        color: colorPalette.primary.main,
+      paper: {
+        marginTop: '8px',
+        borderRadius: '8px',
+        boxShadow: `0 0 0 1px ${alpha('#000', 0.1)}`,
       },
     },
   },

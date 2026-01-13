@@ -12,9 +12,9 @@ import {
 } from 'src/apis/auth';
 import type { ITenantUserUpdatePayload } from 'src/apis/auth/types';
 
-import { Button, CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material';
+import { CircularProgress, Grid, Stack, Tooltip, Typography } from '@mui/material';
 
-import { CustomTextField } from 'src/components';
+import { CustomTextField, LoadingButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { useCustomSearchParams } from 'src/hooks';
 import { ROUTES } from 'src/routes/paths';
@@ -33,8 +33,9 @@ const CreateAccountPage = (): JSX.Element => {
   const [accessToken, setAccessToken] = useState('');
   const { token, email } = searchParams;
   const { mutate, isPending } = useVerifyEmailMutation();
-  const { mutateAsync: updateTenantProfileMutate } = useTenantProfileUpdateMutation();
-  const { mutateAsync: updateTenantUserMutate } = useTenantUserUpdateMutation();
+  const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } =
+    useTenantProfileUpdateMutation();
+  const { mutateAsync: updateTenantUserMutate, isPending: isUserPending } = useTenantUserUpdateMutation();
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -147,9 +148,15 @@ const CreateAccountPage = (): JSX.Element => {
               </Grid>
               <Grid size={{ xs: 12, sm: 12 }}>
                 <Stack justifyContent="center">
-                  <Button type="submit" disabled={!formBag.formState.isDirty} color="inherit" size="large">
-                    Continue
-                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    disabled={!formBag.formState.isDirty}
+                    color="inherit"
+                    size="large"
+                    loading={isProfilePending || isUserPending}
+                  >
+                    Sign in
+                  </LoadingButton>
                 </Stack>
               </Grid>
             </Grid>

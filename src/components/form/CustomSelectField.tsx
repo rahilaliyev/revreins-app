@@ -2,10 +2,10 @@ import type { JSX, ReactNode } from 'react';
 import { type ControllerProps, useController, useFormContext } from 'react-hook-form';
 
 import {
-  Box,
   CircularProgress,
   FormControl,
   type FormControlProps,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -100,7 +100,7 @@ export const CustomSelectField = (props: TSelectField): JSX.Element => {
         </MenuItem>
         {content}
       </Select>
-      {message && <Box mt={3}>{message}</Box>}
+      {message && <FormHelperText>{message}</FormHelperText>}
     </FormControl>
   );
 };
