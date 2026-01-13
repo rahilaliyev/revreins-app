@@ -2,12 +2,6 @@ import z from 'zod';
 
 export const validationSchema = z
   .object({
-    email: z
-      .string()
-      .min(1, 'Email is required')
-      .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-        message: 'Please enter a valid email address',
-      }),
     firstName: z.string().min(1, 'First Name is required'),
     lastName: z.string().min(1, 'Last Name is required'),
     password: z.string().refine(

@@ -34,3 +34,9 @@ export interface IStage {
   name: string;
   creator: 'Lead';
 }
+
+export interface ICommonResponse<T> {
+  data: T;
+  status: boolean;
+  message: string;
+}

@@ -1,3 +1,4 @@
+import type { EUserRole } from 'src/types/enums';
 import type { ICommonTokenRequest } from 'src/types/interfaces';
 
 export interface IRegisterPayload {
@@ -22,7 +23,7 @@ export type TTenantUserDetail = IVerifyEmail;
 export interface ITenantUserUpdatePayload {
   first_name: string;
   last_name: string;
-  company_name: string;
+  company_name?: string;
   password: string;
   confirm_password: string;
 }
@@ -31,4 +32,20 @@ export type TUpdateTenantUserVariables = ICommonTokenRequest<ITenantUserUpdatePa
 
 export interface IVerifyEmailResponse {
   access_token: string;
+}
+
+export type TInvitingMemberAcceptResponse = IVerifyEmailResponse;
+
+export interface IInvitingMemberDetailResponse {
+  team_size: number;
+  role: EUserRole;
+  invited_user: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  tenant: {
+    name: string;
+    logo: string;
+  };
 }

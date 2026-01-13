@@ -1,15 +1,17 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { endpoints } from 'src/contants';
-import type { ICommonTokenRequest, IInvitingMembers } from 'src/types/interfaces';
+import type { ICommonResponse, ICommonTokenRequest, IInvitingMembers } from 'src/types/interfaces';
 
 import { axiosLogin } from '../axiosInstance';
 
 import type {
+  IInvitingMemberDetailResponse,
   ILoginPayload,
   ILoginResponse,
   IRegisterPayload,
   IVerifyEmail,
   IVerifyEmailResponse,
+  TInvitingMemberAcceptResponse,
   TTenantUserDetail,
   TUpdateTenantUserVariables,
 } from './types';
@@ -85,18 +87,35 @@ export const useTenantTeamInviteMutation = (): UseMutationResult<
     },
   });
 
-export const useGetTenantTeamInviteDetails = (): UseMutationResult<void, Error, TTenantUserDetail> =>
-  useMutation<void, Error, TTenantUserDetail>({
+export const useGetTenantTeamInviteDetails = (): UseMutationResult<
+  IInvitingMemberDetailResponse,
+  Error,
+  TTenantUserDetail
+> =>
+  useMutation<IInvitingMemberDetailResponse, Error, TTenantUserDetail>({
     mutationFn: async ({ email, token }: TTenantUserDetail) => {
-      const res = await axiosLogin.post<void>(endpoints.tenant.inviteDetails, { email, token });
-      return res.data;
+      const res = await axiosLogin.post<ICommonResponse<IInvitingMemberDetailResponse>>(
+        endpoints.tenant.inviteDetails,
+        { email, token },
+        {
+          skipNotification: true,
+        },
+      );
+      return res.data.data;
     },
   });
 
-export const useAcceptTeamInvite = (): UseMutationResult<void, Error, TTenantUserDetail> =>
-  useMutation<void, Error, TTenantUserDetail>({
+export const useAcceptTeamInvite = (): UseMutationResult<
+  TInvitingMemberAcceptResponse,
+  Error,
+  TTenantUserDetail
+> =>
+  useMutation<TInvitingMemberAcceptResponse, Error, TTenantUserDetail>({
     mutationFn: async ({ email, token }: TTenantUserDetail) => {
-      const res = await axiosLogin.post<void>(endpoints.tenant.acceptInvite, { email, token });
+      const res = await axiosLogin.post<TInvitingMemberAcceptResponse>(endpoints.tenant.acceptInvite, {
+        email,
+        token,
+      });
       return res.data;
     },
   });

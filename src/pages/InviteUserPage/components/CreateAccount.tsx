@@ -4,25 +4,35 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Button, Grid, Stack, Tooltip, Typography } from '@mui/material';
+import { useTenantProfileUpdateMutation, useTenantUserUpdateMutation } from 'src/apis/auth';
+import type { ITenantUserUpdatePayload } from 'src/apis/auth/types';
 
-import { CustomTextField, GoogleButton } from 'src/components';
+import { Grid, Stack, Tooltip, Typography } from '@mui/material';
+
+import { CustomTextField, GoogleButton, LoadingButton } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { TooltipTitle } from 'src/pages/SignUpPage/components';
 import { StyledSignUpButton } from 'src/pages/SignUpPage/styled';
 import { ROUTES } from 'src/routes/paths';
+import { setAuthCookies } from 'src/utils';
 
 import { type TFormData, validationSchema } from './validationSchema';
 
 import { InformationLineIcon, SignInIcon } from 'src/assets/icons';
 import Logo from 'src/assets/images/logo.svg?react';
 
-const CreateAccount = (): JSX.Element => {
+interface IProps {
+  temporaryToken: string;
+}
+
+const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
   const navigate = useNavigate();
+  const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } =
+    useTenantProfileUpdateMutation();
+  const { mutateAsync: updateTenantUserMutate, isPending: isUserPending } = useTenantUserUpdateMutation();
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: {
-      email: '',
       firstName: '',
       lastName: '',
       password: '',
@@ -34,11 +44,21 @@ const CreateAccount = (): JSX.Element => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);
   };
 
-  const handleSubmit = (data: TFormData): void => {};
+  const handleSubmit = (data: TFormData): void => {
+    const payload: ITenantUserUpdatePayload = {
+      first_name: data.firstName,
+      last_name: data.lastName,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+    };
 
-  //   if (isPending) {
-  //     return <CircularProgress />;
-  //   }
+    updateTenantProfileMutate({ payload, token: temporaryToken })
+      .then(() => updateTenantUserMutate({ payload, token: temporaryToken }))
+      .then(() => {
+        setAuthCookies(temporaryToken);
+        navigate(ROUTES.DEFAULT.PATH);
+      });
+  };
 
   return (
     <Stack flexDirection="column" justifyContent="center" alignItems="center">
@@ -64,9 +84,6 @@ const CreateAccount = (): JSX.Element => {
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <CustomTextField name="lastName" label="Last Name" placeholder="Your Last Name" />
-              </Grid>
-              <Grid size={{ xs: 12, sm: 12 }}>
-                <CustomTextField name="email" label="Email" placeholder="SEO Example" />
               </Grid>
               <Grid size={{ xs: 12, sm: 12 }}>
                 <CustomTextField
@@ -100,9 +117,15 @@ const CreateAccount = (): JSX.Element => {
               </Grid>
               <Grid size={{ xs: 12, sm: 12 }}>
                 <Stack justifyContent="center">
-                  <Button type="submit" disabled={!formBag.formState.isDirty} color="inherit" size="large">
+                  <LoadingButton
+                    type="submit"
+                    disabled={!formBag.formState.isDirty}
+                    color="inherit"
+                    size="large"
+                    loading={isUserPending || isProfilePending}
+                  >
                     Continue
-                  </Button>
+                  </LoadingButton>
                 </Stack>
               </Grid>
             </Grid>
