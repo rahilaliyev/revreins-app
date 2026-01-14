@@ -22,3 +22,9 @@ export enum ECRMStatus {
   ERROR = 'ERROR',
   NOT_CONFIGURATED = 'NOT_CONFIGURATED',
 }
+
+export enum ELogicalOperator {
+  AND = 'AND',
+  OR = 'OR',
+  AND_OR = 'AND/OR',
+}

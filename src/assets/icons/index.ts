@@ -1,5 +1,6 @@
 export { AddBoxLineIcon } from './addBoxLine';
 export { AddFillIcon } from './addFill';
+export { AddLineIcon } from './addLine';
 export { AlertLineIcon } from './alertLine';
 export { ArrowDownFillIcon } from './arrowDownFill';
 export { ArrowDownSLineIcon } from './arrowDownSLine';
@@ -22,6 +23,7 @@ export { DeleteBinLineIcon } from './deleteBinLine';
 export { EyeLineIcon } from './eyeLine';
 export { EyeOffLineIcon } from './eyeOffLine';
 export { Filter2FillIcon } from './filter2Fill';
+export { FilterLineIcon } from './filterLine';
 export { FundsFillIcon } from './fundsFill';
 export { GitBranchLineIcon } from './gitBranchLine';
 export { GlobalLineIcon } from './globalLine';

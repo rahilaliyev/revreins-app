@@ -3,7 +3,7 @@ import { colorPalette } from 'src/theme/colorpalette';
 
 import { Alert, Box, Divider, Stack, Typography } from '@mui/material';
 
-import { CustomDatePickerField, CustomSelectField, CustomTextField } from 'src/components';
+import { CustomSelectField, CustomTextField } from 'src/components';
 
 import { InformationLineIcon } from 'src/assets/icons';
 
@@ -34,17 +34,15 @@ const BasicSetupTab = (): JSX.Element => (
           background: '#F3F3F5',
         }}
       />
-      <CustomDatePickerField
+      <CustomSelectField
         name="dateField"
+        items={[{ value: 'value', label: 'Created Date' }]}
         label="Date Field"
         helperText="Date field to use for time-based filtering"
+        size="small"
         sx={{
           height: (theme) => theme.spacing(9),
-          overflow: 'none',
-          '& .MuiPickersInputBase-root': {
-            background: '#F3F3F5',
-            height: (theme) => theme.spacing(9),
-          },
+          background: '#F3F3F5',
         }}
       />
     </Stack>

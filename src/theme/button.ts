@@ -13,6 +13,7 @@ export const buttonTheme: Components = {
           fontSize: '13px',
           lineHeight: '20px',
           fontWeight: 500,
+          borderRadius: '4px',
         },
       },
       {

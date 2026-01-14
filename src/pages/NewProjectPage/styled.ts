@@ -1,6 +1,6 @@
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { alpha, Box, IconButton, Stack, styled } from '@mui/material';
+import { alpha, Box, Divider, IconButton, Stack, styled } from '@mui/material';
 
 export const StyledNavigateBackButton = styled(IconButton)(({ theme }) => ({
   width: theme.spacing(10),
@@ -63,4 +63,32 @@ export const StyledNumberQueue = styled(Box)(({ theme }) => ({
   padding: theme.spacing(0.5, 2),
   border: `1px solid ${alpha('#000', 0.1)}`,
   borderRadius: theme.spacing(2),
+}));
+
+export const StyledNoFilterGroup = styled(Stack)(({ theme }) => ({
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: theme.spacing(65),
+  borderRadius: theme.spacing(2.5),
+  background: '#F9FAFB',
+  border: '2px solid rgba(0, 0, 0, 0.10)',
+  marginTop: theme.spacing(5.5),
+}));
+
+export const StyledFilterGroup = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(6.5),
+  borderRadius: theme.spacing(2),
+  background: 'white',
+  border: '2px solid rgba(0, 0, 0, 0.04)',
+  marginTop: theme.spacing(5.5),
+}));
+
+export const StyledCenteredDivider = styled(Divider)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: 0,
+  right: 0,
+  transform: 'translateY(-50%)',
+  zIndex: 0,
 }));

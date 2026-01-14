@@ -11,6 +11,7 @@ import { useLocalStorage } from 'src/hooks';
 import { a11yProps, generateRandomId } from 'src/utils';
 
 import BasicSetupTab from './components/BasicSetupTab';
+import FilterConditions from './components/FilterConditions';
 import Header from './components/Header';
 import InformationModal from './components/InformationModal';
 import LeftSidebar from './components/LeftSidebar';
@@ -32,7 +33,7 @@ const NewProjectPage = (): JSX.Element => {
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
-    defaultValues: { name: 'Lead Created', crmObject: 'Lead' },
+    defaultValues: { name: 'Lead Created', crmObject: 'Lead', dateField: 'value', groups: [] },
   });
 
   useEffect(() => {
@@ -94,7 +95,7 @@ const NewProjectPage = (): JSX.Element => {
                 <BasicSetupTab />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                Item Two
+                <FilterConditions />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
                 Item Three
