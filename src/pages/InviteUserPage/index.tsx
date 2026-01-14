@@ -82,7 +82,10 @@ const InviteUserPage = (): JSX.Element => {
         justifyContent="center"
         alignItems="center"
       >
-        <CreateAccount temporaryToken={temporaryToken ?? ''} />
+        <CreateAccount
+          temporaryToken={temporaryToken ?? ''}
+          companyName={invitingMemberData?.tenantName ?? ''}
+        />
       </Stack>
     </Stack>
   );

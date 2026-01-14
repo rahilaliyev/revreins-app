@@ -112,10 +112,13 @@ export const useAcceptTeamInvite = (): UseMutationResult<
 > =>
   useMutation<TInvitingMemberAcceptResponse, Error, TTenantUserDetail>({
     mutationFn: async ({ email, token }: TTenantUserDetail) => {
-      const res = await axiosLogin.post<TInvitingMemberAcceptResponse>(endpoints.tenant.acceptInvite, {
-        email,
-        token,
-      });
-      return res.data;
+      const res = await axiosLogin.post<ICommonResponse<TInvitingMemberAcceptResponse>>(
+        endpoints.tenant.acceptInvite,
+        {
+          email,
+          token,
+        },
+      );
+      return res.data.data;
     },
   });

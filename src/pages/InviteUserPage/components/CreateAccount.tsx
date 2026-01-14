@@ -23,13 +23,15 @@ import Logo from 'src/assets/images/logo.svg?react';
 
 interface IProps {
   temporaryToken: string;
+  companyName: string;
 }
 
-const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
+const CreateAccount = ({ temporaryToken, companyName }: IProps): JSX.Element => {
   const navigate = useNavigate();
   const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } =
     useTenantProfileUpdateMutation();
   const { mutateAsync: updateTenantUserMutate, isPending: isUserPending } = useTenantUserUpdateMutation();
+
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: {
@@ -50,6 +52,7 @@ const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
       last_name: data.lastName,
       password: data.password,
       confirm_password: data.confirmPassword,
+      company_name: companyName,
     };
 
     updateTenantProfileMutate({ payload, token: temporaryToken })
