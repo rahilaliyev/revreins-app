@@ -4,7 +4,7 @@ import { CONDITION_OPERATOR_OPTIONS, LOGIC_OPERATOR_OPTIONS } from 'src/contants
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELogicalOperator } from 'src/types/enums';
 
-import { Box, Button, Chip, Divider, Grid, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, IconButton, Stack, Typography } from '@mui/material';
 
 import { CustomSelectField, CustomTextField } from 'src/components';
 

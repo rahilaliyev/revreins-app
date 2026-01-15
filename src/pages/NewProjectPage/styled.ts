@@ -92,3 +92,11 @@ export const StyledCenteredDivider = styled(Divider)(() => ({
   transform: 'translateY(-50%)',
   zIndex: 0,
 }));
+
+export const StyledPreviewQueryWrapper = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(4),
+  borderRadius: theme.spacing(2.5),
+  background: '#F9FAFB',
+  border: '1px solid rgba(0, 0, 0, 0.1)',
+  marginTop: theme.spacing(8),
+}));

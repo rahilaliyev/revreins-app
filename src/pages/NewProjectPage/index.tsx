@@ -15,6 +15,7 @@ import FilterConditions from './components/FilterConditions';
 import Header from './components/Header';
 import InformationModal from './components/InformationModal';
 import LeftSidebar from './components/LeftSidebar';
+import PreviewQuery from './components/PreviewQuery';
 import { type TFormData, validationSchema } from './components/validationSchema';
 import { StyledContainer, StyledStagesSidebar } from './styled';
 
@@ -98,7 +99,7 @@ const NewProjectPage = (): JSX.Element => {
                 <FilterConditions />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={2}>
-                Item Three
+                <PreviewQuery />
               </CustomTabPanel>
             </CustomFormProvider>
           </Box>
