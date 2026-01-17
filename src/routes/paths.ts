@@ -8,6 +8,12 @@ export const ROUTES = {
       PATH: `${BASE_AUTH_PATH}/projects`,
       NEW_PROJECT: {
         PATH: `${BASE_AUTH_PATH}/projects/new`,
+        STAGES: {
+          PATH: `${BASE_AUTH_PATH}/projects/new/stages`,
+        },
+        ASSUMPTIONS: {
+          PATH: `${BASE_AUTH_PATH}/projects/new/assumptions`,
+        },
       },
     },
     CRM_DATA: {

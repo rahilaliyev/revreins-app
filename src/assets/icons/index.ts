@@ -7,6 +7,7 @@ export { ArrowDownSLineIcon } from './arrowDownSLine';
 export { ArrowGoBackLineIcon } from './arrowGoBackLine';
 export { ArrowLeftLineIcon } from './arrowLeftLine';
 export { ArrowLeftSLineIcon } from './arrowLeftSLine';
+export { ArrowRightLineIcon } from './arrowRightLine';
 export { ArrowRightSLineIcon } from './arrowRightSLine';
 export { Calendar2FillIcon } from './calendar2Fill';
 export { CheckboxCircleFillIcon } from './checkboxCircleFill';

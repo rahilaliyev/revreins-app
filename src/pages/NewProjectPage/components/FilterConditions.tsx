@@ -6,9 +6,9 @@ import { ELogicalOperator } from 'src/types/enums';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { StyledNoFilterGroup } from '../styled';
+import { useStageFormContext } from '../validationSchema';
 
 import Group from './Group';
-import { useStageFormContext } from './validationSchema';
 
 import { AddLineIcon, FilterLineIcon } from 'src/assets/icons';
 

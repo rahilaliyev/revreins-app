@@ -5,6 +5,8 @@ export const getPageTitle = (pathname: string): string => {
     [ROUTES.DEFAULT.PATH]: 'Dashboard',
     [ROUTES.DEFAULT.PROJECTS.PATH]: 'Projects',
     [ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH]: 'Projects / New Project',
+    [ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH]: 'Projects / New Project / Stages',
+    [ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH]: 'Projects / New Project / Assumptions',
     [ROUTES.DEFAULT.CRM_DATA.PATH]: 'CRM Data',
     [ROUTES.DEFAULT.SETTING.PATH]: 'Setting',
     [ROUTES.DEFAULT.TEAM_BILLING.PATH]: 'Team & Billing',

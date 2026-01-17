@@ -16,8 +16,8 @@ import Header from './components/Header';
 import InformationModal from './components/InformationModal';
 import LeftSidebar from './components/LeftSidebar';
 import PreviewQuery from './components/PreviewQuery';
-import { type TFormData, validationSchema } from './components/validationSchema';
 import { StyledContainer, StyledStagesSidebar } from './styled';
+import { type TFormData, validationSchema } from './validationSchema';
 
 const NewProjectPage = (): JSX.Element => {
   const [value, setValue] = useState(0);

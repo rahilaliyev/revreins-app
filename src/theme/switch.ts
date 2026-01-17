@@ -1,53 +1,94 @@
-import type { Components } from '@mui/material';
+import type { Components } from '@mui/material/styles';
 
 import { colorPalette } from './colorpalette';
 
-// TODO: Complete style of switch input
 export const switchTheme: Components = {
   MuiSwitch: {
     styleOverrides: {
       root: {
-        width: 44,
-        height: 30,
-        padding: 8,
-      },
-      switchBase: {
-        left: 7,
-        top: 7,
+        padding: 0,
+        width: 52,
+        height: 28,
 
-        '&.Mui-checked': {
-          width: 44,
-          height: 30,
-          padding: 8,
-          color: '#fff',
-          '&.Mui-checked': {
-            backgroundColor: 'transparent',
-            top: 0,
-            transform: 'translateX(0px)',
+        /* MEDIUM (default) */
+        '& .MuiSwitch-switchBase': {
+          padding: 2,
+        },
+
+        '& .MuiSwitch-thumb': {
+          width: 24,
+          height: 24,
+        },
+
+        '& .MuiSwitch-track': {
+          borderRadius: 14,
+        },
+
+        /* MEDIUM ICON */
+        '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track::before': {
+          content: '""',
+          position: 'absolute',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: 16,
+          height: 16,
+          left: 7,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: '16px 16px',
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 9'><path d='M4.5 6.4L10.7 0.3L11.6 1.2L4.5 8.3L0.3 4.1L1.2 3.1L4.5 6.4Z' fill='white'/></svg>")`,
+        },
+
+        /* SMALL */
+        '&.MuiSwitch-sizeSmall': {
+          height: 20,
+          width: 36,
+
+          '& .MuiSwitch-switchBase': {
+            padding: 2,
           },
+
           '& .MuiSwitch-thumb': {
-            width: '9px !important',
-            height: '9px !important',
+            width: 16,
+            height: 16,
           },
-          '& + .MuiSwitch-track': {
-            backgroundColor: colorPalette.primary.main,
-            opacity: 1,
-            border: 'none',
+
+          '& .MuiSwitch-track': {
+            borderRadius: 10,
+          },
+
+          /* SMALL ICON OVERRIDE */
+          '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track::before': {
+            width: 12,
+            height: 12,
+            left: 4,
+            backgroundSize: '12px 12px',
           },
         },
       },
-      thumb: {
-        width: '8px !important',
-        height: '8px !important',
-        boxShadow: 'none',
-        border: '1px solid #000',
+
+      switchBase: {
+        '&.Mui-checked': {
+          transform: 'translateX(24px)',
+        },
+
+        '&.MuiSwitch-sizeSmall.Mui-checked': {
+          transform: 'translateX(14px)',
+        },
       },
+
       track: {
-        borderRadius: 26 / 2,
-        backgroundColor: colorPalette.primary.main,
-        opacity: 1,
-        transition: 'background-color 0.3s',
-        border: '1px solid #000',
+        backgroundColor: colorPalette.other.stroke,
+        opacity: '1 !important',
+
+        '&::before, &::after': {
+          content: 'none',
+        },
+      },
+
+      thumb: {
+        background: colorPalette.inverted.invertedBg,
+        boxShadow: '0 4px 30px 0 rgba(0, 0, 0, 0.12)',
       },
     },
   },

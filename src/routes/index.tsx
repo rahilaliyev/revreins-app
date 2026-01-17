@@ -1,5 +1,5 @@
 import { type JSX, lazy, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 import { PrivateLayout, PublicLayout } from 'src/layouts';
 
@@ -18,6 +18,7 @@ const InviteUserPage = lazy(() => import('src/pages/InviteUserPage'));
 const HomePage = lazy(() => import('src/pages/HomePage'));
 const ProjectsPage = lazy(() => import('src/pages/ProjectsPage'));
 const NewProjectPage = lazy(() => import('src/pages/NewProjectPage'));
+const AssumptionsPage = lazy(() => import('src/pages/AssumptionsPage'));
 const CRMDataPage = lazy(() => import('src/pages/CRMDataPage'));
 const SettingPage = lazy(() => import('src/pages/SettingPage'));
 const TeamBillingPage = lazy(() => import('src/pages/TeamBillingPage'));
@@ -56,7 +57,18 @@ const RouteComponents = (): JSX.Element => {
         <Route index element={suspenseFallback(HomePage)} />
         <Route path={ROUTES.DEFAULT.PROJECTS.PATH}>
           <Route index element={suspenseFallback(ProjectsPage)} />
-          <Route path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH} element={suspenseFallback(NewProjectPage)} />
+          <Route
+            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH}
+            element={suspenseFallback(NewProjectPage)}
+          />
+          <Route
+            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}
+            element={suspenseFallback(AssumptionsPage)}
+          />
+          <Route
+            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH}
+            element={<Navigate to={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH} />}
+          />
         </Route>
         <Route path={ROUTES.DEFAULT.CRM_DATA.PATH} element={suspenseFallback(CRMDataPage)} />
         <Route path={ROUTES.DEFAULT.SETTING.PATH} element={suspenseFallback(SettingPage)} />

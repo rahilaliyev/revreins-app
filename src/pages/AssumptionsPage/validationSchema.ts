@@ -1,0 +1,25 @@
+import { useFormContext, type UseFormReturn } from 'react-hook-form';
+import z from 'zod';
+
+export const validationSchema = z.object({
+  salesEnterprise: z.string(),
+  salesEnterpriseCtt: z.string(),
+  salesMidMarket: z.string(),
+  salesMidMarketCtt: z.string(),
+  opportunityEnterprise: z.string(),
+  opportunityEnterpriseCtt: z.string(),
+  opportunityMidMarket: z.string(),
+  opportunityMidMarketCtt: z.string(),
+  closedWonEnterprise: z.string(),
+  closedWonEnterpriseCtt: z.string(),
+  closedWonMidMarket: z.string(),
+  closedWonMidMarketCtt: z.string(),
+  bookingEnterprise: z.string(),
+  bookingMidMarket: z.string(),
+});
+
+export type TFormData = z.infer<typeof validationSchema>;
+
+export function useAssumptionsFormContext(): UseFormReturn<TFormData> {
+  return useFormContext<TFormData>();
+}

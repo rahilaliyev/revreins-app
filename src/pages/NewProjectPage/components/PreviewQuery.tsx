@@ -14,7 +14,7 @@ const PreviewQuery = (): JSX.Element => (
     </Stack>
     <Box>
       <Editor
-        height={200}
+        height="calc(100vh - 466px)"
         defaultLanguage="sql"
         defaultValue={`SELECT
       Id, Created_Date, *

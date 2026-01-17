@@ -9,8 +9,7 @@ import { Box, Button, Chip, Grid, IconButton, Stack, Typography } from '@mui/mat
 import { CustomSelectField, CustomTextField } from 'src/components';
 
 import { StyledCenteredDivider, StyledFilterGroup } from '../styled';
-
-import { useStageFormContext } from './validationSchema';
+import { useStageFormContext } from '../validationSchema';
 
 import { AddLineIcon, CloseLineIcon, DeleteBinLineIcon } from 'src/assets/icons';
 

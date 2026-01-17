@@ -83,7 +83,7 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
   const handleSelectedTemplate = (template: string): void => setSelectedTemplate(template);
 
   const handleSubmit = (data: TFormData): void => {
-    navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH, {
+    navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH, {
       state: { name: data.name },
     });
   };
