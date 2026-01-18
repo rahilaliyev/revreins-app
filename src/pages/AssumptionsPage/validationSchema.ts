@@ -16,6 +16,14 @@ export const validationSchema = z.object({
   closedWonMidMarketCtt: z.string(),
   bookingEnterprise: z.string(),
   bookingMidMarket: z.string(),
+  startingEnterprise: z.string(),
+  startingMidMarket: z.string(),
+  churnEnterprise: z.string(),
+  churnMidMarket: z.string(),
+  customerEnterprise: z.string(),
+  customerMidMarket: z.string(),
+  orderValueEnterprise: z.string(),
+  orderValueMidMarket: z.string(),
 });
 
 export type TFormData = z.infer<typeof validationSchema>;

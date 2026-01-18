@@ -1,7 +1,18 @@
 import type { JSX } from 'react';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Box, Switch, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Switch,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+
+import { CustomTextField } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 
@@ -27,6 +38,83 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
               </TableCell>
               <TableCell align="right" width={150}>
                 <Switch />
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </StyledAssumptionTable>
+      </TableContainer>
+    </Box>
+    <Box>
+      <Typography variant="body1" fontWeight={700} mb={4} mt={8}>
+        Recurring revenue
+      </Typography>
+      <TableContainer
+        sx={{ border: `1px solid ${colorPalette.other.stroke}`, borderRadius: (theme) => theme.spacing(4) }}
+      >
+        <StyledAssumptionTable aria-label="table">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body1" fontWeight={600}>
+                  Data type
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography variant="body1" fontWeight={600}>
+                  Enterprise
+                </Typography>
+              </TableCell>
+
+              <TableCell>
+                <Typography variant="body1" fontWeight={600}>
+                  Mid-Market
+                </Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body1">Starting Customers</Typography>
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="startingEnterprise" placeholder="35%" />
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="startingMidMarket" placeholder="35%" />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body1">Churn Rate</Typography>
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="churnEnterprise" placeholder="35%" />
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="churnMidMarket" placeholder="35%" />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body1">% of Customers Ordering</Typography>
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="customerEnterprise" placeholder="35%" />
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="customerMidMarket" placeholder="35%" />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Typography variant="body1">Average Order Value</Typography>
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="orderValueEnterprise" placeholder="35%" />
+              </TableCell>
+              <TableCell align="right" width={150}>
+                <CustomTextField size="small" name="orderValueMidMarket" placeholder="35%" />
               </TableCell>
             </TableRow>
           </TableBody>
