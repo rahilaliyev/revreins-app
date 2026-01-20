@@ -19,6 +19,9 @@ export const endpoints = {
     get updateTenantProfile(): string {
       return `${this.base}/update`;
     },
+    get updateInvitedTenantProfile(): string {
+      return `${this.base}/update-invited`;
+    },
   },
   tenant: {
     base: 'api/tenant',

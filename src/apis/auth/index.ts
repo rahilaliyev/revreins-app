@@ -9,6 +9,7 @@ import type {
   ILoginPayload,
   ILoginResponse,
   IRegisterPayload,
+  ITenantUserUpdatePayload,
   IVerifyEmail,
   IVerifyEmailResponse,
   TInvitingMemberAcceptResponse,
@@ -120,5 +121,22 @@ export const useAcceptTeamInvite = (): UseMutationResult<
         },
       );
       return res.data.data;
+    },
+  });
+
+export const useUpdateInviteMutation = (): UseMutationResult<
+  void,
+  Error,
+  ICommonTokenRequest<ITenantUserUpdatePayload>
+> =>
+  useMutation<void, Error, ICommonTokenRequest<ITenantUserUpdatePayload>>({
+    mutationFn: async ({ payload, token }: ICommonTokenRequest<ITenantUserUpdatePayload>) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant_profile.updateInvitedTenantProfile, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        skipNotification: true,
+      });
+      return res.data;
     },
   });

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { useTenantProfileUpdateMutation, useTenantUserUpdateMutation } from 'src/apis/auth';
+import { useTenantUserUpdateMutation, useUpdateInviteMutation } from 'src/apis/auth';
 import type { ITenantUserUpdatePayload } from 'src/apis/auth/types';
 
 import { Grid, Stack, Tooltip, Typography } from '@mui/material';
@@ -23,13 +23,11 @@ import Logo from 'src/assets/images/logo.svg?react';
 
 interface IProps {
   temporaryToken: string;
-  companyName: string;
 }
 
-const CreateAccount = ({ temporaryToken, companyName }: IProps): JSX.Element => {
+const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
   const navigate = useNavigate();
-  const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } =
-    useTenantProfileUpdateMutation();
+  const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } = useUpdateInviteMutation();
   const { mutateAsync: updateTenantUserMutate, isPending: isUserPending } = useTenantUserUpdateMutation();
 
   const formBag = useForm<TFormData>({
@@ -52,7 +50,6 @@ const CreateAccount = ({ temporaryToken, companyName }: IProps): JSX.Element => 
       last_name: data.lastName,
       password: data.password,
       confirm_password: data.confirmPassword,
-      company_name: companyName,
     };
 
     updateTenantProfileMutate({ payload, token: temporaryToken })
