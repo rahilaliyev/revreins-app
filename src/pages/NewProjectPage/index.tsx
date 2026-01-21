@@ -1,13 +1,17 @@
 import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Navigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { IStage } from 'src/types/interfaces';
+
+import { useGetProjectDetailById } from 'src/apis/projects';
 
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 
 import { CustomTabPanel } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { useLocalStorage } from 'src/hooks';
+import { ROUTES } from 'src/routes/paths';
 import { a11yProps, generateRandomId } from 'src/utils';
 
 import BasicSetupTab from './components/BasicSetupTab';
@@ -20,6 +24,8 @@ import { StyledContainer, StyledStagesSidebar } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
 const NewProjectPage = (): JSX.Element => {
+  const location = useLocation();
+
   const [value, setValue] = useState(0);
   const [isInformationModal, setIsInformationModal] = useState(false);
   const [hideNewProjectInfoModal] = useLocalStorage('hideNewProjectInfoModal', false);
@@ -31,6 +37,8 @@ const NewProjectPage = (): JSX.Element => {
     },
   ]);
   const [activeStage, setActiveStage] = useState('');
+
+  const { data } = useGetProjectDetailById(location.state);
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -59,9 +67,13 @@ const NewProjectPage = (): JSX.Element => {
     console.log(data);
   };
 
+  if (!location.state) {
+    return <Navigate to={ROUTES.DEFAULT.PROJECTS.PATH} />;
+  }
+
   return (
     <Box height="100%">
-      <Header />
+      <Header projectName={data?.name} />
       <StyledContainer>
         <LeftSidebar
           stages={stages}

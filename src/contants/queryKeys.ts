@@ -1,3 +1,4 @@
 export const QUERY_KEYS = {
   CRM_PROVIDERS: 'CRM_PROVIDERS',
+  PROJECTS: 'PROJECTS',
 };

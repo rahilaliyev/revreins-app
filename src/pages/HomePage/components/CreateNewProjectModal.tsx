@@ -2,9 +2,12 @@ import { type JSX, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TEMPLATES } from 'src/contants';
+import dayjs from 'dayjs';
+import { DATE_FORMAT, TEMPLATES } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ESetupCard } from 'src/types/enums';
+
+import { useCreateProjectMutation } from 'src/apis/projects';
 
 import { Box, Button, Chip, Fade, Grid, List, ListItem, Stack, Tooltip, Typography } from '@mui/material';
 
@@ -40,6 +43,7 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
+  const { mutate, isPending } = useCreateProjectMutation();
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     mode: 'onChange',
@@ -83,8 +87,19 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
   const handleSelectedTemplate = (template: string): void => setSelectedTemplate(template);
 
   const handleSubmit = (data: TFormData): void => {
-    navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH, {
-      state: { name: data.name },
+    const payload = {
+      name: data.name,
+      stages: data.stages.map((el) => ({ name: el.value })),
+      start_date: dayjs().format(DATE_FORMAT),
+      currency_id: 1,
+    };
+
+    mutate(payload, {
+      onSuccess: (res) => {
+        navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH, {
+          state: res.project.id,
+        });
+      },
     });
   };
 
@@ -97,6 +112,7 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
       open={isOpenNewProjectModal}
       onClose={handleClose}
       title="New Project"
+      loading={isPending}
       submitText="Create Project"
       isSubmitButtonDisabled={isDisabled}
       onClickSubmitButton={onModalSubmit}

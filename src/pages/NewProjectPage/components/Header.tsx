@@ -9,7 +9,11 @@ import { StyledNavigateBackButton } from '../styled';
 
 import { ArrowLeftSLineIcon } from 'src/assets/icons';
 
-const Header = (): JSX.Element => {
+interface IProps {
+  projectName?: string;
+}
+
+const Header = ({ projectName }: IProps): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,7 +33,7 @@ const Header = (): JSX.Element => {
         </StyledNavigateBackButton>
         <Box>
           <Stack>
-            <Typography variant="h5">{location.state?.name} |</Typography>
+            <Typography variant="h5">{projectName} |</Typography>
             <Typography ml={1} variant="h5" color="text.secondary">
               Stages
             </Typography>

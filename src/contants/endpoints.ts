@@ -40,6 +40,9 @@ export const endpoints = {
     get acceptInvite(): string {
       return `${this.base}/public/team/invite/accept`;
     },
+    get projects(): string {
+      return `${this.base}/projects`;
+    },
   },
   crmProviders: {
     base: 'api/crm-providers',
