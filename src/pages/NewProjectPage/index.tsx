@@ -39,17 +39,23 @@ const NewProjectPage = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (!activeStage && !!data.stages?.length) {
-      setActiveStage(data.stages[0]?.id);
+    if (!data.stages?.length) {
+      setActiveStage(undefined);
+      return;
     }
 
-    if (activeStage) {
-      const stage = data.stages?.find((el) => el.id === activeStage);
-      if (stage) {
-        formBag.setValue('name', stage.name);
-      }
+    const activeStageExists = data.stages.some((stage) => stage.id === activeStage);
+
+    if (!activeStageExists) {
+      setActiveStage(data.stages[0].id);
+      return;
     }
-  }, [data, activeStage]);
+
+    const stage = data.stages.find((el) => el.id === activeStage);
+    if (stage) {
+      formBag.setValue('name', stage.name);
+    }
+  }, [data.stages, activeStage]);
 
   useEffect(() => {
     if (!hideNewProjectInfoModal) {
