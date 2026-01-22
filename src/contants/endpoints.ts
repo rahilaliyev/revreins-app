@@ -43,6 +43,9 @@ export const endpoints = {
     get projects(): string {
       return `${this.base}/projects`;
     },
+    get projectStages(): string {
+      return `${this.base}/project-stages`;
+    },
   },
   crmProviders: {
     base: 'api/crm-providers',

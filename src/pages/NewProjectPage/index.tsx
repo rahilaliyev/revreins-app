@@ -2,9 +2,9 @@ import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { IStage } from 'src/types/interfaces';
 
 import { useGetProjectDetailById } from 'src/apis/projects';
+import type { IProject } from 'src/apis/projects/types';
 
 import { Box, Tab, Tabs, Typography } from '@mui/material';
 
@@ -12,7 +12,7 @@ import { CustomTabPanel } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { useLocalStorage } from 'src/hooks';
 import { ROUTES } from 'src/routes/paths';
-import { a11yProps, generateRandomId } from 'src/utils';
+import { a11yProps } from 'src/utils';
 
 import BasicSetupTab from './components/BasicSetupTab';
 import FilterConditions from './components/FilterConditions';
@@ -29,16 +29,9 @@ const NewProjectPage = (): JSX.Element => {
   const [value, setValue] = useState(0);
   const [isInformationModal, setIsInformationModal] = useState(false);
   const [hideNewProjectInfoModal] = useLocalStorage('hideNewProjectInfoModal', false);
-  const [stages, setStages] = useState<IStage[]>([
-    {
-      id: generateRandomId(),
-      name: 'Lead Created',
-      creator: 'Lead',
-    },
-  ]);
-  const [activeStage, setActiveStage] = useState('');
+  const [activeStage, setActiveStage] = useState<number>();
 
-  const { data } = useGetProjectDetailById(location.state);
+  const { data = {} as IProject } = useGetProjectDetailById(location.state);
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -46,10 +39,17 @@ const NewProjectPage = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (!activeStage && !!stages.length) {
-      setActiveStage(stages[0].id);
+    if (!activeStage && !!data.stages?.length) {
+      setActiveStage(data.stages[0]?.id);
     }
-  }, [stages, activeStage]);
+
+    if (activeStage) {
+      const stage = data.stages?.find((el) => el.id === activeStage);
+      if (stage) {
+        formBag.setValue('name', stage.name);
+      }
+    }
+  }, [data, activeStage]);
 
   useEffect(() => {
     if (!hideNewProjectInfoModal) {
@@ -76,14 +76,14 @@ const NewProjectPage = (): JSX.Element => {
       <Header projectName={data?.name} />
       <StyledContainer>
         <LeftSidebar
-          stages={stages}
-          setStages={setStages}
+          stages={data.stages}
           activeStage={activeStage}
           setActiveStage={setActiveStage}
+          projectId={data.id}
         />
         <StyledStagesSidebar width="69%">
           <Typography variant="body1" fontWeight={500}>
-            Configure: {stages.find((stage) => stage.id === activeStage)?.name}
+            Configure: {data.stages?.find((stage) => stage.id === activeStage)?.name}
           </Typography>
           <Box width="100%" mt={6}>
             <CustomFormProvider form={formBag} onSubmit={handleSubmit}>

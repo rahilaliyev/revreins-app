@@ -1,9 +1,9 @@
 import type { JSX } from 'react';
-import type { IStage } from 'src/types/interfaces';
+
+import type { IStage } from 'src/apis/projects/types';
+import { useDeleteStageMutation } from 'src/apis/stages';
 
 import { Box, Button, IconButton, Stack, Typography } from '@mui/material';
-
-import { generateRandomId } from 'src/utils';
 
 import { StyledNumberQueue, StyledStageCard, StyledStagesSidebar } from '../styled';
 
@@ -92,24 +92,18 @@ const TrashIcon = (): JSX.Element => (
 
 interface IProps {
   stages: IStage[];
-  setStages: (stages: IStage[]) => void;
-  activeStage: string;
-  setActiveStage: (stageId: string) => void;
+  activeStage?: number;
+  setActiveStage?: (stageId: number) => void;
+  projectId: number;
 }
 
-const LeftSidebar = ({ stages, setStages, activeStage, setActiveStage }: IProps): JSX.Element => {
-  const handleAddStage = (): void => {
-    const newStage = {
-      id: generateRandomId(),
-      name: 'New Stage',
-      creator: 'Lead' as const,
-    };
-    setStages([...stages, newStage]);
-  };
+const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId }: IProps): JSX.Element => {
+  const handleAddStage = (): void => {};
 
-  const handleDeleteStage = (id: string): void => {
-    const updatedStages = stages.filter((stage) => stage.id !== id);
-    setStages(updatedStages);
+  const { mutate: deleteStage } = useDeleteStageMutation(projectId);
+
+  const handleDeleteStage = (id: number): void => {
+    deleteStage(id.toString());
   };
 
   return (
@@ -117,12 +111,12 @@ const LeftSidebar = ({ stages, setStages, activeStage, setActiveStage }: IProps)
       <Typography variant="body1" fontWeight={500}>
         Pipeline Stages
       </Typography>
-      {stages.map((stage) => (
+      {stages?.map((stage) => (
         <StyledStageCard
           key={stage.id}
           mt={3}
           isActive={activeStage === stage.id}
-          onClick={() => setActiveStage(stage.id)}
+          onClick={() => setActiveStage?.(stage.id)}
         >
           <Stack justifyContent="space-between">
             <Stack gap={2}>
@@ -148,7 +142,7 @@ const LeftSidebar = ({ stages, setStages, activeStage, setActiveStage }: IProps)
             {stage.name}
           </Typography>
           <Typography variant="caption2" component="p" mt={1} mb={1} color="text.secondary">
-            {stage.creator}
+            {stage.crm_object_id}
           </Typography>
         </StyledStageCard>
       ))}

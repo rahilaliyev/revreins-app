@@ -29,12 +29,6 @@ export interface IMenuItem {
   path: string;
 }
 
-export interface IStage {
-  id: string;
-  name: string;
-  creator: 'Lead';
-}
-
 export interface ICommonResponse<T> {
   data: T;
   status: boolean;

@@ -5,7 +5,7 @@ export interface IProjectPayload {
   }[];
 }
 
-interface IStage {
+export interface IStage {
   created_at: string;
   crm_object_id: number;
   date_field_id: number;
