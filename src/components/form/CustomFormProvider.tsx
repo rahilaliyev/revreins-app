@@ -9,10 +9,11 @@ export interface ICustomFormProvider<T extends FieldValues> {
   children: ReactNode;
   novalidate?: boolean;
   isDisabled?: boolean;
+  id?: string;
 }
 
 export const CustomFormProvider = <T extends FieldValues>(props: ICustomFormProvider<T>): JSX.Element => {
-  const { form, onSubmit, isDisabled = false, children, novalidate = false } = props;
+  const { form, onSubmit, isDisabled = false, children, novalidate = false, id } = props;
 
   const isDev = import.meta.env.DEV;
   const errors = form.formState.errors;
@@ -32,6 +33,7 @@ export const CustomFormProvider = <T extends FieldValues>(props: ICustomFormProv
           width: '100%',
         }}
         noValidate={novalidate}
+        id={id}
       >
         <Box
           component="fieldset"

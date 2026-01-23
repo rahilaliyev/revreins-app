@@ -33,7 +33,7 @@ const ProjectOverview = (): JSX.Element => {
     navigate(ROUTES.DEFAULT.PROJECTS.PATH);
   };
 
-  const projectCount = data?.pagination?.total;
+  const projectCount = data?.pagination?.total || 0;
 
   return (
     <Box component="section" my={6}>

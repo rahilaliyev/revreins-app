@@ -2,7 +2,6 @@ import { type JSX, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
-import { enqueueSnackbar } from 'notistack';
 import { DATE_FORMAT, TEMPLATES } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ESetupCard } from 'src/types/enums';
@@ -41,7 +40,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const lastInputRef = useRef<HTMLInputElement>(null);
-  const { mutate, isPending } = useCreateProjectOnboardingMutation();
+  const { mutate } = useCreateProjectOnboardingMutation();
 
   const formBag = useForm<TThirdStepFormData>({
     resolver: zodResolver(validationThirdStepSchema),
@@ -112,7 +111,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
           Select a pre-made CRM template or set one up from scratch
         </Typography>
       </Box>
-      <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
+      <CustomFormProvider form={formBag} onSubmit={handleSubmit} id="third-step-form">
         <Box py={4}>
           <Typography variant="body2" fontWeight={600} mb={2.5}>
             Name your project
