@@ -32,6 +32,23 @@ export const StyledCreateProject = styled(Button)(({ theme }) => ({
   height: theme.spacing(62.5),
 }));
 
+export const StyledProjectCard = styled(Box)(({ theme }) => ({
+  borderRadius: theme.spacing(3),
+  border: `1px solid ${alpha('#000', 0.1)}`,
+  backgroundColor: 'white',
+  height: theme.spacing(62),
+  padding: theme.spacing(6),
+}));
+
+export const StyledChartIconWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: theme.spacing(9),
+  height: theme.spacing(9),
+  background: 'rgba(0, 0, 0, 0.04);',
+}));
+
 export const StyledAddIconButton = styled(Stack)(({ theme }) => ({
   justifyContent: 'center',
   width: theme.spacing(12),

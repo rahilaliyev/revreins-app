@@ -84,6 +84,14 @@ const AccountSetup = (): JSX.Element => {
       canProceed = await handleSecondStepSubmit();
     }
 
+    if (activeStep === EAccountSetup.THIRD_STEP) {
+      const form = document.getElementById('third-step-form') as HTMLFormElement;
+      if (form) {
+        form.requestSubmit();
+      }
+      return;
+    }
+
     if (activeStep === EAccountSetup.FOURTH_STEP) {
       await handleFourthStepSubmit();
     }
@@ -160,7 +168,10 @@ const AccountSetup = (): JSX.Element => {
             </StepWrapper>
 
             <StepWrapper isActive={activeStep === EAccountSetup.THIRD_STEP}>
-              <ThirdStep onValidityChange={setIsStepValid} />
+              <ThirdStep
+                onValidityChange={setIsStepValid}
+                onSubmitSuccess={() => setActiveStep((prev) => prev + 1)}
+              />
             </StepWrapper>
 
             <StepWrapper isActive={activeStep === EAccountSetup.FOURTH_STEP}>

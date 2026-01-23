@@ -1,16 +1,16 @@
 import { useMutation, type UseMutationResult, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { endpoints, QUERY_KEYS } from 'src/contants';
-import type { ICommonResponse } from 'src/types/interfaces';
+import type { ICommonPaginationResponse, ICommonResponse, ICommonTokenRequest } from 'src/types/interfaces';
 
-import { api } from '../axiosInstance';
+import { api, axiosLogin } from '../axiosInstance';
 
 import type { IProject, IProjectPayload, IProjectResponse } from './types';
 
-export const useGetProjects = (): UseQueryResult<void, Error> =>
+export const useGetProjects = (): UseQueryResult<ICommonPaginationResponse<IProject>, Error> =>
   useQuery({
     queryKey: [QUERY_KEYS.PROJECTS],
     queryFn: async () => {
-      const res = await api.get<void>(endpoints.tenant.projects);
+      const res = await api.get<ICommonPaginationResponse<IProject>>(endpoints.tenant.projects);
       return res.data;
     },
   });
@@ -31,5 +31,21 @@ export const useCreateProjectMutation = (): UseMutationResult<IProjectResponse, 
     mutationFn: async (data: IProjectPayload) => {
       const res = await api.post<ICommonResponse<IProjectResponse>>(endpoints.tenant.projects, data);
       return res.data.data;
+    },
+  });
+
+export const useCreateProjectOnboardingMutation = (): UseMutationResult<
+  void,
+  Error,
+  ICommonTokenRequest<IProjectPayload>
+> =>
+  useMutation<void, Error, ICommonTokenRequest<IProjectPayload>>({
+    mutationFn: async ({ payload, token }: ICommonTokenRequest<IProjectPayload>) => {
+      const res = await axiosLogin.post<void>(endpoints.tenant.projects, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
     },
   });

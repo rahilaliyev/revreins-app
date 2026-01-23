@@ -1,9 +1,13 @@
 import { type JSX, useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TEMPLATES } from 'src/contants';
+import dayjs from 'dayjs';
+import { enqueueSnackbar } from 'notistack';
+import { DATE_FORMAT, TEMPLATES } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ESetupCard } from 'src/types/enums';
+
+import { useCreateProjectOnboardingMutation } from 'src/apis/projects';
 
 import { Box, Button, Chip, Fade, Grid, List, ListItem, Stack, Tooltip, Typography } from '@mui/material';
 
@@ -30,12 +34,15 @@ import {
 
 interface IProps {
   onValidityChange: (isValid: boolean) => void;
+  onSubmitSuccess?: () => void;
 }
 
-const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
+const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element => {
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
   const [selectedTemplate, setSelectedTemplate] = useState('');
   const lastInputRef = useRef<HTMLInputElement>(null);
+  const { mutate, isPending } = useCreateProjectOnboardingMutation();
+
   const formBag = useForm<TThirdStepFormData>({
     resolver: zodResolver(validationThirdStepSchema),
     mode: 'onChange',
@@ -76,7 +83,24 @@ const ThirdStep = ({ onValidityChange }: IProps): JSX.Element => {
 
   const handleSelectedTemplate = (template: string): void => setSelectedTemplate(template);
 
-  const handleSubmit = (data: TThirdStepFormData): void => {};
+  const handleSubmit = (data: TThirdStepFormData): void => {
+    const temporaryToken = sessionStorage.getItem('temporaryToken') || '';
+    const payload = {
+      name: data.name,
+      stages: data.stages.map((el) => ({ name: el.value })),
+      start_date: dayjs().format(DATE_FORMAT),
+      currency_id: 1,
+    };
+
+    mutate(
+      { payload, token: temporaryToken },
+      {
+        onSuccess: () => {
+          onSubmitSuccess?.();
+        },
+      },
+    );
+  };
 
   return (
     <Box pt={2}>
