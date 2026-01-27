@@ -1,29 +1,29 @@
-const BASE_PATH = '/';
+const BASE_PATH = '';
 const BASE_AUTH_PATH = '/auth';
 
 export const ROUTES = {
   DEFAULT: {
     PATH: BASE_PATH,
     PROJECTS: {
-      PATH: `${BASE_AUTH_PATH}/projects`,
+      PATH: `${BASE_PATH}/projects`,
       NEW_PROJECT: {
-        PATH: `${BASE_AUTH_PATH}/projects/new`,
+        PATH: `${BASE_PATH}/projects/new`,
         STAGES: {
-          PATH: `${BASE_AUTH_PATH}/projects/new/stages`,
+          PATH: `${BASE_PATH}/projects/new/stages`,
         },
         ASSUMPTIONS: {
-          PATH: `${BASE_AUTH_PATH}/projects/new/assumptions`,
+          PATH: `${BASE_PATH}/projects/new/assumptions`,
         },
       },
     },
     CRM_DATA: {
-      PATH: `${BASE_AUTH_PATH}/crm-data`,
+      PATH: `${BASE_PATH}/crm-data`,
     },
     SETTING: {
-      PATH: `${BASE_AUTH_PATH}/setting`,
+      PATH: `${BASE_PATH}/setting`,
     },
     TEAM_BILLING: {
-      PATH: `${BASE_AUTH_PATH}/team-and-billing`,
+      PATH: `${BASE_PATH}/team-and-billing`,
     },
   },
   AUTH: {

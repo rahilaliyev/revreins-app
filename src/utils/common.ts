@@ -1,6 +1,10 @@
 import { ROUTES } from 'src/routes/paths';
 
 export const getPageTitle = (pathname: string): string => {
+  if (/^\/projects\/\d+$/.test(pathname)) {
+    return 'Projects / Detail';
+  }
+
   const routeTitles: Record<string, string> = {
     [ROUTES.DEFAULT.PATH]: 'Dashboard',
     [ROUTES.DEFAULT.PROJECTS.PATH]: 'Projects',

@@ -1,5 +1,5 @@
 import { type JSX, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { UI_DATE_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
@@ -77,29 +77,31 @@ const ProjectOverview = (): JSX.Element => {
           ) : (
             data?.data?.slice(0, 3)?.map((el) => (
               <Grid size={4} key={el?.id}>
-                <StyledProjectCard>
-                  <Stack justifyContent="space-between">
-                    <StyledChartIconWrapper>
-                      <InsertChartIcon />
-                    </StyledChartIconWrapper>
-                    <Chip variant="filled" color="primary" label="Published" icon={<DotIcon />} />
-                  </Stack>
-                  <Typography variant="body1" fontWeight={500} mt={3.5}>
-                    {el?.name}
-                  </Typography>
-                  <Stack justifyContent="space-between" my={3}>
-                    <Typography variant="body1" color="text.secondary">
-                      Last updated
+                <Link to={`${ROUTES.DEFAULT.PROJECTS.PATH}/${el?.id}`}>
+                  <StyledProjectCard>
+                    <Stack justifyContent="space-between">
+                      <StyledChartIconWrapper>
+                        <InsertChartIcon />
+                      </StyledChartIconWrapper>
+                      <Chip variant="filled" color="primary" label="Published" icon={<DotIcon />} />
+                    </Stack>
+                    <Typography variant="body1" fontWeight={500} mt={3.5}>
+                      {el?.name}
                     </Typography>
-                    <Typography variant="body1">{dayjs(el?.updated_at).format(UI_DATE_FORMAT)}</Typography>
-                  </Stack>
-                  <Stack justifyContent="space-between" my={3}>
-                    <Typography variant="body1" color="text.secondary">
-                      Forecasts
-                    </Typography>
-                    <Typography variant="body1">-</Typography>
-                  </Stack>
-                </StyledProjectCard>
+                    <Stack justifyContent="space-between" my={3}>
+                      <Typography variant="body1" color="text.secondary">
+                        Last updated
+                      </Typography>
+                      <Typography variant="body1">{dayjs(el?.updated_at).format(UI_DATE_FORMAT)}</Typography>
+                    </Stack>
+                    <Stack justifyContent="space-between" my={3}>
+                      <Typography variant="body1" color="text.secondary">
+                        Forecasts
+                      </Typography>
+                      <Typography variant="body1">-</Typography>
+                    </Stack>
+                  </StyledProjectCard>
+                </Link>
               </Grid>
             ))
           )}
