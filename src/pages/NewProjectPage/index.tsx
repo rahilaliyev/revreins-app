@@ -19,7 +19,6 @@ import FilterConditions from './components/FilterConditions';
 import Header from './components/Header';
 import InformationModal from './components/InformationModal';
 import LeftSidebar from './components/LeftSidebar';
-import PreviewQuery from './components/PreviewQuery';
 import { StyledContainer, StyledStagesSidebar } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
@@ -79,7 +78,7 @@ const NewProjectPage = (): JSX.Element => {
 
   return (
     <Box height="100%">
-      <Header projectName={data?.name} />
+      <Header projectName={data?.name} stages={data?.stages} />
       <StyledContainer>
         <LeftSidebar
           stages={data.stages}
@@ -104,20 +103,12 @@ const NewProjectPage = (): JSX.Element => {
                   label="Filter Conditions"
                   {...a11yProps(1)}
                 />
-                <Tab
-                  sx={{ width: (theme) => theme.spacing(36), p: 0 }}
-                  label="Preview Query"
-                  {...a11yProps(2)}
-                />
               </Tabs>
               <CustomTabPanel value={value} index={0}>
                 <BasicSetupTab />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <FilterConditions />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <PreviewQuery />
               </CustomTabPanel>
             </CustomFormProvider>
           </Box>

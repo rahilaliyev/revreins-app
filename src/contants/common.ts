@@ -1,5 +1,7 @@
 import { ECRMStatus, ELogicalOperator, EUserRole } from 'src/types/enums';
 
+export const MIN_ASSUMPTIONS_STAGES_LENGTH = 2;
+
 export const TEMPLATES = [
   {
     title: 'SaaS Funnel',
