@@ -1,6 +1,7 @@
 export { CustomDatePickerField } from './form/CustomDatePickerField';
 export { CustomSelectField } from './form/CustomSelectField';
 export { CustomTextField } from './form/CustomTextField';
+export { AccordionTable } from './ui/AccordionTable';
 export { CRMCard } from './ui/CRMCard';
 export { CustomModal } from './ui/CustomModal';
 export { CustomSnackbar } from './ui/CustomSnackbar';

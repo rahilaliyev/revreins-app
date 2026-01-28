@@ -27,11 +27,10 @@ export const accordionTheme: Components = {
   MuiAccordionSummary: {
     styleOverrides: {
       root: {
-        fontSize: '14px',
-        fontWeight: '600',
-        lineHeight: '20px',
         padding: 0,
+        alignItems: 'flex-start',
       },
+      content: { margin: 0 },
     },
   },
 };

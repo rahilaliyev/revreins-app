@@ -44,6 +44,7 @@ export { QuestionLineIcon } from './questionLine';
 export { ReloadArrowFillIcon } from './reloadArrowFill';
 export { Setting5LineIcon } from './settings5Line';
 export { ShareBoxLineIcon } from './shareBoxLine';
+export { ShareForward2LineIcon } from './shareForward2line';
 export { SidebarLineIcon } from './sidebarLine';
 export { SignInIcon } from './signInIcon';
 export { Table2Icon } from './table2';
