@@ -1,3 +1,5 @@
+import type { EStageAddEditMode } from 'src/types/enums';
+
 export interface IProjectPayload {
   name: string;
   stages: {
@@ -14,6 +16,10 @@ export interface IStage {
   name: string;
   project_id: number;
   updated_at: string;
+}
+
+export interface IUiStage extends Partial<IStage> {
+  mode: EStageAddEditMode;
 }
 
 export interface IProject {

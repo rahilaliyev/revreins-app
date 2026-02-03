@@ -28,3 +28,8 @@ export enum ELogicalOperator {
   OR = 'OR',
   AND_OR = 'AND/OR',
 }
+
+export enum EStageAddEditMode {
+  ADD = 'ADD',
+  EDIT = 'EDIT',
+}

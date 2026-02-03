@@ -39,7 +39,7 @@ const Row = ({ row, level = 0 }: { row: IFunnelRow; level?: number }): JSX.Eleme
               <IconButton
                 size="small"
                 onClick={() => setOpen(!open)}
-                sx={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                sx={{ transform: open ? 'rotate(0deg)' : 'rotate(270deg)' }}
               >
                 <ArrowDownSLineIcon width={12} height={12} />
               </IconButton>

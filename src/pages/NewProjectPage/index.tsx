@@ -2,11 +2,13 @@ import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { EStageAddEditMode } from 'src/types/enums';
 
 import { useGetProjectDetailById } from 'src/apis/projects';
-import type { IProject } from 'src/apis/projects/types';
+import type { IProject, IUiStage } from 'src/apis/projects/types';
+import { useAddStageMutation, useEditStageMutation } from 'src/apis/stages';
 
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
 import { CustomTabPanel } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
@@ -29,32 +31,55 @@ const NewProjectPage = (): JSX.Element => {
   const [isInformationModal, setIsInformationModal] = useState(false);
   const [hideNewProjectInfoModal] = useLocalStorage('hideNewProjectInfoModal', false);
   const [activeStage, setActiveStage] = useState<number>();
+  const [stages, setStages] = useState<IUiStage[]>([]);
 
   const { data = {} as IProject } = useGetProjectDetailById(location.state);
+  const { mutate: addStageMutation } = useAddStageMutation();
+  const { mutate: editStageMutation } = useEditStageMutation();
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
-    defaultValues: { name: 'Lead Created', crmObject: 'Lead', dateField: 'value', groups: [] },
+    defaultValues: { name: '', crmObject: '', dateField: '', groups: [] },
   });
 
   useEffect(() => {
     if (!data.stages?.length) {
+      setStages([]);
       setActiveStage(undefined);
       return;
     }
 
-    const activeStageExists = data.stages.some((stage) => stage.id === activeStage);
+    const mappedStages = data.stages.map((el) => ({
+      ...el,
+      mode: EStageAddEditMode.EDIT,
+    }));
 
-    if (!activeStageExists) {
-      setActiveStage(data.stages[0].id);
+    setStages(mappedStages);
+
+    setActiveStage((current) => {
+      if (!current || !data.stages.some((s) => s.id === current)) {
+        return data.stages[0]?.id;
+      }
+      return current;
+    });
+  }, [data.stages]);
+
+  useEffect(() => {
+    if (!activeStage) {
       return;
     }
 
-    const stage = data.stages.find((el) => el.id === activeStage);
+    const stage = data.stages?.find((el) => el.id === activeStage);
+
     if (stage) {
-      formBag.setValue('name', stage.name);
+      formBag.reset({
+        name: stage.name,
+        crmObject: stage.crm_object_id?.toString(),
+        dateField: stage.date_field_id?.toString(),
+        groups: [],
+      });
     }
-  }, [data.stages, activeStage]);
+  }, [activeStage, data.stages, formBag]);
 
   useEffect(() => {
     if (!hideNewProjectInfoModal) {
@@ -64,12 +89,30 @@ const NewProjectPage = (): JSX.Element => {
 
   const handleModalClose = (): void => setIsInformationModal(false);
 
-  const handleChange = (event: SyntheticEvent, newValue: number): void => {
+  const handleChange = (_: SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
 
   const handleSubmit = (data: TFormData): void => {
-    console.log(data);
+    const payload = {
+      name: data.name,
+      crm_object_id: Number(data.crmObject),
+      date_field_id: Number(data.dateField),
+      project_id: location.state,
+    };
+
+    const currentStage = stages.find((el) => el.id === activeStage);
+
+    if (currentStage?.mode === EStageAddEditMode.EDIT && activeStage) {
+      editStageMutation({
+        stageId: activeStage,
+        ...payload,
+      });
+    } else if (currentStage?.mode === EStageAddEditMode.ADD && activeStage) {
+      addStageMutation(payload, {
+        onSuccess: (res) => setActiveStage(res.project_stage.id),
+      });
+    }
   };
 
   if (!location.state) {
@@ -79,19 +122,30 @@ const NewProjectPage = (): JSX.Element => {
   return (
     <Box height="100%">
       <Header projectName={data?.name} stages={data?.stages} />
-      <StyledContainer>
-        <LeftSidebar
-          stages={data.stages}
-          activeStage={activeStage}
-          setActiveStage={setActiveStage}
-          projectId={data.id}
-        />
-        <StyledStagesSidebar width="69%">
-          <Typography variant="body1" fontWeight={500}>
-            Configure: {data.stages?.find((stage) => stage.id === activeStage)?.name}
-          </Typography>
-          <Box width="100%" mt={6}>
-            <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
+      <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
+        <StyledContainer>
+          <LeftSidebar
+            stages={stages}
+            activeStage={activeStage}
+            setActiveStage={setActiveStage}
+            projectId={data.id}
+            setStages={setStages}
+          />
+          <StyledStagesSidebar width="69%">
+            <Stack justifyContent="space-between">
+              <Typography variant="body1" fontWeight={500}>
+                Configure: {stages?.find((stage) => stage.id === activeStage)?.name}
+              </Typography>
+              <Button
+                color="inherit"
+                size="small"
+                sx={{ borderRadius: (theme) => theme.spacing(2) }}
+                type="submit"
+              >
+                Save
+              </Button>
+            </Stack>
+            <Box width="100%" mt={6}>
               <Tabs value={value} onChange={handleChange} aria-label="tabs">
                 <Tab
                   sx={{ width: (theme) => theme.spacing(36), p: 0 }}
@@ -110,10 +164,10 @@ const NewProjectPage = (): JSX.Element => {
               <CustomTabPanel value={value} index={1}>
                 <FilterConditions />
               </CustomTabPanel>
-            </CustomFormProvider>
-          </Box>
-        </StyledStagesSidebar>
-      </StyledContainer>
+            </Box>
+          </StyledStagesSidebar>
+        </StyledContainer>
+      </CustomFormProvider>
       <InformationModal open={isInformationModal} onClose={handleModalClose} />
     </Box>
   );

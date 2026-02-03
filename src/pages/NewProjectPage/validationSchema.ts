@@ -17,7 +17,7 @@ export const validationSchema = z.object({
   name: z.string(),
   crmObject: z.string(),
   dateField: z.string(),
-  groups: z.array(groupSchema),
+  groups: z.array(groupSchema).optional(),
 });
 
 export type TFormData = z.infer<typeof validationSchema>;

@@ -1,7 +1,10 @@
 import { useMutation, type UseMutationResult, useQueryClient } from '@tanstack/react-query';
 import { endpoints, QUERY_KEYS } from 'src/contants';
+import type { ICommonResponse } from 'src/types/interfaces';
 
 import { api } from '../axiosInstance';
+
+import type { IProjectStage, IProjectStageMutationResponse, IProjectStagePayload } from './types';
 
 export const useDeleteStageMutation = (projectId: number): UseMutationResult<void, Error, string> => {
   const queryClient = useQueryClient();
@@ -13,6 +16,44 @@ export const useDeleteStageMutation = (projectId: number): UseMutationResult<voi
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.PROJECTS, projectId],
+      });
+    },
+  });
+};
+
+export const useEditStageMutation = (): UseMutationResult<void, Error, IProjectStagePayload> => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, IProjectStagePayload>({
+    mutationFn: async ({ stageId, ...body }: IProjectStagePayload) => {
+      await api.put(`${endpoints.tenant.projectStages}/${stageId}`, body);
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PROJECTS, variables.project_id],
+      });
+    },
+  });
+};
+
+export const useAddStageMutation = (): UseMutationResult<
+  IProjectStageMutationResponse,
+  Error,
+  IProjectStage
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation<IProjectStageMutationResponse, Error, IProjectStage>({
+    mutationFn: async (body: IProjectStage) => {
+      const res = await api.post<ICommonResponse<IProjectStageMutationResponse>>(
+        endpoints.tenant.projectStages,
+        body,
+      );
+      return res.data.data;
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.PROJECTS, variables.project_id],
       });
     },
   });

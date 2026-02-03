@@ -54,6 +54,7 @@ const RouteComponents = (): JSX.Element => {
       </Route>
       <Route path={ROUTES.AUTH.ACCOUNT_SETUP.PATH} element={suspenseFallback(AccountSetupPage)} />
       <Route path={ROUTES.AUTH.INVITE_USER.PATH} element={suspenseFallback(InviteUserPage)} />
+      <Route path="/" element={<Navigate to={ROUTES.DEFAULT.PATH} />} />
       <Route path={ROUTES.DEFAULT.PATH} element={<PrivateLayout />}>
         <Route index element={suspenseFallback(HomePage)} />
         <Route path={ROUTES.DEFAULT.PROJECTS.PATH}>

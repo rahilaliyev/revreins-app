@@ -1,4 +1,4 @@
-const BASE_PATH = '';
+const BASE_PATH = '/dashboard';
 const BASE_AUTH_PATH = '/auth';
 
 export const ROUTES = {
