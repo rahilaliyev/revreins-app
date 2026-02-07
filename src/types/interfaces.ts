@@ -16,6 +16,7 @@ export interface IIconProps {
 export interface IInvitingMembers {
   email: string;
   role: EUserRole;
+  name?: string;
 }
 
 export interface ICommonTokenRequest<T> {

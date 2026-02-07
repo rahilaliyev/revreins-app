@@ -21,6 +21,8 @@ const AssumptionsPage = (): JSX.Element => {
     defaultValues: {
       currency: 'USD',
       startingDate: dayjs().format(MONTH_LETTER_YEAR_FORMAT),
+      enableProjectBreakdown: false,
+      segments: [{ name: '', field: '' }],
     },
   });
 

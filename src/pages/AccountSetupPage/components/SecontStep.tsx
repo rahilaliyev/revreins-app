@@ -14,6 +14,8 @@ import { colorPalette } from 'src/theme/colorpalette';
 import { EUserRole } from 'src/types/enums';
 import type { IInvitingMembers } from 'src/types/interfaces';
 
+import { useGetUserInfoOnboarding } from 'src/apis/user';
+
 import {
   Avatar,
   Box,
@@ -48,9 +50,11 @@ interface IProps {
 }
 
 const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: IProps): JSX.Element => {
+  const token = sessionStorage.getItem('temporaryToken') || '';
   const [selectedRole, setSelectedRole] = useState<EUserRole>(EUserRole.MEMBER);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { data } = useGetUserInfoOnboarding(token);
 
   const formBag = useForm<TSecondStepFormData>({
     resolver: zodResolver(validationSecondStepSchema),
@@ -215,9 +219,9 @@ const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: I
           <ListItem sx={{ py: 1, px: 3 }}>
             <Stack width="70%">
               <ListItemAvatar>
-                <Avatar>R</Avatar>
+                <Avatar>{data?.tenant_user?.avatar ?? data?.user?.name?.[0]}</Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Robert Fox (You)" secondary="example@example.com" />
+              <ListItemText primary={`${data?.user?.name} (You)`} secondary={data?.user?.email} />
             </Stack>
             <Stack width="30%">
               <Chip

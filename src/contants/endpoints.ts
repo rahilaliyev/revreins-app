@@ -53,4 +53,7 @@ export const endpoints = {
       return this.base;
     },
   },
+  user: {
+    base: 'api/tenant/user/me',
+  },
 };

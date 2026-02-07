@@ -1,6 +1,11 @@
 import { useFormContext, type UseFormReturn } from 'react-hook-form';
 import z from 'zod';
 
+const segmentSchema = z.object({
+  field: z.string(),
+  name: z.string(),
+});
+
 export const validationSchema = z.object({
   salesEnterprise: z.string(),
   salesEnterpriseCtt: z.string(),
@@ -27,6 +32,8 @@ export const validationSchema = z.object({
   currency: z.string(),
   startingDate: z.string(),
   businessType: z.string(),
+  enableProjectBreakdown: z.boolean(),
+  segments: z.array(segmentSchema),
 });
 
 export type TFormData = z.infer<typeof validationSchema>;
