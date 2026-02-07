@@ -4,6 +4,7 @@ import { defineConfig } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import pluginReact from 'eslint-plugin-react';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -22,7 +23,12 @@ export default defineConfig([
   ...pluginQuery.configs['flat/recommended'],
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: { js, prettier: prettierPlugin, 'simple-import-sort': simpleImportSort },
+    plugins: {
+      js,
+      prettier: prettierPlugin,
+      'simple-import-sort': simpleImportSort,
+      'react-hooks': pluginReactHooks,
+    },
     extends: ['js/recommended'],
     languageOptions: { globals: globals.browser },
     rules: {
@@ -97,6 +103,8 @@ export default defineConfig([
       'react/jsx-key': ['error', { warnOnDuplicates: true }],
       'react/self-closing-comp': 'error',
       'react/jsx-no-useless-fragment': 'warn',
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
     },
     settings: {
       react: { version: 'detect' },

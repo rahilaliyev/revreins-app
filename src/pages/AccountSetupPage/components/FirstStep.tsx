@@ -41,13 +41,13 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
   useEffect(() => {
     const isValid = !!key && !!name && isSuccessConnection;
     onValidityChange(isValid);
-  }, [key, name, isSuccessConnection]);
+  }, [key, name, isSuccessConnection, onValidityChange]);
 
   useEffect(() => {
     if (data && data?.length > 0) {
       formBag.setValue('id', data[0].id.toString());
     }
-  }, [data]);
+  }, [data, formBag]);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     formBag.setValue('name', e.target.value, { shouldValidate: true });

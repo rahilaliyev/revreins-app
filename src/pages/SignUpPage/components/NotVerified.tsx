@@ -30,7 +30,7 @@ export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element
 
   useEffect(() => {
     setEmailValue(emailValue);
-  }, [emailValue]);
+  }, [emailValue, setEmailValue]);
 
   const handleSubmit = (data: TSignUpFormData): void => {
     mutate(data, {

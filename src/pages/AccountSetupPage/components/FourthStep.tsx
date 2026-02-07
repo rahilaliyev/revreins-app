@@ -34,7 +34,7 @@ const FourthStep = ({ invitingMembers }: IProps): JSX.Element => {
     const ownerData = { email: data?.user?.email, role: EUserRole.OWNER, name: data?.user?.name };
 
     return [ownerData, ...invitingMembers];
-  }, [invitingMembers, token]);
+  }, [invitingMembers, data?.user?.email, data?.user?.name]);
 
   return (
     <Box pt={2}>

@@ -67,7 +67,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
       ((selectedCard === ESetupCard.TEMPLATE && !!selectedTemplate) ||
         (selectedCard === ESetupCard.SCRATCH && !!stages.length));
     onValidityChange(isValid);
-  }, [selectedCard, name, stages]);
+  }, [selectedCard, name, stages, onValidityChange, selectedTemplate]);
 
   useEffect(() => {
     if (lastInputRef.current) {

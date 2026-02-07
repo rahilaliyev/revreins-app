@@ -40,12 +40,8 @@ export const CRMCard = ({
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      setIsSuccessConnection(true);
-    } else {
-      setIsSuccessConnection(false);
-    }
-  }, [isSuccess]);
+    setIsSuccessConnection(isSuccess ?? false);
+  }, [isSuccess, setIsSuccessConnection]);
 
   const handleKeyChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setValue('key', e.target.value, { shouldValidate: true });

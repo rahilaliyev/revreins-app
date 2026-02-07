@@ -1,4 +1,4 @@
-import type { JSX } from 'react';
+import { type ChangeEvent, type FormEvent, type JSX, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,6 +27,7 @@ interface IProps {
 
 const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
   const navigate = useNavigate();
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const { mutateAsync: updateTenantProfileMutate, isPending: isProfilePending } = useUpdateInviteMutation();
   const { mutateAsync: updateTenantUserMutate, isPending: isUserPending } = useTenantUserUpdateMutation();
 
@@ -39,6 +40,10 @@ const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
       confirmPassword: '',
     },
   });
+
+  useEffect(() => {
+    setIsTooltipOpen(!!formBag.formState.errors.password?.message);
+  }, [formBag.formState.errors.password?.message]);
 
   const handleNavigateSignIn = (): void => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);
@@ -58,6 +63,19 @@ const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
         setAuthCookies(temporaryToken);
         navigate(ROUTES.DEFAULT.PATH);
       });
+  };
+
+  const handlePasswordChange = (
+    event: FormEvent<HTMLDivElement> | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    name: 'password' | 'confirmPassword',
+  ): void => {
+    const target = event.target as HTMLInputElement;
+
+    formBag.setValue(name, target.value, { shouldDirty: true });
+
+    if (formBag.formState.errors.password?.message) {
+      setIsTooltipOpen(true);
+    }
   };
 
   return (
@@ -91,10 +109,11 @@ const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
                   name="password"
                   label="Password"
                   placeholder="Create a strong password"
+                  onChange={(e) => handlePasswordChange(e, 'password')}
                   helperText={
                     formBag.formState.errors.password?.message ? (
                       <Stack direction="row" alignItems="center" spacing={0.5}>
-                        <Tooltip open placement="bottom-start" title={<TooltipTitle />}>
+                        <Tooltip open={isTooltipOpen} placement="bottom-start" title={<TooltipTitle />}>
                           <InformationLineIcon width={18} height={18} pathFill={colorPalette.error.main} />
                         </Tooltip>
                         <Typography variant="caption2" color="error">

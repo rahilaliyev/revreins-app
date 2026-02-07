@@ -63,7 +63,7 @@ const InviteUserPage = (): JSX.Element => {
         },
       },
     );
-  }, [token, email]);
+  }, [token, email, mutate, mutateAccept]);
 
   if (accessToken || !token || !email) {
     return <Navigate to={ROUTES.DEFAULT.PATH} />;

@@ -1,4 +1,4 @@
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -48,6 +48,10 @@ const CreateAccountPage = (): JSX.Element => {
     },
   });
 
+  const handleNavigateSignIn = useCallback(() => {
+    navigate(ROUTES.AUTH.SIGNIN.PATH);
+  }, [navigate]);
+
   useEffect(() => {
     if (token && email) {
       mutate(
@@ -66,11 +70,7 @@ const CreateAccountPage = (): JSX.Element => {
     if (!token || !email) {
       enqueueSnackbar({ message: 'Something went wrong', variant: 'error' });
     }
-  }, [token, email]);
-
-  const handleNavigateSignIn = (): void => {
-    navigate(ROUTES.AUTH.SIGNIN.PATH);
-  };
+  }, [token, email, mutate, handleNavigateSignIn]);
 
   const handleSubmit = (data: TFormData): void => {
     const payload: ITenantUserUpdatePayload = {

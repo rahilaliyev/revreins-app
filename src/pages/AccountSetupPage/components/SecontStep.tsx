@@ -89,7 +89,7 @@ const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: I
     if (invitingMembers.length > 0) {
       onValidityChange(true);
     }
-  }, [invitingMembers]);
+  }, [invitingMembers, onValidityChange]);
 
   const handleDelete = (key: number): void => {
     setInvitingMembers((prev) => prev.filter((_, index) => index !== key));
