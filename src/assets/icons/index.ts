@@ -40,6 +40,7 @@ export { LeftCenterTipIcon } from './leftCenterTip';
 export { MagicFillIcon } from './magicFill';
 export { MoreLineIcon } from './moreLine';
 export { Notification3LineIcon } from './notification3Line';
+export { PolygonIcon } from './polygon';
 export { QuestionLineIcon } from './questionLine';
 export { ReloadArrowFillIcon } from './reloadArrowFill';
 export { Setting5LineIcon } from './settings5Line';

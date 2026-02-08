@@ -24,13 +24,13 @@ const FiltersAndRevenueInfo = (): JSX.Element => (
     <StyledRevenueWrapper>
       <Typography display="flex" gap={2} alignItems="center">
         Total Projected Revenue:
-        <Typography fontWeight={700} variant="body1" color="primary">
+        <Typography component="span" fontWeight={700} variant="body1" color="primary">
           $2,420,000
         </Typography>
       </Typography>
       <Typography display="flex" gap={2} alignItems="center" variant="caption1" color="text.secondary">
         Total Projected Revenue:
-        <Typography fontWeight={700} variant="body2" color="primary">
+        <Typography component="span" fontWeight={700} variant="body2" color="primary">
           $3,820,000
         </Typography>
       </Typography>
