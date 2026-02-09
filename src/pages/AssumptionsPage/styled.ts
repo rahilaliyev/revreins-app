@@ -41,3 +41,13 @@ export const StyledAssumptionTable = styled(Table)(({ theme }) => ({
     padding: theme.spacing(3, 5),
   },
 }));
+
+export const StyledDeleteIconWrapper = styled(IconButton)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: theme.spacing(8),
+  height: theme.spacing(8),
+  borderRadius: theme.spacing(1),
+  background: theme.palette.secondary.main,
+}));

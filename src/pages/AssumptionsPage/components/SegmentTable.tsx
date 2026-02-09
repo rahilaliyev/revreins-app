@@ -17,10 +17,10 @@ import {
 
 import { CustomSelectField, CustomTextField } from 'src/components';
 
-import { StyledAssumptionTable } from '../styled';
+import { StyledAssumptionTable, StyledDeleteIconWrapper } from '../styled';
 import { useAssumptionsFormContext } from '../validationSchema';
 
-import { AddLineIcon, InformationLineIcon } from 'src/assets/icons';
+import { AddLineIcon, DeleteBinLineIcon, InformationLineIcon } from 'src/assets/icons';
 
 const SegmentTable = (): JSX.Element => {
   const { control } = useAssumptionsFormContext();
@@ -109,14 +109,26 @@ const SegmentTable = (): JSX.Element => {
           </TableRow>
           {fields.map((field, index) => (
             <TableRow key={field.id}>
-              <TableCell width={250}>
-                <CustomTextField name={`segments.${index}.value`} />
+              <TableCell>
+                <CustomTextField
+                  name={`segments.${index}.value`}
+                  size="small"
+                  sx={{
+                    maxWidth: (theme) => theme.spacing(60),
+                  }}
+                />
               </TableCell>
               <TableCell width={250}>
-                <CustomSelectField
-                  name={`segments.${index}.field`}
-                  items={[{ value: 'midMarket', label: 'Mid market' }]}
-                />
+                <Stack gap={4}>
+                  <CustomSelectField
+                    name={`segments.${index}.field`}
+                    items={[{ value: 'midMarket', label: 'Mid market' }]}
+                    size="small"
+                  />
+                  <StyledDeleteIconWrapper onClick={() => remove(index)}>
+                    <DeleteBinLineIcon width={16} height={16} pathFill={colorPalette.other.icon} />
+                  </StyledDeleteIconWrapper>
+                </Stack>
               </TableCell>
             </TableRow>
           ))}
