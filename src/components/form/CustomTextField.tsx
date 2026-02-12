@@ -22,7 +22,7 @@ type TTextField = Omit<ControllerProps, 'render'> &
   };
 
 export const CustomTextField = (props: TTextField): JSX.Element => {
-  const { type, name, rules, helperText, defaultValue, helperContent, inputRef, ...rest } = props;
+  const { type, name, rules, helperText, defaultValue, helperContent, inputRef, slotProps, ...rest } = props;
   const { control } = useFormContext();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -42,6 +42,9 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
 
   const isPasswordField = type === 'password';
 
+  const customEndAdornment =
+    slotProps?.input && typeof slotProps.input !== 'function' ? slotProps.input.endAdornment : null;
+
   return (
     <FormControl fullWidth>
       <TextField
@@ -57,7 +60,9 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
           }
         }}
         slotProps={{
+          ...slotProps,
           input: {
+            ...slotProps?.input,
             endAdornment: isPasswordField ? (
               <InputAdornment position="end">
                 <IconButton onClick={handleTogglePassword} edge="end">
@@ -68,7 +73,9 @@ export const CustomTextField = (props: TTextField): JSX.Element => {
                   )}
                 </IconButton>
               </InputAdornment>
-            ) : null,
+            ) : (
+              (customEndAdornment ?? null)
+            ),
           },
         }}
       />

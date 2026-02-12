@@ -22,6 +22,7 @@ export { Database2LineIcon } from './database2Line';
 export { DeleteBin7LineIcon } from './deleteBin7Line';
 export { DeleteBinLineIcon } from './deleteBinLine';
 export { DotIcon } from './dot';
+export { Edit2LineIcon } from './edit2Line';
 export { EyeLineIcon } from './eyeLine';
 export { EyeOffLineIcon } from './eyeOffLine';
 export { Filter2FillIcon } from './filter2Fill';

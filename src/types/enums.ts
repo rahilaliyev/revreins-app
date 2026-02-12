@@ -33,3 +33,11 @@ export enum EStageAddEditMode {
   ADD = 'ADD',
   EDIT = 'EDIT',
 }
+
+export enum ELeadCustomFieldType {
+  TEXT = 'text',
+  NUMBER = 'number',
+  DATE = 'date',
+  DATETIME = 'datetime',
+  CHOICES = 'choices',
+}

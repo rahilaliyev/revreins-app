@@ -2,8 +2,8 @@ import { useFormContext, type UseFormReturn } from 'react-hook-form';
 import z from 'zod';
 
 const segmentSchema = z.object({
-  field: z.string(),
   name: z.string(),
+  field: z.string(),
 });
 
 export const validationSchema = z.object({

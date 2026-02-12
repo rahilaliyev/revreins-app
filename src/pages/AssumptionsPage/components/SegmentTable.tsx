@@ -1,10 +1,14 @@
 import type { JSX } from 'react';
 import { useFieldArray } from 'react-hook-form';
 import { colorPalette } from 'src/theme/colorpalette';
+import { ELeadCustomFieldType } from 'src/types/enums';
+
+import { useGetLeadCustomFields } from 'src/apis/breakdowns';
 
 import {
   Button,
   IconButton,
+  InputAdornment,
   Stack,
   TableBody,
   TableCell,
@@ -20,7 +24,7 @@ import { CustomSelectField, CustomTextField } from 'src/components';
 import { StyledAssumptionTable, StyledDeleteIconWrapper } from '../styled';
 import { useAssumptionsFormContext } from '../validationSchema';
 
-import { AddLineIcon, DeleteBinLineIcon, InformationLineIcon } from 'src/assets/icons';
+import { AddLineIcon, DeleteBinLineIcon, Edit2LineIcon, InformationLineIcon } from 'src/assets/icons';
 
 const SegmentTable = (): JSX.Element => {
   const { control } = useAssumptionsFormContext();
@@ -30,9 +34,11 @@ const SegmentTable = (): JSX.Element => {
     control,
   });
 
-  const addSegmentField = (): void => {
+  const { data } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
+
+  const addSegmentField = (index: number): void => {
     append({
-      name: '',
+      name: `Segment ${index + 1}`,
       field: '',
     });
   };
@@ -98,7 +104,7 @@ const SegmentTable = (): JSX.Element => {
                 </Typography>
                 <Button
                   type="button"
-                  onClick={addSegmentField}
+                  onClick={() => addSegmentField(fields.length)}
                   size="small"
                   sx={{ padding: 0, width: (theme) => theme.spacing(8) }}
                 >
@@ -111,10 +117,29 @@ const SegmentTable = (): JSX.Element => {
             <TableRow key={field.id}>
               <TableCell>
                 <CustomTextField
-                  name={`segments.${index}.value`}
+                  name={`segments.${index}.name`}
                   size="small"
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Edit2LineIcon width={20} height={20} pathFill={colorPalette.other.icon} />
+                        </InputAdornment>
+                      ),
+                    },
+                  }}
                   sx={{
                     maxWidth: (theme) => theme.spacing(60),
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      border: 'none',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      border: 'none',
+                    },
+                    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      border: '2px solid',
+                      borderColor: (theme) => theme.palette.primary.main,
+                    },
                   }}
                 />
               </TableCell>

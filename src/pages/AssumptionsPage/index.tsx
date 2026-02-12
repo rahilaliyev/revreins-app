@@ -22,7 +22,7 @@ const AssumptionsPage = (): JSX.Element => {
       currency: 'USD',
       startingDate: dayjs().format(MONTH_LETTER_YEAR_FORMAT),
       enableProjectBreakdown: false,
-      segments: [{ name: '', field: '' }],
+      segments: [{ name: 'Segment 1', field: '' }],
     },
   });
 

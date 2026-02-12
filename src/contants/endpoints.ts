@@ -46,6 +46,9 @@ export const endpoints = {
     get projectStages(): string {
       return `${this.base}/project-stages`;
     },
+    get leadCustomFields(): string {
+      return `${this.base}/lead-custom-fields`;
+    },
   },
   crmProviders: {
     base: 'api/crm-providers',
