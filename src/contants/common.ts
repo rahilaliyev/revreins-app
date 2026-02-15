@@ -24,6 +24,7 @@ export const TEMPLATES = [
 export const USER_ROLES = [
   { value: EUserRole.OWNER, label: 'Owner', description: '' },
   { value: EUserRole.MEMBER, label: 'Member', description: 'Can view reports and forecasts' },
+  { value: EUserRole.USER, label: 'User', description: 'Can view reports and forecasts' },
   // {
   //   value: EUserRole.EDITOR,
   //   label: 'Editor',

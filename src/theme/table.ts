@@ -5,6 +5,7 @@ export const tableTheme: Components = {
     styleOverrides: {
       root: {
         fontFamily: 'Noto Sans, sans-serif',
+        background: 'white',
       },
     },
   },

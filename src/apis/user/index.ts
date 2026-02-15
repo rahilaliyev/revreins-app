@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { endpoints, QUERY_KEYS } from 'src/contants';
 
-import { axiosLogin } from '../axiosInstance';
+import { api, axiosLogin } from '../axiosInstance';
 
 import type { IUserInfoResponse } from './types';
 
@@ -14,6 +14,16 @@ export const useGetUserInfoOnboarding = (token: string): UseQueryResult<IUserInf
           Authorization: `Bearer ${token}`,
         },
       });
+
+      return res.data;
+    },
+  });
+
+export const useGetUserInfo = (): UseQueryResult<IUserInfoResponse, Error> =>
+  useQuery({
+    queryKey: [QUERY_KEYS.USER_INFO],
+    queryFn: async () => {
+      const res = await api.get<IUserInfoResponse>(endpoints.user.base);
 
       return res.data;
     },

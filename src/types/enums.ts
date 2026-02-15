@@ -7,6 +7,7 @@ export enum EAccountSetup {
 
 export enum EUserRole {
   MEMBER = 'member',
+  USER = 'user',
   // EDITOR = 'editor',
   ADMIN = 'admin',
   OWNER = 'owner',
@@ -40,4 +41,10 @@ export enum ELeadCustomFieldType {
   DATE = 'date',
   DATETIME = 'datetime',
   CHOICES = 'choices',
+}
+
+export enum EActivityType {
+  CREATE = 'CREATE',
+  UPDATE = 'UPDATE',
+  PUBLISH = 'PUBLISH',
 }

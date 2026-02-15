@@ -23,6 +23,7 @@ const AssumptionsPage = lazy(() => import('src/pages/AssumptionsPage'));
 const CRMDataPage = lazy(() => import('src/pages/CRMDataPage'));
 const SettingPage = lazy(() => import('src/pages/SettingPage'));
 const TeamBillingPage = lazy(() => import('src/pages/TeamBillingPage'));
+const UserProfilePage = lazy(() => import('src/pages/UserProfilePage'));
 
 const RouteComponents = (): JSX.Element => {
   useEffect(() => {
@@ -76,6 +77,7 @@ const RouteComponents = (): JSX.Element => {
         <Route path={ROUTES.DEFAULT.CRM_DATA.PATH} element={suspenseFallback(CRMDataPage)} />
         <Route path={ROUTES.DEFAULT.SETTING.PATH} element={suspenseFallback(SettingPage)} />
         <Route path={ROUTES.DEFAULT.TEAM_BILLING.PATH} element={suspenseFallback(TeamBillingPage)} />
+        <Route path={ROUTES.DEFAULT.USER_PROFILE.PATH} element={suspenseFallback(UserProfilePage)} />
       </Route>
     </Routes>
   );

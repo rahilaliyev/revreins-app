@@ -1,9 +1,9 @@
-const BASE_PATH = '/dashboard';
+const BASE_PATH = '';
 const BASE_AUTH_PATH = '/auth';
 
 export const ROUTES = {
   DEFAULT: {
-    PATH: BASE_PATH,
+    PATH: '/',
     PROJECTS: {
       PATH: `${BASE_PATH}/projects`,
       NEW_PROJECT: {
@@ -24,6 +24,9 @@ export const ROUTES = {
     },
     TEAM_BILLING: {
       PATH: `${BASE_PATH}/team-and-billing`,
+    },
+    USER_PROFILE: {
+      PATH: `${BASE_PATH}/profile`,
     },
   },
   AUTH: {

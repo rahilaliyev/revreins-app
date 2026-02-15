@@ -1,6 +1,6 @@
 import { ROUTES } from 'src/routes/paths';
 
-export const getPageTitle = (pathname: string): string => {
+export const getPageTitle = (pathname: string, title?: string): string => {
   if (/^\/projects\/\d+$/.test(pathname)) {
     return 'Projects / Detail';
   }
@@ -14,6 +14,7 @@ export const getPageTitle = (pathname: string): string => {
     [ROUTES.DEFAULT.CRM_DATA.PATH]: 'CRM Data',
     [ROUTES.DEFAULT.SETTING.PATH]: 'Setting',
     [ROUTES.DEFAULT.TEAM_BILLING.PATH]: 'Team & Billing',
+    [ROUTES.DEFAULT.USER_PROFILE.PATH]: `Profile / ${title ?? ''}`,
   };
 
   return routeTitles[pathname] || 'Dashboard';

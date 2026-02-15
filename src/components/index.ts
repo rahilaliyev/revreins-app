@@ -10,3 +10,4 @@ export { CustomStepIcon } from './ui/CustomStepIcon';
 export { CustomTabPanel } from './ui/CustomTabPanel';
 export { GoogleButton } from './ui/GoogleButton';
 export { LoadingButton } from './ui/LoadingButton';
+export { LoadingWrapper } from './ui/LoadingWrapper';
