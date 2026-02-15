@@ -43,9 +43,7 @@ export const NotVerified = ({ setEmailValue, setIsVerify }: IProps): JSX.Element
   return (
     <Stack flexDirection="column" justifyContent="center" mb={6} gap={6}>
       <GoogleButton text="Sign up with Google" size="large" />
-      <Typography variant="body1" color="textSecondary">
-        or sign up with email
-      </Typography>
+      <Typography color="textSecondary">or sign up with email</Typography>
       <Stack width="100%">
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
           <Stack justifyContent="center" alignItems="center" flexDirection="column" minWidth={400}>

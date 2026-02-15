@@ -42,7 +42,7 @@ const FourthStep = ({ invitingMembers }: IProps): JSX.Element => {
         <Typography variant="h6" fontWeight={500}>
           Let’s review your progress so far...
         </Typography>
-        <Typography variant="body1" color="textSecondary">
+        <Typography color="textSecondary">
           Select a pre-made CRM template or set one up from scratch
         </Typography>
       </Box>
@@ -78,7 +78,7 @@ const FourthStep = ({ invitingMembers }: IProps): JSX.Element => {
       </Typography>
       <Box maxHeight={300} overflow="auto" pr={1}>
         <Stack justifyContent="space-between" alignItems="center">
-          <Typography variant="body1">Your Team</Typography>
+          <Typography>Your Team</Typography>
           <Typography variant="body2" color="textSecondary">
             {memberList.length}/15
           </Typography>

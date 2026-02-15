@@ -118,7 +118,7 @@ const Sidebar = (): JSX.Element => {
           <MenuItems items={MAIN_MENU_ITEMS} isExpanded={isExpanded} />
           <StyledDivider isExpanded={isExpanded} />
           {isExpanded && (
-            <Typography variant="body1" mb={2} sx={{ marginLeft: '0 !important' }}>
+            <Typography mb={2} sx={{ marginLeft: '0 !important' }}>
               Account
             </Typography>
           )}

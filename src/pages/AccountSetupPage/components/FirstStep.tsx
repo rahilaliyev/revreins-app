@@ -73,7 +73,7 @@ const FirstStep = ({ onValidityChange }: IProps): JSX.Element => {
         <Typography variant="h6" fontWeight={500}>
           Connect Your CRM
         </Typography>
-        <Typography variant="body1" color="textSecondary">
+        <Typography color="textSecondary">
           Tell us your company name & connect a CRM to sync your sales data. You can also skip this step to
           connect it later.
           <br /> Need help? Check{' '}

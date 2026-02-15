@@ -133,7 +133,7 @@ const NewProjectPage = (): JSX.Element => {
           />
           <StyledStagesSidebar width="69%">
             <Stack justifyContent="space-between">
-              <Typography variant="body1" fontWeight={500}>
+              <Typography fontWeight={500}>
                 Configure: {stages?.find((stage) => stage.id === activeStage)?.name}
               </Typography>
               <Button

@@ -56,9 +56,7 @@ export const CRMCard = ({
             <StyledImg src={provider.logo} alt="Logo of provider" />
           </StyledIconWrapper>
           <Stack flexDirection="column" alignItems="flex-start">
-            <Typography component="p" variant="body1">
-              {`Connect Your ${provider.display_name}`}
-            </Typography>
+            <Typography component="p">{`Connect Your ${provider.display_name}`}</Typography>
             <Typography component="p" variant="body2" color="textSecondary">
               Enter the API key below to connect
             </Typography>

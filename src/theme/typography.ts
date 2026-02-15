@@ -112,7 +112,7 @@ export const typographyOptions = {
 export const typographyTheme = {
   MuiTypography: {
     defaultProps: {
-      variant: 'body2',
+      variant: 'body1',
       variantMapping: {
         body2: 'p',
         subtitle2: 'p',

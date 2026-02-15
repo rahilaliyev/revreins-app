@@ -43,9 +43,7 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
 
   return (
     <StyledStagesSidebar width="31%">
-      <Typography variant="body1" fontWeight={500}>
-        Pipeline Stages
-      </Typography>
+      <Typography fontWeight={500}>Pipeline Stages</Typography>
       {stages?.map((stage) => (
         <StageCard
           key={stage.id}

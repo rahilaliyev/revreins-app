@@ -66,10 +66,10 @@ const ProjectOverview = (): JSX.Element => {
                 <StyledAddIconButton>
                   <AddFillIcon pathFill={colorPalette.inverted.invertedBlack} />
                 </StyledAddIconButton>
-                <Typography variant="body1" color="text.primary" mt={3} mb={6} fontWeight={600}>
+                <Typography color="text.primary" mt={3} mb={6} fontWeight={600}>
                   Create New Project
                 </Typography>
-                <Typography variant="body1" color="text.secondary" width="60%" textAlign="center">
+                <Typography color="text.secondary" width="60%" textAlign="center">
                   Start a new sales forecast for a region or market.
                 </Typography>
               </StyledCreateProject>
@@ -85,20 +85,16 @@ const ProjectOverview = (): JSX.Element => {
                       </StyledChartIconWrapper>
                       <Chip variant="filled" color="primary" label="Published" icon={<DotIcon />} />
                     </Stack>
-                    <Typography variant="body1" fontWeight={500} mt={3.5}>
+                    <Typography fontWeight={500} mt={3.5}>
                       {el?.name}
                     </Typography>
                     <Stack justifyContent="space-between" my={3}>
-                      <Typography variant="body1" color="text.secondary">
-                        Last updated
-                      </Typography>
-                      <Typography variant="body1">{dayjs(el?.updated_at).format(UI_DATE_FORMAT)}</Typography>
+                      <Typography color="text.secondary">Last updated</Typography>
+                      <Typography>{dayjs(el?.updated_at).format(UI_DATE_FORMAT)}</Typography>
                     </Stack>
                     <Stack justifyContent="space-between" my={3}>
-                      <Typography variant="body1" color="text.secondary">
-                        Forecasts
-                      </Typography>
-                      <Typography variant="body1">-</Typography>
+                      <Typography color="text.secondary">Forecasts</Typography>
+                      <Typography>-</Typography>
                     </Stack>
                   </StyledProjectCard>
                 </Link>

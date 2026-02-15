@@ -44,12 +44,7 @@ const ForgotPasswordPage = (): JSX.Element => {
         <Typography mt={1.5} mb={1.5} variant="h5">
           Forgot your password?
         </Typography>
-        <Typography
-          variant="body1"
-          textAlign="center"
-          color="textSecondary"
-          width={isSuccess ? '80%' : '100%'}
-        >
+        <Typography textAlign="center" color="textSecondary" width={isSuccess ? '80%' : '100%'}>
           {isSuccess ? (
             <>
               If an account associated with <b>{email}</b> exists, you’ll receive a password reset email

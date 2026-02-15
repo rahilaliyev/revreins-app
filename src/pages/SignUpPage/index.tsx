@@ -26,12 +26,7 @@ const SignUpPage = (): JSX.Element => {
       <Stack flexDirection="column">
         <Stack mt={0.5} mb={6} flexDirection="column" gap={0.5}>
           <Typography variant="h5">{isVerify ? 'Let’s verify your email' : 'Create Your Account'}</Typography>
-          <Typography
-            variant="body1"
-            color="textSecondary"
-            width={isVerify ? '90%' : '100%'}
-            textAlign="center"
-          >
+          <Typography color="textSecondary" width={isVerify ? '90%' : '100%'} textAlign="center">
             {isVerify
               ? `Check ${emailValue} to verify your account and get started`
               : 'Get started with RevReins.io'}

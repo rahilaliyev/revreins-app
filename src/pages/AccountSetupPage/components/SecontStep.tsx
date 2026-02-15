@@ -113,10 +113,10 @@ const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: I
         <Typography variant="h6" fontWeight={500}>
           Manage your team
         </Typography>
-        <Typography variant="body1" color="textSecondary">
+        <Typography color="textSecondary">
           Add your team to collaborate on forecasts. An invite will be sent to the email entered below. To see
           more information on user roles check the{' '}
-          <Typography display="inline" component="span" variant="body1" sx={{ textDecoration: 'underline' }}>
+          <Typography display="inline" component="span" sx={{ textDecoration: 'underline' }}>
             User roles permissions table
           </Typography>
         </Typography>
@@ -210,7 +210,7 @@ const SecontStep = ({ onValidityChange, invitingMembers, setInvitingMembers }: I
       </Box>
       <Box>
         <Stack justifyContent="space-between" alignItems="center">
-          <Typography variant="body1">Your Team</Typography>
+          <Typography>Your Team</Typography>
           <Typography variant="body2" color="textSecondary">
             {invitingMembers.length + 1}/15
           </Typography>

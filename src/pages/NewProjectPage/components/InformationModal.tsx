@@ -47,7 +47,7 @@ const InformationModal = ({ open, onClose }: IProps): JSX.Element => {
       <Stack gap={6}>
         <StyledInfoCard>
           <img src={FirstImg} alt="Configure Stages" />
-          <Typography variant="body1" display="flex" alignItems="center" mt={4} mb={2}>
+          <Typography display="flex" alignItems="center" mt={4} mb={2}>
             <StyledNumberWrapper>1</StyledNumberWrapper> Configure Stages
           </Typography>
           <Typography component="p" variant="caption2" color="text.secondary">
@@ -59,7 +59,7 @@ const InformationModal = ({ open, onClose }: IProps): JSX.Element => {
         </StyledInfoCard>
         <StyledInfoCard>
           <img src={SecondImg} alt="Set Assumptions" />
-          <Typography variant="body1" display="flex" alignItems="center" mt={4} mb={2}>
+          <Typography display="flex" alignItems="center" mt={4} mb={2}>
             <StyledNumberWrapper>2</StyledNumberWrapper> Set Assumptions
           </Typography>
           <Typography component="p" variant="caption2" color="text.secondary">
@@ -71,7 +71,7 @@ const InformationModal = ({ open, onClose }: IProps): JSX.Element => {
         </StyledInfoCard>
         <StyledInfoCard>
           <img src={ThirdImg} alt="See Live Data" />
-          <Typography variant="body1" display="flex" alignItems="center" mt={4} mb={2}>
+          <Typography display="flex" alignItems="center" mt={4} mb={2}>
             <StyledNumberWrapper>3</StyledNumberWrapper> See Live Data
           </Typography>
           <Typography component="p" variant="caption2" color="text.secondary">

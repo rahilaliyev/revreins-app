@@ -25,11 +25,11 @@ const ProjectSettings = (): JSX.Element => {
       <Typography fontWeight={500} variant="subtitle1">
         Project Settings
       </Typography>
-      <Typography fontWeight={500} variant="body1" color="text.secondary" mb={8}>
+      <Typography fontWeight={500} color="text.secondary" mb={8}>
         Select the settings for your project. You will be able to change them later.
       </Typography>
       <Box my={8}>
-        <Typography variant="body1" fontWeight={700} mb={4}>
+        <Typography fontWeight={700} mb={4}>
           Starting Date
         </Typography>
         <TableContainer
@@ -39,7 +39,7 @@ const ProjectSettings = (): JSX.Element => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">Project Starting Date</Typography>
+                  <Typography>Project Starting Date</Typography>
                 </TableCell>
                 <TableCell align="right" width={150}>
                   <CustomDatePickerField
@@ -58,7 +58,7 @@ const ProjectSettings = (): JSX.Element => {
         </TableContainer>
       </Box>
       <Box>
-        <Typography variant="body1" fontWeight={700} mb={4}>
+        <Typography fontWeight={700} mb={4}>
           Project currency
         </Typography>
         <TableContainer
@@ -68,7 +68,7 @@ const ProjectSettings = (): JSX.Element => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">Project Currency for Target Quota </Typography>
+                  <Typography>Project Currency for Target Quota </Typography>
                 </TableCell>
                 <TableCell align="right" width={150}>
                   <CustomSelectField
@@ -84,10 +84,8 @@ const ProjectSettings = (): JSX.Element => {
         </TableContainer>
       </Box>
       <Box my={8}>
-        <Typography variant="body1" fontWeight={700}>
-          Project Breakdown
-        </Typography>
-        <Typography variant="body1" color="text.secondary" mb={4} mt={2}>
+        <Typography fontWeight={700}>Project Breakdown</Typography>
+        <Typography color="text.secondary" mb={4} mt={2}>
           Enable to break down your project leads by any number of fields. Select a field for each breakdown
           segment, all unselected fields will be grouped under “Other”
         </Typography>
@@ -98,15 +96,11 @@ const ProjectSettings = (): JSX.Element => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1" fontWeight={600}>
-                    Break down stages into segments
-                  </Typography>
+                  <Typography fontWeight={600}>Break down stages into segments</Typography>
                 </TableCell>
                 <TableCell align="right" width={270}>
                   <Stack gap={6}>
-                    <Typography variant="body2" whiteSpace="nowrap">
-                      Enable Project Breakdown
-                    </Typography>
+                    <Typography whiteSpace="nowrap">Enable Project Breakdown</Typography>
                     <CustomSwitchField name="enableProjectBreakdown" />
                   </Stack>
                 </TableCell>

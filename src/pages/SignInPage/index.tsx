@@ -49,9 +49,7 @@ const SignInPage = (): JSX.Element => {
         </Typography>
         <Stack flexDirection="column" justifyContent="center" mb={6} gap={6}>
           <GoogleButton text="Sign in with Google" size="large" />
-          <Typography variant="body1" color="textSecondary">
-            or sign in with email
-          </Typography>
+          <Typography color="textSecondary">or sign in with email</Typography>
           <Stack width="100%">
             <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
               <Stack justifyContent="center" alignItems="center" flexDirection="column" minWidth={400}>

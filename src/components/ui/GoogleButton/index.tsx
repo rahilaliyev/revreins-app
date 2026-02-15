@@ -35,7 +35,7 @@ export const GoogleButton = ({ text, size = 'medium' }: IProps): JSX.Element => 
   return (
     <StyledGoogleButton onClick={() => login()} variant="outlined" size={size}>
       <GoogleIcon />
-      <Typography variant="body1" color="textPrimary" fontWeight={500}>
+      <Typography color="textPrimary" fontWeight={500}>
         {text}
       </Typography>
     </StyledGoogleButton>

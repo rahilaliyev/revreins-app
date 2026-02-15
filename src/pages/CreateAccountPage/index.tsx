@@ -100,7 +100,7 @@ const CreateAccountPage = (): JSX.Element => {
       <Stack flexDirection="column">
         <Stack mt={0.5} mb={6} flexDirection="column" gap={0.5}>
           <Typography variant="h5">Create Your Account</Typography>
-          <Typography variant="body1" color="textSecondary" width="100%" textAlign="center">
+          <Typography color="textSecondary" width="100%" textAlign="center">
             Get started with RevReins.io
           </Typography>
         </Stack>

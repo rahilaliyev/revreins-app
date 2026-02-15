@@ -48,7 +48,7 @@ const ResetPasswordPage = (): JSX.Element => {
           Reset your Password
         </Typography>
         {isSuccess && (
-          <Typography variant="body1" textAlign="center" color="textSecondary" width="80%">
+          <Typography textAlign="center" color="textSecondary" width="80%">
             Your password has been changed successfully. You’ll be redirected to the login page shortly.
           </Typography>
         )}

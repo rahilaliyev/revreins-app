@@ -21,7 +21,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
     <Typography fontWeight={500} variant="subtitle1">
       Forecast Assumptions - Recurring Revenue
     </Typography>
-    <Typography fontWeight={500} variant="body1" color="text.secondary" mb={8}>
+    <Typography fontWeight={500} color="text.secondary" mb={8}>
       Configure the key assumptions that drive your forecast model
     </Typography>
     <Box>
@@ -32,9 +32,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
           <TableBody>
             <TableRow>
               <TableCell>
-                <Typography variant="body1" fontWeight={600}>
-                  Enable Recurring Revenue
-                </Typography>
+                <Typography fontWeight={600}>Enable Recurring Revenue</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
                 <Switch />
@@ -45,7 +43,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
       </TableContainer>
     </Box>
     <Box>
-      <Typography variant="body1" fontWeight={700} mb={4} mt={8}>
+      <Typography fontWeight={700} mb={4} mt={8}>
         Recurring revenue
       </Typography>
       <TableContainer
@@ -55,27 +53,21 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
           <TableHead>
             <TableRow>
               <TableCell>
-                <Typography variant="body1" fontWeight={600}>
-                  Data type
-                </Typography>
+                <Typography fontWeight={600}>Data type</Typography>
               </TableCell>
               <TableCell>
-                <Typography variant="body1" fontWeight={600}>
-                  Enterprise
-                </Typography>
+                <Typography fontWeight={600}>Enterprise</Typography>
               </TableCell>
 
               <TableCell>
-                <Typography variant="body1" fontWeight={600}>
-                  Mid-Market
-                </Typography>
+                <Typography fontWeight={600}>Mid-Market</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell>
-                <Typography variant="body1">Starting Customers</Typography>
+                <Typography>Starting Customers</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
                 <CustomTextField size="small" name="startingEnterprise" placeholder="35%" />
@@ -86,7 +78,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
             </TableRow>
             <TableRow>
               <TableCell>
-                <Typography variant="body1">Churn Rate</Typography>
+                <Typography>Churn Rate</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
                 <CustomTextField size="small" name="churnEnterprise" placeholder="35%" />
@@ -97,7 +89,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
             </TableRow>
             <TableRow>
               <TableCell>
-                <Typography variant="body1">% of Customers Ordering</Typography>
+                <Typography>% of Customers Ordering</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
                 <CustomTextField size="small" name="customerEnterprise" placeholder="35%" />
@@ -108,7 +100,7 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
             </TableRow>
             <TableRow>
               <TableCell>
-                <Typography variant="body1">Average Order Value</Typography>
+                <Typography>Average Order Value</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
                 <CustomTextField size="small" name="orderValueEnterprise" placeholder="35%" />

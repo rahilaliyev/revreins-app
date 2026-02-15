@@ -55,11 +55,7 @@ const SegmentTable = (): JSX.Element => {
           <TableRow>
             <TableCell>
               <Stack>
-                <Typography
-                  variant="body1"
-                  fontWeight={600}
-                  sx={{ color: (theme) => theme.palette.primary.main }}
-                >
+                <Typography fontWeight={600} sx={{ color: (theme) => theme.palette.primary.main }}>
                   Breakdown source field
                 </Typography>
                 <Tooltip
@@ -93,15 +89,11 @@ const SegmentTable = (): JSX.Element => {
         <TableBody>
           <TableRow>
             <TableCell>
-              <Typography variant="body1" fontWeight={600}>
-                Segment Name
-              </Typography>
+              <Typography fontWeight={600}>Segment Name</Typography>
             </TableCell>
             <TableCell align="right" width={200}>
               <Stack justifyContent="space-between">
-                <Typography variant="body1" fontWeight={600}>
-                  Segment Field
-                </Typography>
+                <Typography fontWeight={600}>Segment Field</Typography>
                 <Button
                   type="button"
                   onClick={() => addSegmentField(fields.length)}

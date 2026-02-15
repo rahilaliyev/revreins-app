@@ -107,7 +107,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
         <Typography variant="h6" fontWeight={500}>
           Choose Your Starting Point
         </Typography>
-        <Typography variant="body1" color="textSecondary">
+        <Typography color="textSecondary">
           Select a pre-made CRM template or set one up from scratch
         </Typography>
       </Box>
@@ -126,7 +126,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
             <StyledIconCardWrapper isActive={selectedCard === ESetupCard.TEMPLATE} width={56} height={56}>
               <LayoutLineIcon pathFill={colorPalette.primary.hover} />
             </StyledIconCardWrapper>
-            <Typography mt={2} mb={0.5} fontWeight={500} variant="body1">
+            <Typography mt={2} mb={0.5} fontWeight={500}>
               Use Template
             </Typography>
             <Typography variant="caption2" color="textSecondary">
@@ -140,7 +140,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
             <StyledIconCardWrapper isActive={selectedCard === ESetupCard.SCRATCH}>
               <AddBoxLineIcon pathFill={colorPalette.primary.hover} />
             </StyledIconCardWrapper>
-            <Typography mt={2} mb={0.5} fontWeight={500} variant="body1">
+            <Typography mt={2} mb={0.5} fontWeight={500}>
               Start from Scratch
             </Typography>
             <Typography variant="caption2" color="textSecondary">
@@ -152,9 +152,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
           {selectedCard === ESetupCard.TEMPLATE && (
             <Fade in={selectedCard === ESetupCard.TEMPLATE} timeout={500} mountOnEnter unmountOnExit>
               <Box>
-                <Typography variant="body1" mb={2}>
-                  Available Templates
-                </Typography>
+                <Typography mb={2}>Available Templates</Typography>
 
                 <Box maxHeight={200} overflow="auto" pr={1}>
                   <Grid container spacing={2}>
@@ -191,7 +189,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
                           </Stack>
 
                           <Box mt={2}>
-                            <Typography variant="body1">{el.title}</Typography>
+                            <Typography>{el.title}</Typography>
                             <Typography variant="caption2" component="p" color="textSecondary">
                               {el.description}
                             </Typography>
@@ -210,7 +208,7 @@ const ThirdStep = ({ onValidityChange, onSubmitSuccess }: IProps): JSX.Element =
                 <Typography variant="h6" fontWeight={500}>
                   Define Your Stages
                 </Typography>
-                <Typography variant="body1" color="textSecondary">
+                <Typography color="textSecondary">
                   Set up your custom funnel stages, you’ll be able to map them later.
                 </Typography>
                 <Box maxHeight={200} overflow="auto" pr={1} my={4}>

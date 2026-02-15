@@ -84,14 +84,12 @@ const CreateAccount = ({ temporaryToken }: IProps): JSX.Element => {
       <Stack flexDirection="column">
         <Stack mt={0.5} mb={6} flexDirection="column" gap={0.5}>
           <Typography variant="h5">Create Your Account</Typography>
-          <Typography variant="body1" color="textSecondary" width="100%" textAlign="center">
+          <Typography color="textSecondary" width="100%" textAlign="center">
             Get started with RevReins.io
           </Typography>
           <Stack flexDirection="column" justifyContent="center" my={6} gap={6}>
             <GoogleButton text="Sign in with Google" size="large" />
-            <Typography variant="body1" color="textSecondary">
-              or sign in with email
-            </Typography>
+            <Typography color="textSecondary">or sign in with email</Typography>
           </Stack>
         </Stack>
         <Stack width={400} flexDirection="column" justifyContent="center" mb={6} gap={6}>

@@ -43,21 +43,17 @@ const CompanyInformation = ({ invitingMemberData, isLoading }: IProps): JSX.Elem
               <StyledCompanyIconWrapper>
                 <img src={invitingMemberData?.tenantLogo} alt={invitingMemberData?.tenantName} />
               </StyledCompanyIconWrapper>
-              <Typography variant="body1">{invitingMemberData?.tenantName}</Typography>
+              <Typography>{invitingMemberData?.tenantName}</Typography>
             </Stack>
             <Stack>
               <Box width="50%">
-                <Typography variant="body1" color="text.secondary">
-                  Team Size
-                </Typography>
+                <Typography color="text.secondary">Team Size</Typography>
                 <Typography variant="body2" fontWeight={500}>
                   {invitingMemberData?.teamSize} members
                 </Typography>
               </Box>
               <Box width="50%">
-                <Typography variant="body1" color="text.secondary">
-                  Your Role
-                </Typography>
+                <Typography color="text.secondary">Your Role</Typography>
                 <Typography variant="body2" fontWeight={500}>
                   {USER_ROLES?.find((el) => el?.value === invitingMemberData?.role)?.label}
                 </Typography>
@@ -66,9 +62,7 @@ const CompanyInformation = ({ invitingMemberData, isLoading }: IProps): JSX.Elem
           </StyledCompanyTeamInfo>
           <Divider />
           <Box width="100%" mt={4}>
-            <Typography variant="body1" color="text.secondary">
-              Invited by
-            </Typography>
+            <Typography color="text.secondary">Invited by</Typography>
             <Stack mt={2.5}>
               <Avatar src={invitingMemberData?.avatar ?? ''} />
               <Box ml={3}>

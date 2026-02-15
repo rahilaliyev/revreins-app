@@ -26,7 +26,7 @@ const Widgets = (): JSX.Element => {
       <StyledWidgetWrapper>
         <Stack justifyContent="space-between" alignItems="flex-start" width="100%">
           <Box>
-            <Typography variant="body1" marginBottom={1}>
+            <Typography marginBottom={1}>
               {crmStatus === ECRMStatus.CONNECTED ? 'CRM Connection' : 'CRM Not Connected'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
@@ -59,8 +59,8 @@ const Widgets = (): JSX.Element => {
           {crmStatus === ECRMStatus.CONNECTED && (
             <Stack width="100%" justifyContent="space-between">
               <Box>
-                <Typography variant="body1">Close.com CRM</Typography>
-                <Typography variant="body1">Last synced: 10 mins ago</Typography>
+                <Typography>Close.com CRM</Typography>
+                <Typography>Last synced: 10 mins ago</Typography>
               </Box>
               <Stack gap={2}>
                 <Button endIcon={<ReloadArrowFillIcon pathFill={colorPalette.inverted.invertedBg} />}>
@@ -82,7 +82,7 @@ const Widgets = (): JSX.Element => {
           <Box>
             <Stack alignItems="center" gap={2}>
               <GroupLineIcon width={20} height={20} pathFill={colorPalette.other.bgOverlay} />
-              <Typography variant="body1">Team Overview</Typography>
+              <Typography>Team Overview</Typography>
             </Stack>
             <Typography variant="body2" color="text.secondary">
               3 days left in trial

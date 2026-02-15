@@ -52,9 +52,7 @@ const FilterConditions = (): JSX.Element => {
   return (
     <Box mt={8}>
       <Stack justifyContent="space-between">
-        <Typography variant="body1" fontWeight={500}>
-          Filter Groups
-        </Typography>
+        <Typography fontWeight={500}>Filter Groups</Typography>
         <Button
           onClick={handleAddGroup}
           size="small"
@@ -70,7 +68,7 @@ const FilterConditions = (): JSX.Element => {
       ) : (
         <StyledNoFilterGroup>
           <FilterLineIcon width={40} height={40} pathFill="#D1D5DC" />
-          <Typography variant="body1" mt={3} mb={1}>
+          <Typography mt={3} mb={1}>
             No Filters Applied
           </Typography>
           <Typography variant="body2" color="text.secondary" mb={3}>
