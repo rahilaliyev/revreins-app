@@ -1,3 +1,4 @@
+export { AccountCircleIcon } from './accountCircle';
 export { AddBoxLineIcon } from './addBoxLine';
 export { AddFillIcon } from './addFill';
 export { AddLineIcon } from './addLine';
@@ -42,9 +43,11 @@ export { InformationLineIcon } from './informationLine';
 export { InsertChartIcon } from './insertChart';
 export { LayoutLineIcon } from './layoutLine';
 export { LeftCenterTipIcon } from './leftCenterTip';
+export { LockLineIcon } from './lockLine';
 export { MagicFillIcon } from './magicFill';
 export { MoreLineIcon } from './moreLine';
 export { Notification3LineIcon } from './notification3Line';
+export { OrganizationChartIcon } from './organizationChart';
 export { PersonPinIcon } from './personPin';
 export { PolygonIcon } from './polygon';
 export { QuestionLineIcon } from './questionLine';
