@@ -1,6 +1,6 @@
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Avatar, styled, Tab, Tabs } from '@mui/material';
+import { Avatar, Box, styled, Tab, Tabs } from '@mui/material';
 
 export const StyledTabs = styled(Tabs)(({ theme }) => ({
   padding: 0,
@@ -34,4 +34,11 @@ export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   fontWeight: 500,
   lineHeight: theme.typography.h4.lineHeight,
   marginRight: theme.spacing(8),
+}));
+
+export const StyledDangerZone = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(4),
+  marginTop: theme.spacing(4),
+  borderRadius: theme.spacing(2),
+  background: colorPalette.error.bg,
 }));

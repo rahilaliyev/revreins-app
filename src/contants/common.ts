@@ -87,3 +87,10 @@ export const LOGIC_OPERATOR_OPTIONS = [
   { label: ELogicalOperator.OR, value: ELogicalOperator.OR },
   { label: ELogicalOperator.AND_OR, value: ELogicalOperator.AND_OR },
 ];
+
+export const VALIDATION_REQUIREMENTS = [
+  'Uppercase letters (A–Z)',
+  'Lowercase letters (a–z)',
+  'Numbers (0–9)',
+  'Special characters (e.g., !@#$%^&*())',
+];

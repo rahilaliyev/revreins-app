@@ -1,13 +1,7 @@
 import type { JSX } from 'react';
+import { VALIDATION_REQUIREMENTS } from 'src/contants';
 
 import { Box, List, ListItem, ListItemText, Typography } from '@mui/material';
-
-const VALIDATION_REQUIREMENTS = [
-  'Uppercase letters (A–Z)',
-  'Lowercase letters (a–z)',
-  'Numbers (0–9)',
-  'Special characters (e.g., !@#$%^&*())',
-];
 
 export const TooltipTitle = (): JSX.Element => (
   <Box>

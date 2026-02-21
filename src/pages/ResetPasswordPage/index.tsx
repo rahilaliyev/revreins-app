@@ -2,6 +2,7 @@ import { type JSX, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { VALIDATION_REQUIREMENTS } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 
 import { Box, Button, List, ListItem, ListItemText, Stack, Typography } from '@mui/material';
@@ -16,13 +17,6 @@ import { type TFormData, validationSchema } from './validationSchema';
 
 import { ArrowGoBackLineIcon } from 'src/assets/icons';
 import Logo from 'src/assets/images/logo.svg?react';
-
-const VALIDATION_REQUIREMENTS = [
-  'Uppercase letters (A–Z)',
-  'Lowercase letters (a–z)',
-  'Numbers (0–9)',
-  'Special characters (e.g., !@#$%^&*())',
-];
 
 const ResetPasswordPage = (): JSX.Element => {
   const navigate = useNavigate();

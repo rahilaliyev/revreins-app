@@ -19,6 +19,7 @@ const Notifications = (): JSX.Element => {
       projectNotifications: true,
     },
   });
+
   const handleSubmit = (values: TNotificationFormData): void => {};
 
   return (
