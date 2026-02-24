@@ -1,51 +1,27 @@
-import { type JSX, type MouseEvent, useState } from 'react';
+import type { JSX } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
 
 import { useGetUserInfo } from 'src/apis/user';
 
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  Button,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { AppBar, Avatar, Badge, Button, Divider, IconButton, Stack, Typography } from '@mui/material';
 
 import { ROUTES } from 'src/routes/paths';
-import { generateRandomId, getPageTitle, removeAuthCookies } from 'src/utils';
+import { generateRandomId, getPageTitle } from 'src/utils';
 
 import { GlobalLineIcon, Notification3LineIcon, QuestionLineIcon, User6LineIcon } from 'src/assets/icons';
 
 const Header = (): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const { data } = useGetUserInfo();
 
   const pageTitle = getPageTitle(location.pathname, data?.user?.name);
   const titleParts = pageTitle.split(' / ');
 
-  const handleMenu = (event: MouseEvent<HTMLElement>): void => setAnchorEl(event.currentTarget);
-
-  const handleLogout = (): void => {
-    handleClose();
-    removeAuthCookies();
-    navigate(ROUTES.AUTH.SIGNIN.PATH);
-  };
-
   const handleNavigateProfilePage = (): void => {
     navigate(ROUTES.DEFAULT.USER_PROFILE.PATH);
-  };
-
-  const handleClose = (): void => {
-    setAnchorEl(null);
   };
 
   return (
@@ -75,10 +51,7 @@ const Header = (): JSX.Element => {
             variant="text"
             color="secondary"
             sx={{ gap: 4, ml: 1.5, mr: 2.5 }}
-            onClick={handleMenu}
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
+            onClick={handleNavigateProfilePage}
           >
             <Typography variant="subtitle1">{data?.user?.name}</Typography>
             <Avatar sx={{ bgcolor: colorPalette.primary.bg }}>
@@ -93,24 +66,6 @@ const Header = (): JSX.Element => {
             <QuestionLineIcon />
           </IconButton>
         </Stack>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleNavigateProfilePage}>My Profile</MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        </Menu>
       </Stack>
     </AppBar>
   );

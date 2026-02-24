@@ -44,6 +44,7 @@ export { InsertChartIcon } from './insertChart';
 export { LayoutLineIcon } from './layoutLine';
 export { LeftCenterTipIcon } from './leftCenterTip';
 export { LockLineIcon } from './lockLine';
+export { LogoutBoxRLineIcon } from './logoutBoxRLine';
 export { MagicFillIcon } from './magicFill';
 export { MoreLineIcon } from './moreLine';
 export { Notification3LineIcon } from './notification3Line';

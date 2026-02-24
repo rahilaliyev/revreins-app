@@ -1,19 +1,29 @@
 import type { JSX } from 'react';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { MONTH_LETTER_YEAR_WITHOUT_DASH_FORMAT, USER_ROLES } from 'src/contants';
+import { colorPalette } from 'src/theme/colorpalette';
 
 import { useGetUserInfo } from 'src/apis/user';
 
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 
 import { LoadingWrapper } from 'src/components';
+import { ROUTES } from 'src/routes/paths';
+import { removeAuthCookies } from 'src/utils';
 
 import { StyledAvatar, StyledMainInfoSectionWrapper } from '../styled';
 
-import { ClockIcon, EmailIcon, PersonPinIcon } from 'src/assets/icons';
+import { ClockIcon, EmailIcon, LogoutBoxRLineIcon, PersonPinIcon } from 'src/assets/icons';
 
 const MainInfoSection = (): JSX.Element => {
   const { data, isLoading } = useGetUserInfo();
+  const navigate = useNavigate();
+
+  const handleLogout = (): void => {
+    removeAuthCookies();
+    navigate(ROUTES.AUTH.SIGNIN.PATH);
+  };
 
   return (
     <StyledMainInfoSectionWrapper>
@@ -42,6 +52,16 @@ const MainInfoSection = (): JSX.Element => {
               </Typography>
             </Stack>
           </Stack>
+          <Button
+            variant="outlined"
+            size="small"
+            color="error"
+            onClick={handleLogout}
+            sx={{ marginTop: (theme) => theme.spacing(4) }}
+            endIcon={<LogoutBoxRLineIcon width={16} height={16} pathFill={colorPalette.error.main} />}
+          >
+            Logout
+          </Button>
         </Box>
       </LoadingWrapper>
     </StyledMainInfoSectionWrapper>
