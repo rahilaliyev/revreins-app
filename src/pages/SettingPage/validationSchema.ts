@@ -1,4 +1,21 @@
+import { MAX_PROFILE_IMAGE_SIZE } from 'src/contants';
 import z from 'zod';
+
+const avatarSchema = z
+  .union([z.string().refine((val) => /^https?:\/\/.+/i.test(val), 'Invalid avatar URL'), z.custom<File>()])
+  .optional()
+  .refine((file) => {
+    if (!file || typeof file === 'string') {
+      return true;
+    }
+    return file.size <= MAX_PROFILE_IMAGE_SIZE;
+  }, 'Max file size is 10MB')
+  .refine((file) => {
+    if (!file || typeof file === 'string') {
+      return true;
+    }
+    return ['image/png', 'image/jpeg', 'image/gif'].includes(file.type);
+  }, 'Only PNG, JPG, GIF allowed');
 
 export const validationProfileSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -9,6 +26,7 @@ export const validationProfileSchema = z.object({
       message: 'Please enter a valid email address',
     }),
   title: z.string(),
+  avatar: avatarSchema,
 });
 
 export const validationSecuritySchema = z

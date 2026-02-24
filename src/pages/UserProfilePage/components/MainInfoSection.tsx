@@ -25,6 +25,10 @@ const MainInfoSection = (): JSX.Element => {
     navigate(ROUTES.AUTH.SIGNIN.PATH);
   };
 
+  const handleNavigateSetting = (): void => {
+    navigate(ROUTES.DEFAULT.SETTING.PATH);
+  };
+
   return (
     <StyledMainInfoSectionWrapper>
       <LoadingWrapper isLoading={isLoading}>
@@ -52,16 +56,20 @@ const MainInfoSection = (): JSX.Element => {
               </Typography>
             </Stack>
           </Stack>
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            onClick={handleLogout}
-            sx={{ marginTop: (theme) => theme.spacing(4) }}
-            endIcon={<LogoutBoxRLineIcon width={16} height={16} pathFill={colorPalette.error.main} />}
-          >
-            Logout
-          </Button>
+          <Stack gap={4} mt={4}>
+            <Button size="small" color="secondary" onClick={handleNavigateSetting}>
+              Change Information
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              color="error"
+              onClick={handleLogout}
+              endIcon={<LogoutBoxRLineIcon width={16} height={16} pathFill={colorPalette.error.main} />}
+            >
+              Logout
+            </Button>
+          </Stack>
         </Box>
       </LoadingWrapper>
     </StyledMainInfoSectionWrapper>

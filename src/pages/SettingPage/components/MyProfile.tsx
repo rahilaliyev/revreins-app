@@ -1,5 +1,5 @@
-import { type JSX, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { type JSX, useEffect, useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { colorPalette } from 'src/theme/colorpalette';
@@ -16,6 +16,8 @@ import { type TProfileFormData, validationProfileSchema } from '../validationSch
 
 const MyProfile = (): JSX.Element => {
   const { data } = useGetUserInfo();
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const formBag = useForm<TProfileFormData>({
     resolver: zodResolver(validationProfileSchema),
@@ -23,6 +25,7 @@ const MyProfile = (): JSX.Element => {
       email: data?.user?.email || '',
       name: data?.user?.name || '',
       title: '',
+      avatar: undefined,
     },
   });
 
@@ -32,9 +35,15 @@ const MyProfile = (): JSX.Element => {
         email: data?.user?.email || '',
         name: data?.user?.name || '',
         title: '',
+        avatar: data?.tenant_user?.avatar || undefined,
       });
     }
   }, [data, formBag]);
+
+  const handleRemoveImage = (): void => {
+    setPreview(null);
+    formBag.resetField('avatar');
+  };
 
   const handleSubmit = (values: TProfileFormData): void => {};
 
@@ -49,15 +58,51 @@ const MyProfile = (): JSX.Element => {
       <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
         <Box my={8}>
           <Stack pb={6}>
-            <StyledAvatar sx={{ bgcolor: colorPalette.primary.bg }}>
-              {data?.tenant_user?.avatar ?? data?.user?.name?.[0]}
-            </StyledAvatar>
+            <Box>
+              <StyledAvatar
+                src={preview || data?.tenant_user?.avatar}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {!preview && !data?.tenant_user?.avatar && data?.user?.name?.[0]}
+              </StyledAvatar>
+              <Controller
+                name="avatar"
+                control={formBag.control}
+                render={({ field }) => (
+                  <input
+                    ref={(el) => {
+                      field.ref(el);
+                      fileInputRef.current = el;
+                    }}
+                    hidden
+                    type="file"
+                    accept="image/png,image/jpeg,image/gif"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) {
+                        return;
+                      }
+
+                      field.onChange(file);
+                      setPreview(URL.createObjectURL(file));
+
+                      e.target.value = '';
+                    }}
+                  />
+                )}
+              />
+            </Box>
             <Box>
               <Typography fontWeight={500}>Profile Picture</Typography>
               <Typography variant="body2" mt={0.625} mb={3} color="text.secondary">
                 We support PNGs, JPGs, and GIFs under 10MB.
               </Typography>
-              <Button variant="text" color="primary" sx={{ padding: 0, height: 'inherit' }}>
+              <Button
+                variant="text"
+                color="primary"
+                sx={{ padding: 0, height: 'inherit' }}
+                onClick={handleRemoveImage}
+              >
                 Remove photo
               </Button>
             </Box>

@@ -1,6 +1,7 @@
 import { ECRMStatus, ELogicalOperator, EUserRole } from 'src/types/enums';
 
 export const MIN_ASSUMPTIONS_STAGES_LENGTH = 2;
+export const MAX_PROFILE_IMAGE_SIZE = 10 * 1024 * 1024; // 10 mb
 
 export const TEMPLATES = [
   {
