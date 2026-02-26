@@ -2,7 +2,7 @@ import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EStageAddEditMode } from 'src/types/enums';
+import { type ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import { useGetProjectDetailById } from 'src/apis/projects';
 import type { IProject, IUiStage } from 'src/apis/projects/types';
@@ -39,7 +39,7 @@ const NewProjectPage = (): JSX.Element => {
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
-    defaultValues: { name: '', crmObject: '', dateField: '', groups: [] },
+    defaultValues: { name: '', crmObject: null, dateField: '', groups: [] },
   });
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const NewProjectPage = (): JSX.Element => {
     if (stage) {
       formBag.reset({
         name: stage.name,
-        crmObject: stage.crm_object_id?.toString(),
+        crmObject: stage.crm_object_id?.toString() as ECRMObjectType,
         dateField: stage.date_field_id?.toString(),
         groups: [],
       });

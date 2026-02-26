@@ -1,5 +1,5 @@
 import type { Dispatch, JSX, SetStateAction } from 'react';
-import { EStageAddEditMode } from 'src/types/enums';
+import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import type { IUiStage } from 'src/apis/projects/types';
 
@@ -35,7 +35,7 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
     setStages((prev) => [...prev, newStage]);
     reset({
       name: 'New Stage',
-      crmObject: 'Lead',
+      crmObject: ECRMObjectType.LEAD,
       dateField: 'Lead',
     });
     setActiveStage?.(tempId);

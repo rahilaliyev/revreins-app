@@ -34,6 +34,20 @@ export interface IVerifyEmailResponse {
   access_token: string;
 }
 
+export interface IUserUpdatePayload {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  avatar?: string;
+  role: EUserRole;
+  permissions: {
+    read: boolean;
+    write: boolean;
+  };
+  is_active: number;
+}
+
 export type TInvitingMemberAcceptResponse = IVerifyEmailResponse;
 
 export interface IInvitingMemberDetailResponse {

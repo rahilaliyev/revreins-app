@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { endpoints } from 'src/contants';
 import type { ICommonResponse, ICommonTokenRequest, IInvitingMembers } from 'src/types/interfaces';
 
-import { axiosLogin } from '../axiosInstance';
+import { api, axiosLogin } from '../axiosInstance';
 
 import type {
   IInvitingMemberDetailResponse,
@@ -10,6 +10,7 @@ import type {
   ILoginResponse,
   IRegisterPayload,
   ITenantUserUpdatePayload,
+  IUserUpdatePayload,
   IVerifyEmail,
   IVerifyEmailResponse,
   TInvitingMemberAcceptResponse,
@@ -68,6 +69,14 @@ export const useTenantUserUpdateMutation = (): UseMutationResult<void, Error, TU
           Authorization: `Bearer ${token}`,
         },
       });
+      return res.data;
+    },
+  });
+
+export const useUserUpdateMutation = (): UseMutationResult<void, Error, Partial<IUserUpdatePayload>> =>
+  useMutation<void, Error, Partial<IUserUpdatePayload>>({
+    mutationFn: async (body: Partial<IUserUpdatePayload>) => {
+      const res = await api.post<void>(endpoints.tenant.updateTenantUser, body);
       return res.data;
     },
   });

@@ -2,8 +2,8 @@ import { type JSX, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { colorPalette } from 'src/theme/colorpalette';
 
+import { useUserUpdateMutation } from 'src/apis/auth';
 import { useGetUserInfo } from 'src/apis/user';
 
 import { Box, Button, Divider, Grid, Stack, Typography } from '@mui/material';
@@ -18,6 +18,7 @@ const MyProfile = (): JSX.Element => {
   const { data } = useGetUserInfo();
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { mutateAsync } = useUserUpdateMutation();
 
   const formBag = useForm<TProfileFormData>({
     resolver: zodResolver(validationProfileSchema),

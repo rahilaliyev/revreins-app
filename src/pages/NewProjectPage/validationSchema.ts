@@ -1,5 +1,5 @@
 import { useFormContext, type UseFormReturn } from 'react-hook-form';
-import { ELogicalOperator } from 'src/types/enums';
+import { ECRMObjectType, ELogicalOperator } from 'src/types/enums';
 import z from 'zod';
 
 const conditionSchema = z.object({
@@ -15,7 +15,7 @@ const groupSchema = z.object({
 
 export const validationSchema = z.object({
   name: z.string(),
-  crmObject: z.string(),
+  crmObject: z.enum(ECRMObjectType).nullable(),
   dateField: z.string(),
   groups: z.array(groupSchema).optional(),
 });

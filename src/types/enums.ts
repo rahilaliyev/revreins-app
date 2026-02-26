@@ -48,3 +48,19 @@ export enum EActivityType {
   UPDATE = 'UPDATE',
   PUBLISH = 'PUBLISH',
 }
+
+export enum ECRMObjectType {
+  LEAD = 'lead',
+  OPPORTUNITY = 'opportunity',
+}
+
+export enum EDataType {
+  STRING = 'string',
+  INTEGER = 'integer',
+  DECIMAL = 'decimal',
+  DATE = 'date',
+  DATETIME = 'datetime',
+  JSON = 'json',
+  TEXT = 'text',
+  BOOLEAN = 'boolean',
+}

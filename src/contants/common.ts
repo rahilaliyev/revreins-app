@@ -1,4 +1,4 @@
-import { ECRMStatus, ELogicalOperator, EUserRole } from 'src/types/enums';
+import { ECRMObjectType, ECRMStatus, ELogicalOperator, EUserRole } from 'src/types/enums';
 
 export const MIN_ASSUMPTIONS_STAGES_LENGTH = 2;
 export const MAX_PROFILE_IMAGE_SIZE = 10 * 1024 * 1024; // 10 mb
@@ -94,4 +94,15 @@ export const VALIDATION_REQUIREMENTS = [
   'Lowercase letters (a–z)',
   'Numbers (0–9)',
   'Special characters (e.g., !@#$%^&*())',
+];
+
+export const CRM_OBJECT_FIELDS_OPTIONS = [
+  {
+    value: ECRMObjectType.LEAD,
+    label: 'Lead',
+  },
+  {
+    value: ECRMObjectType.OPPORTUNITY,
+    label: 'Opportunity',
+  },
 ];

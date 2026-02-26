@@ -49,6 +49,9 @@ export const endpoints = {
     get leadCustomFields(): string {
       return `${this.base}/lead-custom-fields`;
     },
+    get crmObjectFields(): string {
+      return `${this.base}/crm-object-fields`;
+    },
   },
   crmProviders: {
     base: 'api/crm-providers',
