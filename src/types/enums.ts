@@ -64,3 +64,17 @@ export enum EDataType {
   TEXT = 'text',
   BOOLEAN = 'boolean',
 }
+
+export enum ENotificationActionType {
+  CREATE = 'CREATE',
+  DELETE = 'DELETE',
+  INFO = 'INFO',
+}
+
+export enum ENotificationType {
+  INVITE = 'INVITE',
+  PROJECT = 'PROJECT',
+  TEAM = 'TEAM',
+  PAYMENT = 'PAYMENT',
+  CRM = 'CRM',
+}

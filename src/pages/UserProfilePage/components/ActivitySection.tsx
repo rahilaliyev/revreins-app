@@ -51,7 +51,7 @@ const ACTIVITY_TYPE = {
     description: (name: string) => `Created project "${name}"`,
   },
   [EActivityType.UPDATE]: {
-    icon: <ChartIcon />,
+    icon: <ChartIcon width={16} height={16} pathFill={colorPalette.warning.main} />,
     bgColor: colorPalette.warning.bgHover,
     title: 'Project Updated',
     description: (name: string) => `Updated project "${name}"`,

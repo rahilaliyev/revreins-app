@@ -4,12 +4,14 @@ import { colorPalette } from 'src/theme/colorpalette';
 
 import { useGetUserInfo } from 'src/apis/user';
 
-import { AppBar, Avatar, Badge, Button, Divider, IconButton, Stack, Typography } from '@mui/material';
+import { AppBar, Avatar, Button, Divider, IconButton, Stack, Typography } from '@mui/material';
 
 import { ROUTES } from 'src/routes/paths';
 import { generateRandomId, getPageTitle } from 'src/utils';
 
-import { GlobalLineIcon, Notification3LineIcon, QuestionLineIcon, User6LineIcon } from 'src/assets/icons';
+import Notifications from '../Notifications';
+
+import { GlobalLineIcon, QuestionLineIcon, User6LineIcon } from 'src/assets/icons';
 
 const Header = (): JSX.Element => {
   const location = useLocation();
@@ -42,11 +44,7 @@ const Header = (): JSX.Element => {
         </Typography>
 
         <Stack>
-          <IconButton>
-            <Badge color="error" variant="dot">
-              <Notification3LineIcon />
-            </Badge>
-          </IconButton>
+          <Notifications />
           <Button
             variant="text"
             color="secondary"

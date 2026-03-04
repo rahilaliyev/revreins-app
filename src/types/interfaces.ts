@@ -45,3 +45,8 @@ export interface ICommonPaginationResponse<T> {
     total: number;
   };
 }
+
+export interface INotificationActionMapColor {
+  color: string;
+  bg: string;
+}
