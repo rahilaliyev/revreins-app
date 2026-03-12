@@ -78,3 +78,9 @@ export enum ENotificationType {
   PAYMENT = 'PAYMENT',
   CRM = 'CRM',
 }
+
+export enum EProjectStatus {
+  PUBLISHED = 'PUBLISHED',
+  DRAFT = 'DRAFT',
+  DELETED = 'DELETED',
+}

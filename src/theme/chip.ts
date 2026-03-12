@@ -64,10 +64,6 @@ export const chipTheme: Components = {
       outlined: {
         backgroundColor: 'transparent',
         border: 'none',
-
-        '& .MuiChip-label': {
-          paddingLeft: 0,
-        },
       },
     },
   },

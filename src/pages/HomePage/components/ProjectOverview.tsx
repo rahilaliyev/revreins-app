@@ -8,6 +8,7 @@ import { useGetProjects } from 'src/apis/projects';
 
 import { Box, Button, Chip, Grid, Stack, Typography } from '@mui/material';
 
+import { CreateNewProjectModal } from 'src/components';
 import { ROUTES } from 'src/routes/paths';
 
 import {
@@ -16,8 +17,6 @@ import {
   StyledCreateProject,
   StyledProjectCard,
 } from '../styled';
-
-import CreateNewProjectModal from './CreateNewProjectModal';
 
 import { AddFillIcon, DotIcon, InsertChartIcon } from 'src/assets/icons';
 

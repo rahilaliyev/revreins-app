@@ -37,7 +37,7 @@ interface IProps {
   handleClose: () => void;
 }
 
-const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): JSX.Element => {
+export const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): JSX.Element => {
   const navigate = useNavigate();
   const lastInputRef = useRef<HTMLInputElement>(null);
   const [selectedCard, setSelectedCard] = useState<ESetupCard>();
@@ -258,5 +258,3 @@ const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IProps): 
     </CustomModal>
   );
 };
-
-export default CreateNewProjectModal;
