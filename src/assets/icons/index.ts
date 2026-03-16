@@ -41,6 +41,7 @@ export { GitBranchLineIcon } from './gitBranchLine';
 export { GlobalLineIcon } from './globalLine';
 export { GoogleIcon } from './googleIcon';
 export { GroupLineIcon } from './groupLine';
+export { GroupsIcon } from './groups';
 export { Home5LineIcon } from './home5Line';
 export { InformationFillIcon } from './informationFill';
 export { InformationLineIcon } from './informationLine';

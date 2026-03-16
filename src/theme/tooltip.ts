@@ -46,6 +46,11 @@ export const tooltipTheme: Components = {
           borderWidth: '8px 15px 0 0',
           borderColor: `${colorPalette.other.black} transparent transparent transparent`,
         },
+
+        '&[data-popper-placement*="bottom"] .MuiTooltip-arrow': {
+          borderWidth: '0 0 8px 15px',
+          borderColor: `transparent transparent ${colorPalette.other.black} transparent`,
+        },
       },
     },
   },

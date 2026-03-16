@@ -34,6 +34,9 @@ export const tabTheme: Components = {
           backgroundColor: 'white',
         },
       },
+      icon: {
+        marginLeft: '8px',
+      },
     },
   },
 };
