@@ -62,7 +62,7 @@ const RouteComponents = (): JSX.Element => {
           <Route index element={suspenseFallback(ProjectsPage)} />
           <Route path={`${ROUTES.DEFAULT.PROJECTS.PATH}/:id`} element={suspenseFallback(ProjectDetailPage)} />
           <Route
-            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH}
+            path={`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH}/:id`}
             element={suspenseFallback(NewProjectPage)}
           />
           <Route

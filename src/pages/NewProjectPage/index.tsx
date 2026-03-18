@@ -1,6 +1,6 @@
 import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
@@ -14,7 +14,6 @@ import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { CustomTabPanel } from 'src/components';
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { useLocalStorage } from 'src/hooks';
-import { ROUTES } from 'src/routes/paths';
 import { a11yProps } from 'src/utils';
 
 import BasicSetupTab from './components/BasicSetupTab';
@@ -26,7 +25,7 @@ import { StyledContainer, StyledStagesSidebar } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
 const NewProjectPage = (): JSX.Element => {
-  const location = useLocation();
+  const { id } = useParams();
 
   const [value, setValue] = useState(0);
   const [isInformationModal, setIsInformationModal] = useState(false);
@@ -34,7 +33,7 @@ const NewProjectPage = (): JSX.Element => {
   const [activeStage, setActiveStage] = useState<number>();
   const [stages, setStages] = useState<IUiStage[]>([]);
 
-  const { data = {} as IProject } = useGetProjectDetailById(location.state);
+  const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { mutate: addStageMutation } = useAddStageMutation();
   const { mutate: editStageMutation } = useEditStageMutation();
   const { mutate: createFilters } = useCreateStageFilterMutation();
@@ -73,6 +72,7 @@ const NewProjectPage = (): JSX.Element => {
 
     const stage = data.stages?.find((el) => el.id === activeStage);
 
+    console.log(stage);
     if (stage) {
       formBag.reset({
         name: stage.name,
@@ -100,7 +100,7 @@ const NewProjectPage = (): JSX.Element => {
       name: data.name,
       crm_object_id: Number(data.crmObject),
       date_field_id: data.dateField,
-      project_id: location.state,
+      project_id: Number(id),
     };
 
     const currentStage = stages.find((el) => el.id === activeStage);
@@ -122,10 +122,6 @@ const NewProjectPage = (): JSX.Element => {
       });
     }
   };
-
-  if (!location.state) {
-    return <Navigate to={ROUTES.DEFAULT.PROJECTS.PATH} />;
-  }
 
   return (
     <Box height="100%">

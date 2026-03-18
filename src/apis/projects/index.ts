@@ -15,7 +15,7 @@ export const useGetProjects = (): UseQueryResult<ICommonPaginationResponse<IProj
     },
   });
 
-export const useGetProjectDetailById = (projectId: number): UseQueryResult<IProject, Error> =>
+export const useGetProjectDetailById = (projectId: string): UseQueryResult<IProject, Error> =>
   useQuery({
     queryKey: [QUERY_KEYS.PROJECTS, projectId],
     queryFn: async () => {
