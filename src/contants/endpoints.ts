@@ -46,11 +46,44 @@ export const endpoints = {
     get projectStages(): string {
       return `${this.base}/project-stages`;
     },
+    get projectBreakdowns(): string {
+      return `${this.base}/project-breakdowns`;
+    },
+    projectBreakdownDetail(id: string): string {
+      return `${this.projectBreakdowns}/${id}`;
+    },
+    projectStagesFilters(id: string): string {
+      return `${this.projectStages}/${id}/filters`;
+    },
+    projectStagesFilteredData(id: string): string {
+      return `${this.projectStages}/${id}/filtered-data`;
+    },
+    get stageFilterOperators(): string {
+      return `${this.projectStages}/filter-operators`;
+    },
     get leadCustomFields(): string {
       return `${this.base}/lead-custom-fields`;
     },
     get crmObjectFields(): string {
       return `${this.base}/crm-object-fields`;
+    },
+  },
+  assumptions: {
+    base: 'api/tenant/assumptions',
+    get generate(): string {
+      return `${this.base}/generate`;
+    },
+    get forecast(): string {
+      return `${this.base}/forecast`;
+    },
+    get recalculate(): string {
+      return `${this.base}/recalculate`;
+    },
+  },
+  stageConversions: {
+    base: 'api/tenant/stage-conversions',
+    get generateStageConversions(): string {
+      return `${this.base}/generate`;
     },
   },
   crmProviders: {

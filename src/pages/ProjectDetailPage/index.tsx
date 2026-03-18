@@ -205,7 +205,7 @@ const ProjectDetailPage = (): JSX.Element => {
 
   const [rowData, setRowData] = useState(FUNNEL_MOCK_DATA);
 
-  const { data } = useGetProjectDetailById(Number(id));
+  const { data: projectDetail } = useGetProjectDetailById(Number(id));
 
   const handleCellValueChange = (rowId: string, monthIndex: number, value: string | number): void => {
     setRowData((prevData) =>
@@ -223,7 +223,7 @@ const ProjectDetailPage = (): JSX.Element => {
 
   return (
     <Box height="100%">
-      <Header name={data?.name} />
+      <Header name={projectDetail?.name} />
       <StyledContainer>
         <FiltersAndRevenueInfo />
         <Box p={6} bgcolor="white" borderRadius={3.5} mb={4}>

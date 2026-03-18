@@ -36,7 +36,7 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
     reset({
       name: 'New Stage',
       crmObject: ECRMObjectType.LEAD,
-      dateField: 'Lead',
+      dateField: 0,
     });
     setActiveStage?.(tempId);
   };

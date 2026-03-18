@@ -3,9 +3,9 @@ import { ECRMObjectType, ELogicalOperator } from 'src/types/enums';
 import z from 'zod';
 
 const conditionSchema = z.object({
-  field: z.string(),
-  operator: z.string(),
-  value: z.string(),
+  crm_object_field_id: z.number().min(1, 'Required field'),
+  operator: z.string().min(1, 'Required field'),
+  value: z.string().min(1, 'Required field'),
   nextOperator: z.enum([ELogicalOperator.AND, ELogicalOperator.OR, ELogicalOperator.AND_OR]).optional(),
 });
 
@@ -14,10 +14,10 @@ const groupSchema = z.object({
 });
 
 export const validationSchema = z.object({
-  name: z.string(),
-  crmObject: z.enum(ECRMObjectType).nullable(),
-  dateField: z.string(),
-  groups: z.array(groupSchema).optional(),
+  name: z.string().min(1, 'Required field'),
+  crmObject: z.enum(ECRMObjectType),
+  dateField: z.number().min(1, 'Required field'),
+  groups: z.array(groupSchema),
 });
 
 export type TFormData = z.infer<typeof validationSchema>;

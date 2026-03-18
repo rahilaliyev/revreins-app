@@ -1,8 +1,7 @@
 import type { JSX } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MIN_ASSUMPTIONS_STAGES_LENGTH } from 'src/contants';
-
-import type { IStage } from 'src/apis/projects/types';
+import type { IStage } from 'src/types/interfaces';
 
 import { Box, Button, Stack, Typography } from '@mui/material';
 
@@ -15,9 +14,10 @@ import { ArrowLeftSLineIcon } from 'src/assets/icons';
 interface IProps {
   projectName?: string;
   stages: IStage[];
+  id: number;
 }
 
-const Header = ({ projectName, stages }: IProps): JSX.Element => {
+const Header = ({ projectName, stages, id }: IProps): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,7 +26,9 @@ const Header = ({ projectName, stages }: IProps): JSX.Element => {
   };
 
   const handleNavigateAssumptions = (): void => {
-    navigate(ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH, { state: { name: location.state?.name } });
+    navigate(`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}/${id}`, {
+      state: { name: location.state?.name },
+    });
   };
 
   const minStagesLength = stages?.length < MIN_ASSUMPTIONS_STAGES_LENGTH;

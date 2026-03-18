@@ -1,8 +1,11 @@
 import type { JSX } from 'react';
 import { useFieldArray } from 'react-hook-form';
-import { CONDITION_OPERATOR_OPTIONS, LOGIC_OPERATOR_OPTIONS } from 'src/contants';
+import { LOGIC_OPERATOR_OPTIONS } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELogicalOperator } from 'src/types/enums';
+
+import { useGetCrmObjectFields } from 'src/apis/crmObjectFields';
+import { useGetStageFilters } from 'src/apis/stages-filters';
 
 import { Box, Button, Chip, Grid, IconButton, Stack, Typography } from '@mui/material';
 
@@ -20,6 +23,9 @@ interface IProps {
 
 const Group = ({ index, removeGroup }: IProps): JSX.Element => {
   const { control, setValue } = useStageFormContext();
+  const { data } = useGetStageFilters();
+
+  const { data: crmObjectFields, isLoading } = useGetCrmObjectFields({});
 
   const {
     fields: conditions,
@@ -36,8 +42,8 @@ const Group = ({ index, removeGroup }: IProps): JSX.Element => {
     setValue(`groups.${index}.conditions.${lastIndex}.nextOperator`, ELogicalOperator.AND);
 
     addCondition({
-      field: 'Amount',
-      operator: 'Equals',
+      crm_object_field_id: 0,
+      operator: '',
       value: '',
     });
   };
@@ -78,16 +84,21 @@ const Group = ({ index, removeGroup }: IProps): JSX.Element => {
             <Grid spacing={2} container>
               <Grid size={4}>
                 <CustomSelectField
-                  name={`groups.${index}.conditions.${conditionIndex}.field`}
-                  items={[{ value: 'Amount', label: 'Amount' }]}
+                  name={`groups.${index}.conditions.${conditionIndex}.crm_object_field_id`}
+                  items={(crmObjectFields || [])?.map((el) => ({
+                    value: el.id,
+                    label: el.name,
+                  }))}
+                  defaultValue=""
                   size="small"
                   sx={{ background: 'rgba(0, 0, 0, 0.04)' }}
+                  loading={isLoading}
                 />
               </Grid>
               <Grid size={3}>
                 <CustomSelectField
                   name={`groups.${index}.conditions.${conditionIndex}.operator`}
-                  items={CONDITION_OPERATOR_OPTIONS}
+                  items={data || []}
                   size="small"
                   sx={{ background: 'rgba(0, 0, 0, 0.04)' }}
                 />

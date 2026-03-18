@@ -50,3 +50,14 @@ export interface INotificationActionMapColor {
   color: string;
   bg: string;
 }
+
+export interface IStage {
+  created_at: string;
+  crm_object_id: number;
+  date_field_id: number;
+  deleted_at: string;
+  id: number;
+  name: string;
+  project_id: number;
+  updated_at: string;
+}

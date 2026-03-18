@@ -3,7 +3,16 @@ import { useWatch } from 'react-hook-form';
 import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 
-import { Box, Stack, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Stack,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from '@mui/material';
 
 import { CustomDatePickerField, CustomSelectField, CustomSwitchField } from 'src/components';
 
@@ -114,6 +123,11 @@ const ProjectSettings = (): JSX.Element => {
           <SegmentTable />
         </Box>
       )}
+      <Stack justifyContent="flex-end" mt={2}>
+        <Button type="submit" size="large" color="inherit">
+          Save
+        </Button>
+      </Stack>
     </StyledComponentWrapper>
   );
 };

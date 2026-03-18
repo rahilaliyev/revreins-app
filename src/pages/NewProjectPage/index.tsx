@@ -2,11 +2,12 @@ import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Navigate, useLocation } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { type ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
+import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import { useGetProjectDetailById } from 'src/apis/projects';
 import type { IProject, IUiStage } from 'src/apis/projects/types';
 import { useAddStageMutation, useEditStageMutation } from 'src/apis/stages';
+import { useCreateStageFilterMutation } from 'src/apis/stages-filters';
 
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 
@@ -36,10 +37,11 @@ const NewProjectPage = (): JSX.Element => {
   const { data = {} as IProject } = useGetProjectDetailById(location.state);
   const { mutate: addStageMutation } = useAddStageMutation();
   const { mutate: editStageMutation } = useEditStageMutation();
+  const { mutate: createFilters } = useCreateStageFilterMutation();
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
-    defaultValues: { name: '', crmObject: null, dateField: '', groups: [] },
+    defaultValues: { name: '', crmObject: ECRMObjectType.LEAD, dateField: 0, groups: [] },
   });
 
   useEffect(() => {
@@ -75,7 +77,7 @@ const NewProjectPage = (): JSX.Element => {
       formBag.reset({
         name: stage.name,
         crmObject: stage.crm_object_id?.toString() as ECRMObjectType,
-        dateField: stage.date_field_id?.toString(),
+        dateField: stage.date_field_id,
         groups: [],
       });
     }
@@ -94,10 +96,10 @@ const NewProjectPage = (): JSX.Element => {
   };
 
   const handleSubmit = (data: TFormData): void => {
-    const payload = {
+    const setupPayload = {
       name: data.name,
       crm_object_id: Number(data.crmObject),
-      date_field_id: Number(data.dateField),
+      date_field_id: data.dateField,
       project_id: location.state,
     };
 
@@ -106,11 +108,17 @@ const NewProjectPage = (): JSX.Element => {
     if (currentStage?.mode === EStageAddEditMode.EDIT && activeStage) {
       editStageMutation({
         stageId: activeStage,
-        ...payload,
+        ...setupPayload,
       });
     } else if (currentStage?.mode === EStageAddEditMode.ADD && activeStage) {
-      addStageMutation(payload, {
-        onSuccess: (res) => setActiveStage(res.project_stage.id),
+      addStageMutation(setupPayload, {
+        onSuccess: (res) => {
+          setActiveStage(res.project_stage.id);
+          createFilters({
+            groups: data.groups,
+            stageId: res.project_stage.id,
+          });
+        },
       });
     }
   };
@@ -121,7 +129,7 @@ const NewProjectPage = (): JSX.Element => {
 
   return (
     <Box height="100%">
-      <Header projectName={data?.name} stages={data?.stages} />
+      <Header projectName={data?.name} stages={data?.stages} id={data?.id} />
       <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
         <StyledContainer>
           <LeftSidebar

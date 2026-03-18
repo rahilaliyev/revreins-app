@@ -1,21 +1,11 @@
 import type { EStageAddEditMode } from 'src/types/enums';
+import type { IStage } from 'src/types/interfaces';
 
 export interface IProjectPayload {
   name: string;
   stages: {
     name: string;
   }[];
-}
-
-export interface IStage {
-  created_at: string;
-  crm_object_id: number;
-  date_field_id: number;
-  deleted_at: string;
-  id: number;
-  name: string;
-  project_id: number;
-  updated_at: string;
 }
 
 export interface IUiStage extends Partial<IStage> {

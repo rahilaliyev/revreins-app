@@ -80,6 +80,7 @@ export const CustomSelectField = (props: TSelectField): JSX.Element => {
         </InputLabel>
       )}
       <Select
+        displayEmpty
         {...field}
         {...rest}
         {...(loading
@@ -95,7 +96,7 @@ export const CustomSelectField = (props: TSelectField): JSX.Element => {
           },
         }}
       >
-        <MenuItem value="" disabled>
+        <MenuItem value="" disabled sx={{ color: (theme) => theme.palette.text.secondary }}>
           {placeholder || 'Choose'}
         </MenuItem>
         {content}

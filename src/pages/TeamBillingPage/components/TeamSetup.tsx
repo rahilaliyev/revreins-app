@@ -203,7 +203,7 @@ const TeamSetup = (): JSX.Element => {
           </List>
         </Box>
       </StyledBoxWrapper>
-      <Alert severity="info" sx={{ marginTop: (theme) => theme.spacing(1.5) }}>
+      <Alert severity="info" sx={{ marginTop: (theme) => theme.spacing(6) }}>
         <Typography variant="body2" color="info">
           Quick Tip - user permissions
         </Typography>

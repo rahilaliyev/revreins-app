@@ -28,20 +28,20 @@ const FilterConditions = (): JSX.Element => {
     addGroup({
       conditions: [
         {
-          field: 'Amount',
-          operator: 'Equals',
+          crm_object_field_id: 0,
+          operator: '',
           value: '',
           nextOperator: ELogicalOperator.AND,
         },
         {
-          field: 'Amount',
-          operator: 'Equals',
+          crm_object_field_id: 0,
+          operator: '',
           value: '',
           nextOperator: ELogicalOperator.AND,
         },
         {
-          field: 'Amount',
-          operator: 'Equals',
+          crm_object_field_id: 0,
+          operator: '',
           value: '',
           nextOperator: ELogicalOperator.AND,
         },

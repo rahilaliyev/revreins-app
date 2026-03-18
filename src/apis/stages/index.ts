@@ -48,6 +48,9 @@ export const useAddStageMutation = (): UseMutationResult<
       const res = await api.post<ICommonResponse<IProjectStageMutationResponse>>(
         endpoints.tenant.projectStages,
         body,
+        {
+          skipNotification: true,
+        },
       );
       return res.data.data;
     },

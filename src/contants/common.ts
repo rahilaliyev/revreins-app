@@ -45,49 +45,6 @@ export const CRM_STATUS_COLOR_MAP: Record<ECRMStatus, 'success' | 'error' | 'def
   [ECRMStatus.NOT_CONFIGURATED]: 'default',
 };
 
-export const CONDITION_OPERATOR_OPTIONS = [
-  {
-    value: 'Equals',
-    label: 'Equals',
-  },
-  {
-    value: 'Not Equals',
-    label: 'Not Equals',
-  },
-  {
-    value: 'Contains',
-    label: 'Contains',
-  },
-  {
-    value: 'Does Not Contain',
-    label: 'Does Not Contain',
-  },
-  {
-    value: 'Greater Than',
-    label: 'Greater Than',
-  },
-  {
-    value: 'Less Than',
-    label: 'Less Than',
-  },
-  {
-    value: 'Less Than Or Equal',
-    label: 'Less Than Or Equal',
-  },
-  {
-    value: 'Greater Than Or Equal ',
-    label: 'Greater Than Or Equal ',
-  },
-  {
-    value: 'Is Empty',
-    label: 'Is Empty',
-  },
-  {
-    value: 'Is Not Empty',
-    label: 'Is Not Empty',
-  },
-];
-
 export const LOGIC_OPERATOR_OPTIONS = [
   { label: ELogicalOperator.AND, value: ELogicalOperator.AND },
   { label: ELogicalOperator.OR, value: ELogicalOperator.OR },

@@ -66,7 +66,7 @@ const RouteComponents = (): JSX.Element => {
             element={suspenseFallback(NewProjectPage)}
           />
           <Route
-            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}
+            path={`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}/:id`}
             element={suspenseFallback(AssumptionsPage)}
           />
           <Route

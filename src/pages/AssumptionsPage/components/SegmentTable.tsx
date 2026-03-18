@@ -1,5 +1,5 @@
-import type { JSX } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { type JSX, useMemo } from 'react';
+import { useFieldArray, useWatch } from 'react-hook-form';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
@@ -29,17 +29,46 @@ import { AddLineIcon, DeleteBinLineIcon, Edit2LineIcon, InformationLineIcon } fr
 const SegmentTable = (): JSX.Element => {
   const { control } = useAssumptionsFormContext();
 
+  const businessType = useWatch({
+    control,
+    name: 'businessType',
+  });
+
   const { fields, append, remove } = useFieldArray({
     name: 'segments',
     control,
   });
 
-  const { data } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
+  const { data, isLoading } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
+
+  const businessTypeChoises = useMemo(() => {
+    if (data) {
+      return data?.map((el) => ({
+        value: el?.id,
+        label: el?.name,
+      }));
+    }
+
+    return [];
+  }, [data]);
+
+  const segmentFieldOptions = useMemo(() => {
+    if (businessType) {
+      const findingData = data?.find((el) => el.id === Number(businessType))?.choices;
+
+      return findingData?.map((el) => ({
+        value: el?.id,
+        label: el?.value,
+      }));
+    }
+
+    return [];
+  }, [businessType, data]);
 
   const addSegmentField = (index: number): void => {
     append({
       name: `Segment ${index + 1}`,
-      field: '',
+      crm_lead_custom_field_choice_id: 0,
     });
   };
 
@@ -76,13 +105,16 @@ const SegmentTable = (): JSX.Element => {
               </Stack>
             </TableCell>
             <TableCell width={200}>
-              <CustomSelectField
-                name="businessType"
-                defaultValue="businessType"
-                items={[{ value: 'businessType', label: 'Business type' }]}
-                placeholder="Business Type"
-                sx={{ background: colorPalette.background.main }}
-              />
+              <Stack gap={2}>
+                <CustomSelectField
+                  name="businessType"
+                  defaultValue=""
+                  items={businessTypeChoises}
+                  placeholder="Business Type"
+                  loading={isLoading}
+                  sx={{ background: colorPalette.background.main }}
+                />
+              </Stack>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -138,9 +170,10 @@ const SegmentTable = (): JSX.Element => {
               <TableCell width={250}>
                 <Stack gap={4}>
                   <CustomSelectField
-                    name={`segments.${index}.field`}
-                    items={[{ value: 'midMarket', label: 'Mid market' }]}
+                    name={`segments.${index}.crm_lead_custom_field_choice_id`}
+                    items={segmentFieldOptions || []}
                     size="small"
+                    defaultValue=""
                   />
                   <StyledDeleteIconWrapper onClick={() => remove(index)}>
                     <DeleteBinLineIcon width={16} height={16} pathFill={colorPalette.other.icon} />
