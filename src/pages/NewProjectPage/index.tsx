@@ -72,7 +72,6 @@ const NewProjectPage = (): JSX.Element => {
 
     const stage = data.stages?.find((el) => el.id === activeStage);
 
-    console.log(stage);
     if (stage) {
       formBag.reset({
         name: stage.name,

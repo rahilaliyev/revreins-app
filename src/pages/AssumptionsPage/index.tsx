@@ -8,6 +8,8 @@ import { ELeadCustomFieldType } from 'src/types/enums';
 
 import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
+import { useGetProjectDetailById } from 'src/apis/projects';
+import type { IProject } from 'src/apis/projects/types';
 
 import { Box } from '@mui/material';
 
@@ -24,6 +26,7 @@ const AssumptionsPage = (): JSX.Element => {
   const { id } = useParams();
   const [isShowNewClientSection, setIsShowNewClientSection] = useState(false);
   const [segmentData, setSegmentData] = useState<ISegmentResponse[] | null>(null);
+  const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { mutate: createProjectBreakdownMutation } = useCreateProjectBreakdownMutation();
   const formBag = useForm<TFormData>({
@@ -55,7 +58,7 @@ const AssumptionsPage = (): JSX.Element => {
 
   return (
     <Box height="100%">
-      <Header />
+      <Header name={data.name} />
       <StyledContainer>
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
           <ProjectSettings />

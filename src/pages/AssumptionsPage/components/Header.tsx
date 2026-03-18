@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, Stack, Typography } from '@mui/material';
 
@@ -7,8 +7,11 @@ import { StyledNavigateBackButton } from '../styled';
 
 import { ArrowLeftSLineIcon } from 'src/assets/icons';
 
-const Header = (): JSX.Element => {
-  const location = useLocation();
+interface IProps {
+  name: string;
+}
+
+const Header = ({ name }: IProps): JSX.Element => {
   const navigate = useNavigate();
 
   const handleNavigateBack = (): void => {
@@ -23,7 +26,7 @@ const Header = (): JSX.Element => {
         </StyledNavigateBackButton>
         <Box>
           <Stack>
-            <Typography variant="h5">{location.state?.name} |</Typography>
+            <Typography variant="h5">{name} |</Typography>
             <Typography ml={1} variant="h5" color="text.secondary">
               Assumptions
             </Typography>
