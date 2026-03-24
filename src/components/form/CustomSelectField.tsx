@@ -67,7 +67,7 @@ export const CustomSelectField = (props: TSelectField): JSX.Element => {
   }
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth error={!!error}>
       {label && (
         <InputLabel
           sx={{
@@ -81,6 +81,17 @@ export const CustomSelectField = (props: TSelectField): JSX.Element => {
       )}
       <Select
         displayEmpty
+        renderValue={(selected) => {
+          const match = items.find((item) => item.value === selected);
+          if (match) {
+            return match.label;
+          }
+          return (
+            <Typography component="span" sx={{ color: (theme) => theme.palette.text.disabled }}>
+              {placeholder || 'Choose'}
+            </Typography>
+          );
+        }}
         {...field}
         {...rest}
         {...(loading

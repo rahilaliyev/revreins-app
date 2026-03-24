@@ -14,14 +14,18 @@ import {
   Typography,
 } from '@mui/material';
 
-import { CustomDatePickerField, CustomSelectField, CustomSwitchField } from 'src/components';
+import { CustomDatePickerField, CustomSelectField, CustomSwitchField, LoadingButton } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 import { useAssumptionsFormContext } from '../validationSchema';
 
 import SegmentTable from './SegmentTable';
 
-const ProjectSettings = (): JSX.Element => {
+interface IProps {
+  isLoading: boolean;
+}
+
+const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
   const { control } = useAssumptionsFormContext();
 
   const enableProjectBreakdown = useWatch({
@@ -124,9 +128,9 @@ const ProjectSettings = (): JSX.Element => {
         </Box>
       )}
       <Stack justifyContent="flex-end" mt={2}>
-        <Button type="submit" size="large" color="inherit">
+        <LoadingButton type="submit" size="large" color="inherit" loading={isLoading}>
           Save
-        </Button>
+        </LoadingButton>
       </Stack>
     </StyledComponentWrapper>
   );

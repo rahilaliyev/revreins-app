@@ -9,9 +9,10 @@ import { ArrowLeftSLineIcon } from 'src/assets/icons';
 
 interface IProps {
   name: string;
+  onGenerate: () => void;
 }
 
-const Header = ({ name }: IProps): JSX.Element => {
+const Header = ({ name, onGenerate }: IProps): JSX.Element => {
   const navigate = useNavigate();
 
   const handleNavigateBack = (): void => {
@@ -38,7 +39,9 @@ const Header = ({ name }: IProps): JSX.Element => {
       </Stack>
       <Stack gap={4}>
         <Button color="secondary">Save as Draft</Button>
-        <Button color="inherit">Generate the Project</Button>
+        <Button color="inherit" onClick={onGenerate}>
+          Generate the Project
+        </Button>
       </Stack>
     </Stack>
   );

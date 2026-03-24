@@ -170,6 +170,7 @@ const SegmentTable = (): JSX.Element => {
               <TableCell width={250}>
                 <Stack gap={4}>
                   <CustomSelectField
+                    placeholder="Choose business type"
                     name={`segments.${index}.crm_lead_custom_field_choice_id`}
                     items={segmentFieldOptions || []}
                     size="small"

@@ -76,7 +76,7 @@ const NewProjectPage = (): JSX.Element => {
       formBag.reset({
         name: stage.name,
         crmObject: stage.crm_object_id?.toString() as ECRMObjectType,
-        dateField: stage.date_field_id,
+        dateField: stage.date_field_id ?? 0,
         groups: [],
       });
     }

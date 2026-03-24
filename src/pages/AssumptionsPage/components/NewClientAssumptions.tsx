@@ -17,6 +17,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import { CustomSelectField, CustomTextField } from 'src/components';
+
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 
 import { ArrowRightLineIcon, InformationLineIcon } from 'src/assets/icons';
@@ -98,16 +100,21 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                       <Typography>{stage?.stage_to?.name}</Typography>
                     </Stack>
                   </TableCell>
-                  {/* <TableCell align="right" width={150}>
-                    <CustomTextField size="small" name="salesEnterprise" placeholder="35%" />
+                  <TableCell align="right" width={150}>
+                    <CustomSelectField
+                      size="small"
+                      name={`stage_${stage.id}_avg_months`}
+                      placeholder="Average of Last X Months"
+                      items={Array.from({ length: 12 }, (_, i) => ({ label: String(i + 1), value: i + 1 }))}
+                    />
                   </TableCell>
                   <TableCell align="right" width={130}>
                     <Stack gap={1}>
-                      <CustomTextField size="small" name="salesEnterpriseCtt" placeholder="35" />
+                      <CustomTextField size="small" name={`stage_${stage.id}_ctt_days`} placeholder="35" />
                       <Typography fontWeight={500}>days</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell align="right" width={150}>
+                  {/* <TableCell align="right" width={150}>
                     <CustomTextField size="small" name="salesMidMarket" placeholder="35%" />
                   </TableCell>
                   <TableCell align="right" width={130}>

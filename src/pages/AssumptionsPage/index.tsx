@@ -6,10 +6,13 @@ import dayjs from 'dayjs';
 import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
+import { useGenerateAssumptionMutation } from 'src/apis/assumptions';
+import type { IAssumptionGeneratePayload } from 'src/apis/assumptions/types';
 import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
 import { useGetProjectDetailById } from 'src/apis/projects';
 import type { IProject } from 'src/apis/projects/types';
+import { useGetStageConversions } from 'src/apis/stageConversions';
 
 import { Box } from '@mui/material';
 
@@ -28,7 +31,11 @@ const AssumptionsPage = (): JSX.Element => {
   const [segmentData, setSegmentData] = useState<ISegmentResponse[] | null>(null);
   const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
-  const { mutate: createProjectBreakdownMutation } = useCreateProjectBreakdownMutation();
+  const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
+
+  const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
+  const { mutate: generateAssumptionMutation } = useGenerateAssumptionMutation();
+
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: {
@@ -56,15 +63,42 @@ const AssumptionsPage = (): JSX.Element => {
     });
   };
 
+  const handleGenerateAssumption = (): void => {
+    if (!stageConversions?.length) {
+      return;
+    }
+
+    const payload: IAssumptionGeneratePayload = {
+      project_id: Number(id),
+      stage_conversions: stageConversions?.map((el) => ({
+        assumption_category_id: el?.assumption_category_id,
+        conversion_segments: formBag.getValues('enableProjectBreakdown')
+          ? segmentData?.map((sgmnt) => ({
+              segment_id: sgmnt.id,
+              stage_cycle_months: 2,
+              rate_mode: 'last_3_months',
+              manual_rate: 0.25,
+            }))
+          : [],
+        stage_from_id: el.stage_from_id,
+        stage_to_id: el.stage_to_id,
+      })),
+    };
+
+    generateAssumptionMutation(payload);
+  };
+
   return (
     <Box height="100%">
-      <Header name={data.name} />
+      <Header name={data.name} onGenerate={handleGenerateAssumption} />
       <StyledContainer>
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
-          <ProjectSettings />
+          <ProjectSettings isLoading={isPending} />
         </CustomFormProvider>
         {isShowNewClientSection && !!segmentData?.length && (
-          <NewClientAssumptions segmentData={segmentData} />
+          <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
+            <NewClientAssumptions segmentData={segmentData} />
+          </CustomFormProvider>
         )}
 
         {/* <RecurringRevenueAssumptions /> */}
