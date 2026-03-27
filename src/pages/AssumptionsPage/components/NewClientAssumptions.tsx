@@ -114,15 +114,6 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                       <Typography fontWeight={500}>days</Typography>
                     </Stack>
                   </TableCell>
-                  {/* <TableCell align="right" width={150}>
-                    <CustomTextField size="small" name="salesMidMarket" placeholder="35%" />
-                  </TableCell>
-                  <TableCell align="right" width={130}>
-                    <Stack gap={1}>
-                      <CustomTextField size="small" name="salesMidMarketCtt" placeholder="35" />
-                      <Typography fontWeight={500}>days</Typography>
-                    </Stack>
-                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>

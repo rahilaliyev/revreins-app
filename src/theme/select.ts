@@ -15,6 +15,12 @@ export const selectTheme: Components = {
         top: '50%',
         transform: 'translateY(-50%)',
       },
+      select: {
+        '.MuiInputBase-sizeSmall &': {
+          paddingRight: '32px !important',
+          textAlign: 'left',
+        },
+      },
     },
     variants: [
       {

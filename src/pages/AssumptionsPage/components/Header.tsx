@@ -3,16 +3,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, Stack, Typography } from '@mui/material';
 
+import { LoadingButton } from 'src/components';
+
 import { StyledNavigateBackButton } from '../styled';
 
 import { ArrowLeftSLineIcon } from 'src/assets/icons';
 
 interface IProps {
   name: string;
+  isLoading: boolean;
   onGenerate: () => void;
 }
 
-const Header = ({ name, onGenerate }: IProps): JSX.Element => {
+const Header = ({ name, onGenerate, isLoading }: IProps): JSX.Element => {
   const navigate = useNavigate();
 
   const handleNavigateBack = (): void => {
@@ -39,9 +42,9 @@ const Header = ({ name, onGenerate }: IProps): JSX.Element => {
       </Stack>
       <Stack gap={4}>
         <Button color="secondary">Save as Draft</Button>
-        <Button color="inherit" onClick={onGenerate}>
+        <LoadingButton loading={isLoading} color="inherit" onClick={onGenerate}>
           Generate the Project
-        </Button>
+        </LoadingButton>
       </Stack>
     </Stack>
   );

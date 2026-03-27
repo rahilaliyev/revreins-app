@@ -1,6 +1,6 @@
 import { type JSX, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
@@ -17,6 +17,7 @@ import { useGetStageConversions } from 'src/apis/stageConversions';
 import { Box } from '@mui/material';
 
 import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
+import { ROUTES } from 'src/routes/paths';
 
 import Header from './components/Header';
 import NewClientAssumptions from './components/NewClientAssumptions';
@@ -27,6 +28,7 @@ import { type TFormData, validationSchema } from './validationSchema';
 
 const AssumptionsPage = (): JSX.Element => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isShowNewClientSection, setIsShowNewClientSection] = useState(false);
   const [segmentData, setSegmentData] = useState<ISegmentResponse[] | null>(null);
   const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
@@ -34,7 +36,8 @@ const AssumptionsPage = (): JSX.Element => {
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
 
   const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
-  const { mutate: generateAssumptionMutation } = useGenerateAssumptionMutation();
+  const { mutate: generateAssumptionMutation, isPending: isGeneratePending } =
+    useGenerateAssumptionMutation();
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -85,12 +88,14 @@ const AssumptionsPage = (): JSX.Element => {
       })),
     };
 
-    generateAssumptionMutation(payload);
+    generateAssumptionMutation(payload, {
+      onSuccess: (res) => navigate(`${ROUTES.DEFAULT.PROJECTS.PATH}/${res.project.id}`),
+    });
   };
 
   return (
     <Box height="100%">
-      <Header name={data.name} onGenerate={handleGenerateAssumption} />
+      <Header name={data.name} onGenerate={handleGenerateAssumption} isLoading={isGeneratePending} />
       <StyledContainer>
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
           <ProjectSettings isLoading={isPending} />
