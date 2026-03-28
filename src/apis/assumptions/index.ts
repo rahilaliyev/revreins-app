@@ -1,11 +1,11 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query';
-import { endpoints } from 'src/contants';
+import { useMutation, type UseMutationResult, useQuery, type UseQueryResult } from '@tanstack/react-query';
+import { endpoints, QUERY_KEYS } from 'src/contants';
 import type { ICommonResponse } from 'src/types/interfaces';
 
 import { api } from '../axiosInstance';
 import type { IProjectResponse } from '../projects/types';
 
-import type { IAssumptionGeneratePayload } from './types';
+import type { IAssumptionGeneratePayload, IForecast } from './types';
 
 export const useGenerateAssumptionMutation = (): UseMutationResult<
   IProjectResponse,
@@ -17,4 +17,17 @@ export const useGenerateAssumptionMutation = (): UseMutationResult<
       const res = await api.post<ICommonResponse<IProjectResponse>>(endpoints.assumptions.generate, data);
       return res.data.data;
     },
+  });
+
+export const useGetProjectForecast = (
+  params?: Record<string, string | number>,
+): UseQueryResult<IForecast, Error> =>
+  useQuery<IForecast, Error>({
+    queryKey: [QUERY_KEYS.PROJECT_FORECAST_DETAIL, params],
+    queryFn: async () => {
+      const res = await api.get<ICommonResponse<IForecast>>(endpoints.assumptions.forecast, { params });
+
+      return res.data.data;
+    },
+    enabled: params && !!params.project_id,
   });

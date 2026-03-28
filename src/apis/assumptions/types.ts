@@ -1,3 +1,5 @@
+import type { IStage } from 'src/types/interfaces';
+
 interface ISegmentPayload {
   segment_id: number;
   stage_cycle_months: number;
@@ -15,4 +17,28 @@ interface IStageConversionPayload {
 export interface IAssumptionGeneratePayload {
   project_id: number;
   stage_conversions: IStageConversionPayload[];
+}
+
+interface IForecastSegment {
+  anchor_month: string;
+  growth_rate: number;
+  segment_id: number;
+  segment_name: string;
+}
+
+type TForecastStage = Record<
+  string,
+  {
+    count: number;
+    is_projected: boolean;
+  }
+>;
+
+export interface IForecast {
+  generated_at: string;
+  horizon_months: number;
+  project_id: number;
+  segments: IForecastSegment[];
+  stages: { data: TForecastStage }[];
+  totals: TForecastStage[];
 }

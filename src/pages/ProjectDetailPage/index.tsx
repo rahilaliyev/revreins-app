@@ -1,6 +1,7 @@
-import { type JSX, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useGetProjectForecast } from 'src/apis/assumptions';
 import { useGetProjectDetailById } from 'src/apis/projects';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
@@ -206,6 +207,17 @@ const ProjectDetailPage = (): JSX.Element => {
   const [rowData, setRowData] = useState(FUNNEL_MOCK_DATA);
 
   const { data: projectDetail } = useGetProjectDetailById(id ?? '');
+  const { data: projectForecast, isSuccess } = useGetProjectForecast({
+    project_id: projectDetail?.id ?? '',
+    horizon_months: 9,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      const months = projectForecast?.totals;
+      console.log(months);
+    }
+  }, [projectForecast]);
 
   const handleCellValueChange = (rowId: string, monthIndex: number, value: string | number): void => {
     setRowData((prevData) =>
