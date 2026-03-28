@@ -4,7 +4,7 @@ import type { ICommonPaginationResponse, ICommonResponse, ICommonTokenRequest } 
 
 import { api, axiosLogin } from '../axiosInstance';
 
-import type { IProject, IProjectPayload, IProjectResponse } from './types';
+import type { IProject, IProjectPayload, IProjectResponse, IProjectUpdatePayload } from './types';
 
 export const useGetProjects = (): UseQueryResult<ICommonPaginationResponse<IProject>, Error> =>
   useQuery({
@@ -31,6 +31,14 @@ export const useCreateProjectMutation = (): UseMutationResult<IProjectResponse, 
     mutationFn: async (data: IProjectPayload) => {
       const res = await api.post<ICommonResponse<IProjectResponse>>(endpoints.tenant.projects, data);
       return res.data.data;
+    },
+  });
+
+export const useUpdateProjectMutation = (id: number): UseMutationResult<void, Error, IProjectUpdatePayload> =>
+  useMutation<void, Error, IProjectUpdatePayload>({
+    mutationFn: async (data: IProjectUpdatePayload) => {
+      const res = await api.post<void>(`${endpoints.tenant.projects}/${id}`, data);
+      return res.data;
     },
   });
 

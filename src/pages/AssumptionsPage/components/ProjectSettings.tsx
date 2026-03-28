@@ -1,6 +1,6 @@
 import { type JSX, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
-import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
+import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 
 import { useGetCurrencies } from 'src/apis/currencies';
@@ -68,6 +68,7 @@ const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
                     }}
                     name="startingDate"
                     format={MONTH_LETTER_YEAR_FORMAT}
+                    outputFormat={DATE_FORMAT}
                   />
                 </TableCell>
               </TableRow>
@@ -92,7 +93,7 @@ const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
                   <CustomSelectField
                     size="small"
                     sx={{ '& .MuiSelect-select': { display: 'flex' } }}
-                    name="currency_id"
+                    name="currencyId"
                     items={currencyOptions}
                   />
                 </TableCell>

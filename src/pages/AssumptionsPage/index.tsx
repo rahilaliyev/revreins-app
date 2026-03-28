@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
-import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
+import { DATE_FORMAT } from 'src/contants';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
 import { useGenerateAssumptionMutation } from 'src/apis/assumptions';
 import type { IAssumptionGeneratePayload } from 'src/apis/assumptions/types';
 import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
-import { useGetProjectDetailById } from 'src/apis/projects';
-import type { IProject } from 'src/apis/projects/types';
+import { useGetProjectDetailById, useUpdateProjectMutation } from 'src/apis/projects';
+import type { IProject, IProjectResponse, IProjectUpdatePayload } from 'src/apis/projects/types';
 import { useGetStageConversions } from 'src/apis/stageConversions';
 
 import { Box } from '@mui/material';
@@ -37,12 +37,15 @@ const AssumptionsPage = (): JSX.Element => {
   const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
   const { mutate: generateAssumptionMutation, isPending: isGeneratePending } =
     useGenerateAssumptionMutation();
+  const { mutate: updateProjectMutation, isPending: isUpdateProjectPending } = useUpdateProjectMutation(
+    data.id,
+  );
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: {
-      currency_id: 1,
-      startingDate: dayjs().format(MONTH_LETTER_YEAR_FORMAT),
+      currencyId: 1,
+      startingDate: '',
       enableProjectBreakdown: false,
       segments: [{ name: 'Segment 1', crm_lead_custom_field_choice_id: 0 }],
     },
@@ -51,19 +54,25 @@ const AssumptionsPage = (): JSX.Element => {
   useEffect(() => {
     if (data) {
       formBag.reset({
-        currency_id: data.currency_id,
-        startingDate: dayjs(data.start_date).format(MONTH_LETTER_YEAR_FORMAT),
+        currencyId: data.currency_id,
+        startingDate: dayjs(data.start_date).format(DATE_FORMAT),
       });
     }
   }, [data, formBag]);
 
-  const handleSubmit = (data: TFormData): void => {
+  const handleSubmit = (formData: TFormData): void => {
     const payload: IProjectBreakdownPayload = {
       project_id: Number(id),
-      status: data.enableProjectBreakdown ? 1 : 0,
-      crm_lead_custom_field_id: data.businessType,
-      name: leadCustomFields?.find((el) => el.id === data.businessType)?.name ?? '',
-      segments: data?.segments,
+      status: formData.enableProjectBreakdown ? 1 : 0,
+      crm_lead_custom_field_id: formData.businessType,
+      name: leadCustomFields?.find((el) => el.id === formData.businessType)?.name ?? '',
+      segments: formData?.segments,
+    };
+
+    const updatingProjectPayload: IProjectUpdatePayload = {
+      name: data.name,
+      start_date: formData.startingDate,
+      currency_id: formData.currencyId,
     };
 
     createProjectBreakdownMutation(payload, {
@@ -72,6 +81,12 @@ const AssumptionsPage = (): JSX.Element => {
         setSegmentData(res.segments);
       },
     });
+
+    updateProjectMutation(updatingProjectPayload);
+  };
+
+  const handleSuccessResponseGenerate = (res: IProjectResponse): void => {
+    navigate(`${ROUTES.DEFAULT.PROJECTS.PATH}/${res.project.id}`);
   };
 
   const handleGenerateAssumption = (): void => {
@@ -97,13 +112,17 @@ const AssumptionsPage = (): JSX.Element => {
     };
 
     generateAssumptionMutation(payload, {
-      onSuccess: (res) => navigate(`${ROUTES.DEFAULT.PROJECTS.PATH}/${res.project.id}`),
+      onSuccess: handleSuccessResponseGenerate,
     });
   };
 
   return (
     <Box height="100%">
-      <Header name={data.name} onGenerate={handleGenerateAssumption} isLoading={isGeneratePending} />
+      <Header
+        name={data.name}
+        onGenerate={handleGenerateAssumption}
+        isLoading={isGeneratePending || isUpdateProjectPending}
+      />
       <StyledContainer>
         <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
           <ProjectSettings isLoading={isPending} />

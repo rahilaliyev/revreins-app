@@ -1,5 +1,3 @@
-import type { IStage } from 'src/types/interfaces';
-
 interface ISegmentPayload {
   segment_id: number;
   stage_cycle_months: number;

@@ -1,4 +1,4 @@
-import { type JSX, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { type ControllerProps, useController, useFormContext } from 'react-hook-form';
 import dayjs, { type Dayjs } from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
@@ -31,6 +31,7 @@ type TDesktopDatePickerField = Omit<ControllerProps, 'render'> &
   DesktopDatePickerProps & {
     hasErrorHeight?: boolean;
     helperText?: string;
+    outputFormat?: string;
     onBlur?: () => void;
     onFocus?: () => void;
   };
@@ -109,7 +110,7 @@ const CustomCalendarHeader = (props: PickersCalendarHeaderProps): JSX.Element =>
 };
 
 export const CustomDatePickerField = (props: TDesktopDatePickerField): JSX.Element => {
-  const { name, label, defaultValue, rules, helperText, onBlur, onFocus, ...rest } = props;
+  const { name, label, defaultValue, rules, helperText, onBlur, onFocus, outputFormat, ...rest } = props;
 
   const { control } = useFormContext();
 
@@ -128,8 +129,13 @@ export const CustomDatePickerField = (props: TDesktopDatePickerField): JSX.Eleme
 
   const message = error?.message ?? helperText ?? '';
 
+  useEffect(() => {
+    setTempValue(field.value ? dayjs(field.value) : null);
+  }, [field.value]);
+
   const handleAccept = (): void => {
-    field.onChange(tempValue);
+    const value = outputFormat && tempValue ? tempValue.format(outputFormat) : tempValue;
+    field.onChange(value);
     setOpen(false);
   };
 

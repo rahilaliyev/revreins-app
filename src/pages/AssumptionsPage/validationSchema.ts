@@ -8,13 +8,21 @@ const segmentSchema = z.object({
 
 export const validationSchema = z
   .object({
-    currency_id: z.number(),
+    currencyId: z.number(),
     startingDate: z.string(),
     businessType: z.number().optional(),
     enableProjectBreakdown: z.boolean(),
-    segments: z.array(segmentSchema),
+    segments: z.array(segmentSchema).optional(),
   })
   .superRefine((data, ctx) => {
+    if (data.enableProjectBreakdown && !data.segments?.length) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Segment is required',
+        path: ['segments'],
+      });
+    }
+
     if (data.enableProjectBreakdown && !data.businessType) {
       ctx.addIssue({
         code: 'custom',

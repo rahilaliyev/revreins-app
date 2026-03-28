@@ -26,7 +26,7 @@ export interface IProjectBreakdownPayload {
   crm_lead_custom_field_id?: number;
   project_id: number;
   status: 0 | 1;
-  segments: ISegment[];
+  segments?: ISegment[];
 }
 
 export interface ISegmentResponse extends ISegment {

@@ -26,3 +26,10 @@ export interface IProject {
 export interface IProjectResponse {
   project: IProject;
 }
+
+export interface IProjectUpdatePayload {
+  name: string;
+  status?: number;
+  start_date: string;
+  currency_id: number;
+}

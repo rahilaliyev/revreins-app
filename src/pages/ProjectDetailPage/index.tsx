@@ -217,7 +217,7 @@ const ProjectDetailPage = (): JSX.Element => {
       const months = projectForecast?.totals;
       console.log(months);
     }
-  }, [projectForecast]);
+  }, [projectForecast, isSuccess]);
 
   const handleCellValueChange = (rowId: string, monthIndex: number, value: string | number): void => {
     setRowData((prevData) =>
