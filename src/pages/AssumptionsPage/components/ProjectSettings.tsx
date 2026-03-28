@@ -1,7 +1,9 @@
-import type { JSX } from 'react';
+import { type JSX, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
 import { MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
+
+import { useGetCurrencies } from 'src/apis/currencies';
 
 import { Box, Stack, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 
@@ -17,12 +19,24 @@ interface IProps {
 }
 
 const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
+  const { data: currencies } = useGetCurrencies();
   const { control } = useAssumptionsFormContext();
 
   const enableProjectBreakdown = useWatch({
     control,
     name: 'enableProjectBreakdown',
   });
+
+  const currencyOptions = useMemo(() => {
+    if (currencies) {
+      return currencies?.map((currency) => ({
+        label: currency.code,
+        value: currency.id,
+      }));
+    }
+
+    return [];
+  }, [currencies]);
 
   return (
     <StyledComponentWrapper>
@@ -78,8 +92,8 @@ const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
                   <CustomSelectField
                     size="small"
                     sx={{ '& .MuiSelect-select': { display: 'flex' } }}
-                    name="currency"
-                    items={[{ value: 'USD', label: 'USD' }]}
+                    name="currency_id"
+                    items={currencyOptions}
                   />
                 </TableCell>
               </TableRow>

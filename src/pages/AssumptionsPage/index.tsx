@@ -1,4 +1,4 @@
-import { type JSX, useState } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,12 +41,21 @@ const AssumptionsPage = (): JSX.Element => {
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
     defaultValues: {
-      currency: 'USD',
+      currency_id: 1,
       startingDate: dayjs().format(MONTH_LETTER_YEAR_FORMAT),
       enableProjectBreakdown: false,
       segments: [{ name: 'Segment 1', crm_lead_custom_field_choice_id: 0 }],
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      formBag.reset({
+        currency_id: data.currency_id,
+        startingDate: dayjs(data.start_date).format(MONTH_LETTER_YEAR_FORMAT),
+      });
+    }
+  }, [data, formBag]);
 
   const handleSubmit = (data: TFormData): void => {
     const payload: IProjectBreakdownPayload = {

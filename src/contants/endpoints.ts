@@ -67,6 +67,9 @@ export const endpoints = {
     get crmObjectFields(): string {
       return `${this.base}/crm-object-fields`;
     },
+    get currencies(): string {
+      return `${this.base}/currencies`;
+    },
   },
   assumptions: {
     base: 'api/tenant/assumptions',

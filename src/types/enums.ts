@@ -84,3 +84,9 @@ export enum EProjectStatus {
   DRAFT = 'DRAFT',
   DELETED = 'DELETED',
 }
+
+export enum ECurrencyCode {
+  USD = 'USD',
+  EUR = 'EUR',
+  CAD = 'CAD',
+}
