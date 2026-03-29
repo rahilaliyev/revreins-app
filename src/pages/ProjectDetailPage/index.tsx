@@ -8,9 +8,11 @@ import { useGetProjectDetailById } from 'src/apis/projects';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 
 import { AccordionTable, LoadingWrapper } from 'src/components';
+import { useLocalStorage } from 'src/hooks';
 
 import FiltersAndRevenueInfo from './components/FiltersAndRevenueInfo';
 import Header from './components/Header';
+import InformationModal from './components/InformationModal';
 import { StyledContainer } from './styled';
 
 import { ArrowDownSLineIcon } from 'src/assets/icons';
@@ -27,6 +29,8 @@ const ProjectDetailPage = (): JSX.Element => {
 
   const [rowData, setRowData] = useState<IRow[]>([]);
   const [columns, setColumns] = useState<string[]>([]);
+  const [isInformationModal, setIsInformationModal] = useState(false);
+  const [hideProjectDetailInfoModal] = useLocalStorage('hideProjectDetailInfoModal', false);
 
   const { data: projectDetail } = useGetProjectDetailById(id ?? '');
   const {
@@ -73,6 +77,8 @@ const ProjectDetailPage = (): JSX.Element => {
     );
   }, []);
 
+  const handleModalClose = (): void => setIsInformationModal(false);
+
   useEffect(() => {
     if (isSuccess) {
       const months = projectForecast?.segments?.[0]?.stages?.[0]?.data;
@@ -81,6 +87,12 @@ const ProjectDetailPage = (): JSX.Element => {
       setColumns(Object.keys(months));
     }
   }, [projectForecast, isSuccess, formatForecastData]);
+
+  useEffect(() => {
+    if (!hideProjectDetailInfoModal) {
+      setIsInformationModal(true);
+    }
+  }, [hideProjectDetailInfoModal]);
 
   return (
     <Box height="100%">
@@ -114,6 +126,7 @@ const ProjectDetailPage = (): JSX.Element => {
           </Accordion>
         </Box>
       </StyledContainer>
+      <InformationModal open={isInformationModal} onClose={handleModalClose} />
     </Box>
   );
 };

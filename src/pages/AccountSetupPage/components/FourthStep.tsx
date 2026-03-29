@@ -27,7 +27,7 @@ interface IProps {
 }
 
 const FourthStep = ({ invitingMembers }: IProps): JSX.Element => {
-  const token = localStorage.getItem('temporaryToken') || '';
+  const token = sessionStorage.getItem('temporaryToken') || '';
   const { data } = useGetUserInfoOnboarding(token);
 
   const memberList = useMemo(() => {
