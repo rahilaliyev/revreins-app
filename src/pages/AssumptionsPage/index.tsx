@@ -22,6 +22,7 @@ import { ROUTES } from 'src/routes/paths';
 import Header from './components/Header';
 import NewClientAssumptions from './components/NewClientAssumptions';
 import ProjectSettings from './components/ProjectSettings';
+import RecurringRevenueAssumptions from './components/RecurringRevenueAssumptions';
 import { StyledContainer } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
@@ -133,7 +134,7 @@ const AssumptionsPage = (): JSX.Element => {
           </CustomFormProvider>
         )}
 
-        {/* <RecurringRevenueAssumptions /> */}
+        <RecurringRevenueAssumptions />
       </StyledContainer>
     </Box>
   );

@@ -9,10 +9,9 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material';
-
-import { CustomTextField } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 
@@ -70,10 +69,10 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
                 <Typography>Starting Customers</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="startingEnterprise" placeholder="35%" />
+                <TextField size="small" name="startingEnterprise" placeholder="35%" />
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="startingMidMarket" placeholder="35%" />
+                <TextField size="small" name="startingMidMarket" placeholder="35%" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -81,10 +80,10 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
                 <Typography>Churn Rate</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="churnEnterprise" placeholder="35%" />
+                <TextField size="small" name="churnEnterprise" placeholder="35%" />
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="churnMidMarket" placeholder="35%" />
+                <TextField size="small" name="churnMidMarket" placeholder="35%" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -92,10 +91,10 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
                 <Typography>% of Customers Ordering</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="customerEnterprise" placeholder="35%" />
+                <TextField size="small" name="customerEnterprise" placeholder="35%" />
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="customerMidMarket" placeholder="35%" />
+                <TextField size="small" name="customerMidMarket" placeholder="35%" />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -103,10 +102,10 @@ const RecurringRevenueAssumptions = (): JSX.Element => (
                 <Typography>Average Order Value</Typography>
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="orderValueEnterprise" placeholder="35%" />
+                <TextField size="small" name="orderValueEnterprise" placeholder="35%" />
               </TableCell>
               <TableCell align="right" width={150}>
-                <CustomTextField size="small" name="orderValueMidMarket" placeholder="35%" />
+                <TextField size="small" name="orderValueMidMarket" placeholder="35%" />
               </TableCell>
             </TableRow>
           </TableBody>

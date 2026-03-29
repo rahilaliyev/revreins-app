@@ -1,5 +1,6 @@
 import { type JSX, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
+import { DATE_MONTH_FORMAT, MONTH_WORD_FORMAT } from 'src/contants';
 
 import {
   Box,
@@ -22,10 +23,8 @@ import {
 
 import { ArrowDownSLineIcon, PolygonIcon } from 'src/assets/icons';
 
-type TMonth = 'jan' | 'feb' | 'mar' | 'apr' | 'may' | 'jun' | 'jul' | 'aug' | 'sep' | 'oct' | 'nov' | 'dec';
-
 interface IRow {
-  id: string;
+  id: number;
   label: string;
   values: (number | string)[];
   children?: IRow[];
@@ -35,17 +34,22 @@ interface ITableRowProps {
   row: IRow;
   level?: number;
   onValueChange?: (rowId: string, monthIndex: number, value: string | number) => void;
+  columns: string[];
 }
 
-const MONTHS: TMonth[] = Array.from({ length: 12 }, (_, i) => dayjs().month(i).format('MMM')) as TMonth[];
+interface IAccordionTableProps {
+  data: IRow[];
+  onChange?: (rowId: string, monthIndex: number, value: string | number) => void;
+  columns: string[];
+}
 
-const Row = ({ row, level = 0, onValueChange }: ITableRowProps): JSX.Element => {
+const Row = ({ row, level = 0, onValueChange, columns }: ITableRowProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const hasChildren = Boolean(row.children?.length);
 
   const handleValueChange = (monthIndex: number, value: string): void => {
     if (onValueChange) {
-      onValueChange(row.id, monthIndex, value);
+      onValueChange(row.id?.toString(), monthIndex, value);
     }
   };
 
@@ -69,7 +73,7 @@ const Row = ({ row, level = 0, onValueChange }: ITableRowProps): JSX.Element => 
           </Box>
         </TableCell>
 
-        {MONTHS.map((m, key) => {
+        {columns.map((m, key) => {
           const currentMonth = dayjs().month();
           const isFutureMonth = key > currentMonth;
 
@@ -100,19 +104,13 @@ const Row = ({ row, level = 0, onValueChange }: ITableRowProps): JSX.Element => 
       {hasChildren &&
         open &&
         row.children?.map((child) => (
-          <Row key={child.id} row={child} level={level + 1} onValueChange={onValueChange} />
+          <Row key={child.id} row={child} level={level + 1} onValueChange={onValueChange} columns={columns} />
         ))}
     </>
   );
 };
 
-export const AccordionTable = ({
-  data,
-  onChange,
-}: {
-  data: IRow[];
-  onChange?: (rowId: string, monthIndex: number, value: string | number) => void;
-}): JSX.Element => {
+export const AccordionTable = ({ data, onChange, columns }: IAccordionTableProps): JSX.Element => {
   const tableRef = useRef<HTMLTableElement>(null);
   const [indicatorLeft, setIndicatorLeft] = useState(0);
 
@@ -127,15 +125,14 @@ export const AccordionTable = ({
       if (currentMonthCell) {
         const tableRect = tableRef.current.getBoundingClientRect();
         const cellRect = currentMonthCell.getBoundingClientRect();
-        const leftPosition = cellRect.left - tableRect.left + cellRect.width;
-        setIndicatorLeft(leftPosition);
+        setIndicatorLeft(cellRect.left - tableRect.left);
       }
     };
     calculatePosition();
 
     window.addEventListener('resize', calculatePosition);
     return (): void => window.removeEventListener('resize', calculatePosition);
-  }, []);
+  }, [columns]);
 
   return (
     <Box position="relative">
@@ -143,17 +140,18 @@ export const AccordionTable = ({
         <StyledAccordionTable aria-label="collapsible table" ref={tableRef}>
           <TableHead>
             <TableRow>
-              <TableCell>Funnel Stage</TableCell>
-              {MONTHS.map((month, key) => {
-                const currentMonth = dayjs().month();
+              <TableCell width={250}>Funnel Stage</TableCell>
+              {columns.map((month) => {
+                const currentMonth = dayjs().format(DATE_MONTH_FORMAT);
 
                 return (
                   <TableCell
                     key={month}
                     align="right"
-                    className={key === currentMonth ? 'current-month' : ''}
+                    width={100}
+                    className={month === currentMonth ? 'current-month' : ''}
                   >
-                    {month}
+                    {dayjs(month, DATE_MONTH_FORMAT).format(MONTH_WORD_FORMAT)}
                   </TableCell>
                 );
               })}
@@ -161,7 +159,7 @@ export const AccordionTable = ({
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <Row key={row.id} row={row} onValueChange={onChange} />
+              <Row key={row.id} row={row} onValueChange={onChange} columns={columns} />
             ))}
           </TableBody>
         </StyledAccordionTable>
