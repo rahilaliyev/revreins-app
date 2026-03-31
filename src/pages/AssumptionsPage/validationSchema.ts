@@ -3,7 +3,21 @@ import z from 'zod';
 
 const segmentSchema = z.object({
   name: z.string(),
-  crm_lead_custom_field_choice_id: z.number(),
+  crmLeadCustomFieldChoiceId: z.number(),
+});
+
+const conversionSegmentSchema = z.object({
+  segmentId: z.number(),
+  stageCycleMonths: z.number().min(1).nullable(),
+  rateMode: z.string().nullable(),
+  manualRate: z.number().nullable(),
+});
+
+const stageConversionSchema = z.object({
+  stageFromId: z.number(),
+  stageToId: z.number(),
+  assumptionCategoryId: z.number().optional().nullable(),
+  conversionSegments: z.array(conversionSegmentSchema),
 });
 
 export const validationSchema = z
@@ -13,6 +27,7 @@ export const validationSchema = z
     businessType: z.number().optional(),
     enableProjectBreakdown: z.boolean(),
     segments: z.array(segmentSchema).optional(),
+    stageConversions: z.array(stageConversionSchema).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.enableProjectBreakdown && !data.segments?.length) {
@@ -33,6 +48,8 @@ export const validationSchema = z
   });
 
 export type TFormData = z.infer<typeof validationSchema>;
+export type TStageConversionField = z.infer<typeof stageConversionSchema>;
+export type TConversionSegmentField = z.infer<typeof conversionSegmentSchema>;
 
 export function useAssumptionsFormContext(): UseFormReturn<TFormData> {
   return useFormContext<TFormData>();

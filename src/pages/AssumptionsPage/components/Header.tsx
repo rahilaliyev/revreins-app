@@ -12,10 +12,9 @@ import { ArrowLeftSLineIcon } from 'src/assets/icons';
 interface IProps {
   name: string;
   isLoading: boolean;
-  onGenerate: () => void;
 }
 
-const Header = ({ name, onGenerate, isLoading }: IProps): JSX.Element => {
+const Header = ({ name, isLoading }: IProps): JSX.Element => {
   const navigate = useNavigate();
 
   const handleNavigateBack = (): void => {
@@ -42,7 +41,7 @@ const Header = ({ name, onGenerate, isLoading }: IProps): JSX.Element => {
       </Stack>
       <Stack gap={4}>
         <Button color="secondary">Save as Draft</Button>
-        <LoadingButton loading={isLoading} color="inherit" onClick={onGenerate}>
+        <LoadingButton loading={isLoading} color="inherit" type="submit">
           Generate the Project
         </LoadingButton>
       </Stack>

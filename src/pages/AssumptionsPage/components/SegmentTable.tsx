@@ -68,7 +68,7 @@ const SegmentTable = (): JSX.Element => {
   const addSegmentField = (index: number): void => {
     append({
       name: `Segment ${index + 1}`,
-      crm_lead_custom_field_choice_id: 0,
+      crmLeadCustomFieldChoiceId: 0,
     });
   };
 
@@ -171,7 +171,7 @@ const SegmentTable = (): JSX.Element => {
                 <Stack gap={4}>
                   <CustomSelectField
                     placeholder="Choose business type"
-                    name={`segments.${index}.crm_lead_custom_field_choice_id`}
+                    name={`segments.${index}.crmLeadCustomFieldChoiceId`}
                     items={segmentFieldOptions || []}
                     size="small"
                     defaultValue=""

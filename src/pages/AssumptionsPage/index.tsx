@@ -4,14 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from 'src/contants';
-import { ELeadCustomFieldType } from 'src/types/enums';
 
 import { useGenerateAssumptionMutation } from 'src/apis/assumptions';
 import type { IAssumptionGeneratePayload } from 'src/apis/assumptions/types';
-import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
-import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
-import { useGetProjectDetailById, useUpdateProjectMutation } from 'src/apis/projects';
-import type { IProject, IProjectResponse, IProjectUpdatePayload } from 'src/apis/projects/types';
+import type { ISegmentResponse } from 'src/apis/breakdowns/types';
+import { useGetProjectDetailById } from 'src/apis/projects';
+import type { IProject, IProjectResponse } from 'src/apis/projects/types';
 import { useGetStageConversions } from 'src/apis/stageConversions';
 
 import { Box } from '@mui/material';
@@ -24,23 +22,17 @@ import NewClientAssumptions from './components/NewClientAssumptions';
 import ProjectSettings from './components/ProjectSettings';
 import RecurringRevenueAssumptions from './components/RecurringRevenueAssumptions';
 import { StyledContainer } from './styled';
-import { type TFormData, validationSchema } from './validationSchema';
+import { type TFormData, type TStageConversionField, validationSchema } from './validationSchema';
 
 const AssumptionsPage = (): JSX.Element => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isShowNewClientSection, setIsShowNewClientSection] = useState(false);
   const [segmentData, setSegmentData] = useState<ISegmentResponse[] | null>(null);
   const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
-  const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
 
-  const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
   const { mutate: generateAssumptionMutation, isPending: isGeneratePending } =
     useGenerateAssumptionMutation();
-  const { mutate: updateProjectMutation, isPending: isUpdateProjectPending } = useUpdateProjectMutation(
-    data.id,
-  );
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
@@ -48,7 +40,7 @@ const AssumptionsPage = (): JSX.Element => {
       currencyId: 1,
       startingDate: '',
       enableProjectBreakdown: false,
-      segments: [{ name: 'Segment 1', crm_lead_custom_field_choice_id: 0 }],
+      segments: [{ name: 'Segment 1', crmLeadCustomFieldChoiceId: 0 }],
     },
   });
 
@@ -61,54 +53,52 @@ const AssumptionsPage = (): JSX.Element => {
     }
   }, [data, formBag]);
 
-  const handleSubmit = (formData: TFormData): void => {
-    const payload: IProjectBreakdownPayload = {
-      project_id: Number(id),
-      status: formData.enableProjectBreakdown ? 1 : 0,
-      crm_lead_custom_field_id: formData.businessType,
-      name: leadCustomFields?.find((el) => el.id === formData.businessType)?.name ?? '',
-      segments: formData?.segments,
-    };
+  useEffect(() => {
+    if (!stageConversions?.length) {
+      return;
+    }
 
-    const updatingProjectPayload: IProjectUpdatePayload = {
-      name: data.name,
-      start_date: formData.startingDate,
-      currency_id: formData.currencyId,
-    };
+    const seededConversions: TStageConversionField[] = stageConversions.map((sc) => ({
+      stageFromId: sc.stage_from_id,
+      stageToId: sc.stage_to_id,
+      assumptionCategoryId: sc.assumption_category_id,
+      conversionSegments: (segmentData ?? []).map((sgmnt) => ({
+        segmentId: sgmnt.id,
+        stageCycleMonths: null,
+        rateMode: null,
+        manualRate: null,
+      })),
+    }));
 
-    createProjectBreakdownMutation(payload, {
-      onSuccess: (res) => {
-        setIsShowNewClientSection(true);
-        setSegmentData(res.segments);
-      },
-    });
-
-    updateProjectMutation(updatingProjectPayload);
-  };
+    formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });
+  }, [stageConversions, segmentData, formBag]);
 
   const handleSuccessResponseGenerate = (res: IProjectResponse): void => {
     navigate(`${ROUTES.DEFAULT.PROJECTS.PATH}/${res.project.id}`);
   };
 
-  const handleGenerateAssumption = (): void => {
+  const handleGenerateAssumption = (formData: TFormData): void => {
     if (!stageConversions?.length) {
       return;
     }
 
+    const stageConversionValues = formData.stageConversions ?? [];
+    const enableBreakdown = formData.enableProjectBreakdown;
+
     const payload: IAssumptionGeneratePayload = {
       project_id: Number(id),
-      stage_conversions: stageConversions?.map((el) => ({
-        assumption_category_id: el?.assumption_category_id,
-        conversion_segments: formBag.getValues('enableProjectBreakdown')
-          ? segmentData?.map((sgmnt) => ({
-              segment_id: sgmnt.id,
-              stage_cycle_months: 2,
-              rate_mode: 'last_3_months',
-              manual_rate: 0.25,
+      stage_conversions: stageConversionValues.map((sc) => ({
+        assumption_category_id: sc.assumptionCategoryId ?? 0,
+        stage_from_id: sc.stageFromId,
+        stage_to_id: sc.stageToId,
+        conversion_segments: enableBreakdown
+          ? sc.conversionSegments.map((seg) => ({
+              segment_id: seg.segmentId,
+              stage_cycle_months: seg.stageCycleMonths ?? 0,
+              rate_mode: seg.rateMode ?? '',
+              manual_rate: seg.manualRate ?? 0,
             }))
           : [],
-        stage_from_id: el.stage_from_id,
-        stage_to_id: el.stage_to_id,
       })),
     };
 
@@ -119,23 +109,15 @@ const AssumptionsPage = (): JSX.Element => {
 
   return (
     <Box height="100%">
-      <Header
-        name={data.name}
-        onGenerate={handleGenerateAssumption}
-        isLoading={isGeneratePending || isUpdateProjectPending}
-      />
-      <StyledContainer>
-        <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
-          <ProjectSettings isLoading={isPending} />
-        </CustomFormProvider>
-        {isShowNewClientSection && !!segmentData?.length && (
-          <CustomFormProvider form={formBag} onSubmit={handleSubmit}>
-            <NewClientAssumptions segmentData={segmentData} />
-          </CustomFormProvider>
-        )}
+      <CustomFormProvider form={formBag} onSubmit={handleGenerateAssumption}>
+        <Header name={data.name} isLoading={isGeneratePending} />
+        <StyledContainer>
+          <ProjectSettings setSegmentData={setSegmentData} />
+          <NewClientAssumptions segmentData={segmentData ?? []} />
 
-        <RecurringRevenueAssumptions />
-      </StyledContainer>
+          <RecurringRevenueAssumptions />
+        </StyledContainer>
+      </CustomFormProvider>
     </Box>
   );
 };

@@ -1,26 +1,41 @@
 import { type JSX, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
+import { ELeadCustomFieldType } from 'src/types/enums';
 
+import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
+import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
 import { useGetCurrencies } from 'src/apis/currencies';
+import { useGetProjectDetailById, useUpdateProjectMutation } from 'src/apis/projects';
+import type { IProject, IProjectUpdatePayload } from 'src/apis/projects/types';
 
 import { Box, Stack, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 
 import { CustomDatePickerField, CustomSelectField, CustomSwitchField, LoadingButton } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
-import { useAssumptionsFormContext } from '../validationSchema';
+import { type TFormData, useAssumptionsFormContext } from '../validationSchema';
 
 import SegmentTable from './SegmentTable';
 
 interface IProps {
-  isLoading: boolean;
+  setSegmentData: (data: ISegmentResponse[]) => void;
 }
 
-const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
+const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
+  const { id } = useParams();
+
+  const { data: projectData = {} as IProject } = useGetProjectDetailById(id ?? '');
+  const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { data: currencies } = useGetCurrencies();
-  const { control } = useAssumptionsFormContext();
+  const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
+  const { mutate: updateProjectMutation, isPending: isUpdateProjectPending } = useUpdateProjectMutation(
+    projectData.id,
+  );
+
+  const { control, getValues } = useAssumptionsFormContext();
 
   const enableProjectBreakdown = useWatch({
     control,
@@ -37,6 +52,32 @@ const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
 
     return [];
   }, [currencies]);
+
+  const handleCreateBreakdowns = (): void => {
+    const formData = getValues();
+    const payload: IProjectBreakdownPayload = {
+      project_id: Number(id),
+      status: formData.enableProjectBreakdown ? 1 : 0,
+      crm_lead_custom_field_id: formData.businessType,
+      name: leadCustomFields?.find((el) => el.id === formData.businessType)?.name ?? '',
+      segments: formData?.segments?.map((el) => ({
+        name: el.name,
+        crm_lead_custom_field_choice_id: el.crmLeadCustomFieldChoiceId,
+      })),
+    };
+
+    const updatingProjectPayload: IProjectUpdatePayload = {
+      name: projectData.name,
+      start_date: formData.startingDate,
+      currency_id: formData.currencyId,
+    };
+
+    createProjectBreakdownMutation(payload, {
+      onSuccess: (res) => setSegmentData(res.segments),
+    });
+
+    updateProjectMutation(updatingProjectPayload);
+  };
 
   return (
     <StyledComponentWrapper>
@@ -134,7 +175,13 @@ const ProjectSettings = ({ isLoading }: IProps): JSX.Element => {
         </Box>
       )}
       <Stack justifyContent="flex-end" mt={2}>
-        <LoadingButton type="submit" size="large" color="inherit" loading={isLoading}>
+        <LoadingButton
+          onClick={handleCreateBreakdowns}
+          size="large"
+          color="inherit"
+          loading={isPending || isUpdateProjectPending}
+          disabled={!enableProjectBreakdown}
+        >
           Save
         </LoadingButton>
       </Stack>

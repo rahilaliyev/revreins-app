@@ -1,4 +1,4 @@
-interface ISegmentPayload {
+export interface IConversionSegment {
   segment_id: number;
   stage_cycle_months: number;
   rate_mode: string;
@@ -9,7 +9,7 @@ interface IStageConversionPayload {
   stage_from_id: number;
   stage_to_id: number;
   assumption_category_id: number;
-  conversion_segments?: ISegmentPayload[];
+  conversion_segments?: IConversionSegment[];
 }
 
 export interface IAssumptionGeneratePayload {

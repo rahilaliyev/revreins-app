@@ -54,44 +54,74 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                 <TableCell>
                   <Typography fontWeight={600}>Stage Name</Typography>
                 </TableCell>
-                {segmentData.map((el) => (
-                  <Fragment key={el.id}>
-                    <TableCell>
-                      <Typography fontWeight={600}>{el.name}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Typography
-                        fontWeight={600}
-                        display="flex"
-                        justifyContent="center"
-                        gap={1}
-                        color="text.secondary"
-                      >
-                        CTT
-                        <Tooltip
-                          placement="top-start"
-                          title={
-                            <Box>
-                              <Typography variant="caption2" fontWeight={700}>
-                                Cycle Transition Time
-                              </Typography>
-                              <br />
-                              <Typography variant="caption2" fontWeight={500}>
-                                The time it takes for a lead to transition from one stage to another
-                              </Typography>
-                            </Box>
-                          }
+                {segmentData.length ? (
+                  segmentData.map((el) => (
+                    <Fragment key={el.id}>
+                      <TableCell>
+                        <Typography fontWeight={600}>{el.name}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Typography
+                          fontWeight={600}
+                          display="flex"
+                          justifyContent="center"
+                          gap={1}
+                          color="text.secondary"
                         >
-                          <InformationLineIcon pathFill={colorPalette.other.icon} />
-                        </Tooltip>
-                      </Typography>
-                    </TableCell>
-                  </Fragment>
-                ))}
+                          CTT
+                          <Tooltip
+                            placement="top-start"
+                            title={
+                              <Box>
+                                <Typography variant="caption2" fontWeight={700}>
+                                  Cycle Transition Time
+                                </Typography>
+                                <br />
+                                <Typography variant="caption2" fontWeight={500}>
+                                  The time it takes for a lead to transition from one stage to another
+                                </Typography>
+                              </Box>
+                            }
+                          >
+                            <InformationLineIcon pathFill={colorPalette.other.icon} />
+                          </Tooltip>
+                        </Typography>
+                      </TableCell>
+                    </Fragment>
+                  ))
+                ) : (
+                  <TableCell align="left">
+                    <Typography
+                      fontWeight={600}
+                      display="flex"
+                      justifyContent="center"
+                      gap={1}
+                      color="text.secondary"
+                    >
+                      CTT
+                      <Tooltip
+                        placement="top-start"
+                        title={
+                          <Box>
+                            <Typography variant="caption2" fontWeight={700}>
+                              Cycle Transition Time
+                            </Typography>
+                            <br />
+                            <Typography variant="caption2" fontWeight={500}>
+                              The time it takes for a lead to transition from one stage to another
+                            </Typography>
+                          </Box>
+                        }
+                      >
+                        <InformationLineIcon pathFill={colorPalette.other.icon} />
+                      </Tooltip>
+                    </Typography>
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
-              {stageConversions?.map((stage) => (
+              {stageConversions?.map((stage, stageIdx) => (
                 <TableRow key={stage?.id}>
                   <TableCell>
                     <Stack gap={2}>
@@ -100,20 +130,45 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                       <Typography>{stage?.stage_to?.name}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell align="right" width={150}>
-                    <CustomSelectField
-                      size="small"
-                      name={`stage_${stage.id}_avg_months`}
-                      placeholder="Average of Last X Months"
-                      items={Array.from({ length: 12 }, (_, i) => ({ label: String(i + 1), value: i + 1 }))}
-                    />
-                  </TableCell>
-                  <TableCell align="right" width={130}>
-                    <Stack gap={1}>
-                      <CustomTextField size="small" name={`stage_${stage.id}_ctt_days`} placeholder="35" />
-                      <Typography fontWeight={500}>days</Typography>
-                    </Stack>
-                  </TableCell>
+                  {segmentData.length ? (
+                    segmentData.map((el, segmentIdx) => (
+                      <Fragment key={el.id}>
+                        <TableCell align="right" width={150}>
+                          <CustomSelectField
+                            size="small"
+                            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`}
+                            placeholder="Average of Last X Months"
+                            items={Array.from({ length: 12 }, (_, i) => ({
+                              label: `Last ${i + 1} Months`,
+                              value: `last_${i + 1}_months`,
+                            }))}
+                          />
+                        </TableCell>
+                        <TableCell align="right" width={130}>
+                          <Stack gap={1}>
+                            <CustomTextField
+                              size="small"
+                              name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`}
+                              placeholder="35"
+                              type="number"
+                            />
+                            <Typography fontWeight={500}>days</Typography>
+                          </Stack>
+                        </TableCell>
+                      </Fragment>
+                    ))
+                  ) : (
+                    <TableCell align="right" width={130}>
+                      <Stack gap={1}>
+                        <CustomTextField
+                          size="small"
+                          name={`stageConversions.${stageIdx}.conversionSegments.0.stageCycleMonths`}
+                          placeholder="35"
+                        />
+                        <Typography fontWeight={500}>days</Typography>
+                      </Stack>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
