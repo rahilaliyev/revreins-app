@@ -26,9 +26,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element =>
         shouldDirty: true,
       });
     }
-  }, [rateMode]);
-
-  console.log(rateMode);
+  }, [rateMode, segmentIdx, stageIdx, setValue]);
 
   return (
     <>

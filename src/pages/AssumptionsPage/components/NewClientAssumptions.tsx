@@ -1,4 +1,4 @@
-import { type ChangeEvent, Fragment, type JSX } from 'react';
+import { Fragment, type JSX } from 'react';
 import { useParams } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
 
@@ -17,10 +17,9 @@ import {
   Typography,
 } from '@mui/material';
 
-import { CustomSelectField, CustomTextField } from 'src/components';
+import { CustomTextField } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
-import { useAssumptionsFormContext } from '../validationSchema';
 
 import ConversionSegmentCell from './ConversionSegmentCell';
 
@@ -32,11 +31,8 @@ interface IProps {
 
 const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
-  const { setValue, watch } = useAssumptionsFormContext();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
-
-  console.log(watch('stageConversions'));
 
   return (
     <StyledComponentWrapper>
