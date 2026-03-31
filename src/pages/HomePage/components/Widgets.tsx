@@ -3,7 +3,11 @@ import { CRM_STATUS_COLOR_MAP } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ECRMStatus } from 'src/types/enums';
 
+import { useGetCrmIntegrationStatus } from 'src/apis/crmConnection';
+
 import { Avatar, AvatarGroup, Box, Button, Chip, Stack, Typography } from '@mui/material';
+
+import { LoadingWrapper } from 'src/components';
 
 import { StyledWidgetWrapper } from '../styled';
 
@@ -17,65 +21,69 @@ import {
 } from 'src/assets/icons';
 
 const Widgets = (): JSX.Element => {
-  const [crmStatus] = useState(ECRMStatus.NOT_CONFIGURATED);
+  const { data, isLoading } = useGetCrmIntegrationStatus();
 
-  const chipColor = CRM_STATUS_COLOR_MAP[crmStatus];
+  const firstElement = data?.[0];
+  const chipColor = CRM_STATUS_COLOR_MAP[firstElement?.sync_status as ECRMStatus] || 'default';
 
   return (
     <Stack gap={6}>
       <StyledWidgetWrapper>
-        <Stack justifyContent="space-between" alignItems="flex-start" width="100%">
-          <Box>
-            <Typography marginBottom={1}>
-              {crmStatus === ECRMStatus.CONNECTED ? 'CRM Connection' : 'CRM Not Connected'}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {crmStatus === ECRMStatus.CONNECTED
-                ? 'Salesforce Integration'
-                : 'CRM Connection was not configured'}
-            </Typography>
-          </Box>
-          <Box>
-            <Chip
-              variant="outlined"
-              color={chipColor}
-              label={
-                <Stack alignItems="center" gap={1}>
-                  {crmStatus === ECRMStatus.CONNECTED ? (
-                    <CheckboxCircleLineIcon width={16} height={16} pathFill={colorPalette.success.main} />
-                  ) : (
-                    <AlertLineIcon width={16} height={16} pathFill={colorPalette.other.black} />
-                  )}
-                  <Typography variant="body2">
-                    {crmStatus === ECRMStatus.CONNECTED ? 'Connected' : 'Not Configured'}
-                  </Typography>
+        <LoadingWrapper isLoading={isLoading}>
+          <Stack justifyContent="space-between" alignItems="flex-start" width="100%">
+            <Box>
+              <Typography marginBottom={1}>
+                {firstElement?.sync_status === ECRMStatus.ACTIVE ? 'CRM Connection' : 'CRM Not Connected'}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {firstElement?.sync_status === ECRMStatus.ACTIVE
+                  ? 'Salesforce Integration'
+                  : 'CRM Connection was not configured'}
+              </Typography>
+            </Box>
+            <Box>
+              <Chip
+                variant="outlined"
+                color={chipColor}
+                label={
+                  <Stack alignItems="center" gap={1}>
+                    {firstElement?.sync_status === ECRMStatus.ACTIVE ? (
+                      <CheckboxCircleLineIcon width={16} height={16} pathFill={colorPalette.success.main} />
+                    ) : (
+                      <AlertLineIcon width={16} height={16} pathFill={colorPalette.other.black} />
+                    )}
+                    <Typography variant="body2">
+                      {firstElement?.sync_status === ECRMStatus.ACTIVE ? 'Connected' : 'Not Configured'}
+                    </Typography>
+                  </Stack>
+                }
+                size="small"
+              />
+            </Box>
+          </Stack>
+
+          <Stack mt={4} width="100%">
+            {firstElement?.sync_status === ECRMStatus.ACTIVE && (
+              <Stack width="100%" justifyContent="space-between">
+                <Box>
+                  <Typography>{firstElement?.integration_name}</Typography>
+                  <Typography>Last synced: {firstElement?.last_sync_at}</Typography>
+                </Box>
+                <Stack gap={2}>
+                  <Button endIcon={<ReloadArrowFillIcon pathFill={colorPalette.inverted.invertedBg} />}>
+                    Re-sync
+                  </Button>
+                  <Button color="secondary">Manage CRM</Button>
                 </Stack>
-              }
-              size="small"
-            />
-          </Box>
-        </Stack>
-        <Stack mt={4} width="100%">
-          {crmStatus === ECRMStatus.CONNECTED && (
-            <Stack width="100%" justifyContent="space-between">
-              <Box>
-                <Typography>Close.com CRM</Typography>
-                <Typography>Last synced: 10 mins ago</Typography>
-              </Box>
-              <Stack gap={2}>
-                <Button endIcon={<ReloadArrowFillIcon pathFill={colorPalette.inverted.invertedBg} />}>
-                  Re-sync
-                </Button>
-                <Button color="secondary">Manage CRM</Button>
               </Stack>
-            </Stack>
-          )}
-          {crmStatus !== ECRMStatus.CONNECTED && (
-            <Button endIcon={<GitBranchLineIcon pathFill={colorPalette.inverted.invertedBg} />}>
-              Connect CRM
-            </Button>
-          )}
-        </Stack>
+            )}
+            {firstElement?.sync_status !== ECRMStatus.ACTIVE && (
+              <Button endIcon={<GitBranchLineIcon pathFill={colorPalette.inverted.invertedBg} />}>
+                Connect CRM
+              </Button>
+            )}
+          </Stack>
+        </LoadingWrapper>
       </StyledWidgetWrapper>
       <StyledWidgetWrapper>
         <Stack justifyContent="space-between" alignItems="flex-start" width="100%">

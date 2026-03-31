@@ -31,6 +31,9 @@ export const endpoints = {
     get crmIntegrations(): string {
       return `${this.base}/crm-integrations`;
     },
+    get crmIntegrationStatus(): string {
+      return `${this.crmIntegrations}/status`;
+    },
     get inviteTeamMembers(): string {
       return `${this.base}/team/invite`;
     },

@@ -19,9 +19,8 @@ export enum ESetupCard {
 }
 
 export enum ECRMStatus {
-  CONNECTED = 'CONNECTED',
-  ERROR = 'ERROR',
-  NOT_CONFIGURATED = 'NOT_CONFIGURATED',
+  ACTIVE = 'active',
+  DEACTIVE = 'deactive',
 }
 
 export enum ELogicalOperator {

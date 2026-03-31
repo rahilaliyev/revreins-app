@@ -1,9 +1,15 @@
 import { useMutation, type UseMutationResult, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { endpoints, QUERY_KEYS } from 'src/contants';
+import type { ICommonResponse } from 'src/types/interfaces';
 
-import { axiosLogin } from '../axiosInstance';
+import { api, axiosLogin } from '../axiosInstance';
 
-import type { ICRMProvider, ICRMProviderResponse, TUpdateCRMIntegrationRequest } from './types';
+import type {
+  ICRMIntegrationStatusResponse,
+  ICRMProvider,
+  ICRMProviderResponse,
+  TUpdateCRMIntegrationRequest,
+} from './types';
 
 export const useGetCrmProviders = (token: string): UseQueryResult<ICRMProvider[], Error> =>
   useQuery({
@@ -31,5 +37,19 @@ export const useTenantCRMIntegrationMutation = (): UseMutationResult<
         },
       });
       return res.data;
+    },
+  });
+
+export const useGetCrmIntegrationStatus = (): UseQueryResult<
+  ICRMIntegrationStatusResponse['integrations'],
+  Error
+> =>
+  useQuery({
+    queryKey: [QUERY_KEYS.CRM_INTEGRATION_STATUS],
+    queryFn: async () => {
+      const res = await api.get<ICommonResponse<ICRMIntegrationStatusResponse>>(
+        endpoints.tenant.crmIntegrationStatus,
+      );
+      return res.data.data.integrations;
     },
   });

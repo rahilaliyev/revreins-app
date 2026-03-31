@@ -40,9 +40,8 @@ export const USER_ROLES = [
 ];
 
 export const CRM_STATUS_COLOR_MAP: Record<ECRMStatus, 'success' | 'error' | 'default'> = {
-  [ECRMStatus.CONNECTED]: 'success',
-  [ECRMStatus.ERROR]: 'error',
-  [ECRMStatus.NOT_CONFIGURATED]: 'default',
+  [ECRMStatus.ACTIVE]: 'success',
+  [ECRMStatus.DEACTIVE]: 'error',
 };
 
 export const LOGIC_OPERATOR_OPTIONS = [
