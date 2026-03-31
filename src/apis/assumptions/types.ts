@@ -8,7 +8,7 @@ export interface IConversionSegment {
 interface IStageConversionPayload {
   stage_from_id: number;
   stage_to_id: number;
-  assumption_category_id: number;
+  assumption_category_id: number | null;
   conversion_segments?: IConversionSegment[];
 }
 

@@ -1,4 +1,4 @@
-import { Fragment, type JSX } from 'react';
+import { type ChangeEvent, Fragment, type JSX } from 'react';
 import { useParams } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
 
@@ -20,6 +20,7 @@ import {
 import { CustomSelectField, CustomTextField } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
+import { useAssumptionsFormContext } from '../validationSchema';
 
 import { ArrowRightLineIcon, InformationLineIcon } from 'src/assets/icons';
 
@@ -29,6 +30,7 @@ interface IProps {
 
 const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
+  const { setValue } = useAssumptionsFormContext();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
 
@@ -150,7 +152,13 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                               size="small"
                               name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`}
                               placeholder="35"
-                              type="number"
+                              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setValue(
+                                  `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`,
+                                  Number(e.target.value),
+                                  { shouldDirty: true, shouldValidate: true },
+                                )
+                              }
                             />
                             <Typography fontWeight={500}>days</Typography>
                           </Stack>

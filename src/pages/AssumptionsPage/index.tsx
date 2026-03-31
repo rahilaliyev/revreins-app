@@ -61,7 +61,7 @@ const AssumptionsPage = (): JSX.Element => {
     const seededConversions: TStageConversionField[] = stageConversions.map((sc) => ({
       stageFromId: sc.stage_from_id,
       stageToId: sc.stage_to_id,
-      assumptionCategoryId: sc.assumption_category_id,
+      assumptionCategoryId: sc.assumption_category_id ?? null,
       conversionSegments: (segmentData ?? []).map((sgmnt) => ({
         segmentId: sgmnt.id,
         stageCycleMonths: null,
@@ -88,7 +88,7 @@ const AssumptionsPage = (): JSX.Element => {
     const payload: IAssumptionGeneratePayload = {
       project_id: Number(id),
       stage_conversions: stageConversionValues.map((sc) => ({
-        assumption_category_id: sc.assumptionCategoryId ?? 0,
+        assumption_category_id: sc.assumptionCategoryId ?? null,
         stage_from_id: sc.stageFromId,
         stage_to_id: sc.stageToId,
         conversion_segments: enableBreakdown
