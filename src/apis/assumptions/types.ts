@@ -1,8 +1,8 @@
 export interface IConversionSegment {
   segment_id: number;
   stage_cycle_months: number;
-  rate_mode: string;
-  manual_rate: number;
+  rate_mode: string | null;
+  manual_rate: number | null;
 }
 
 interface IStageConversionPayload {

@@ -95,8 +95,8 @@ const AssumptionsPage = (): JSX.Element => {
           ? sc.conversionSegments.map((seg) => ({
               segment_id: seg.segmentId,
               stage_cycle_months: seg.stageCycleMonths ?? 0,
-              rate_mode: seg.rateMode ?? '',
-              manual_rate: seg.manualRate ?? 0,
+              rate_mode: seg.rateMode === 'manual_rate' ? null : seg.rateMode,
+              manual_rate: seg.manualRate ?? null,
             }))
           : [],
       })),

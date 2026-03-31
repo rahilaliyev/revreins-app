@@ -22,6 +22,8 @@ import { CustomSelectField, CustomTextField } from 'src/components';
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 import { useAssumptionsFormContext } from '../validationSchema';
 
+import ConversionSegmentCell from './ConversionSegmentCell';
+
 import { ArrowRightLineIcon, InformationLineIcon } from 'src/assets/icons';
 
 interface IProps {
@@ -30,9 +32,11 @@ interface IProps {
 
 const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
-  const { setValue } = useAssumptionsFormContext();
+  const { setValue, watch } = useAssumptionsFormContext();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
+
+  console.log(watch('stageConversions'));
 
   return (
     <StyledComponentWrapper>
@@ -134,36 +138,7 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                   </TableCell>
                   {segmentData.length ? (
                     segmentData.map((el, segmentIdx) => (
-                      <Fragment key={el.id}>
-                        <TableCell align="right" width={150}>
-                          <CustomSelectField
-                            size="small"
-                            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`}
-                            placeholder="Average of Last X Months"
-                            items={Array.from({ length: 12 }, (_, i) => ({
-                              label: `Last ${i + 1} Months`,
-                              value: `last_${i + 1}_months`,
-                            }))}
-                          />
-                        </TableCell>
-                        <TableCell align="right" width={130}>
-                          <Stack gap={1}>
-                            <CustomTextField
-                              size="small"
-                              name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`}
-                              placeholder="35"
-                              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setValue(
-                                  `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`,
-                                  Number(e.target.value),
-                                  { shouldDirty: true, shouldValidate: true },
-                                )
-                              }
-                            />
-                            <Typography fontWeight={500}>days</Typography>
-                          </Stack>
-                        </TableCell>
-                      </Fragment>
+                      <ConversionSegmentCell key={el.id} stageIdx={stageIdx} segmentIdx={segmentIdx} />
                     ))
                   ) : (
                     <TableCell align="right" width={130}>
