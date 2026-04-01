@@ -2,7 +2,7 @@ import { type JSX, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProjectForecast } from 'src/apis/assumptions';
-import type { IConversion } from 'src/apis/assumptions/types';
+import type { IConversionForecast } from 'src/apis/assumptions/types';
 import { useGetProjectDetailById } from 'src/apis/projects';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
@@ -56,35 +56,36 @@ const ProjectDetailPage = (): JSX.Element => {
     );
   };
 
-  const formatConversion = (conv: IConversion): IRow => ({
+  const formatConversion = (conv: IConversionForecast): IRow => ({
     id: conv.conversion_id,
     label: `Moved to ${conv.stage_to_name}`,
-    values: Object.values(conv.data).map((v) => v.count),
+    values: Object.values(conv.data).map((v) => v.total),
   });
 
-  const formatForecastData = useCallback((forecast: typeof projectForecast): IRow[] => {
-    const segment = forecast?.segments?.[0];
-
-    return (
-      segment?.stages?.map((stg) => ({
+  const formatForecastData = useCallback(
+    (forecast: typeof projectForecast): IRow[] =>
+      forecast?.stages?.map((stg) => ({
         id: stg.stage_id,
         label: stg.stage_name,
-        values: stg.data ? Object.values(stg.data).map((v) => v.count) : [],
-        children: segment.conversions
-          ?.filter((conv) => conv.stage_from_id === stg.stage_id)
-          ?.map(formatConversion),
-      })) ?? []
-    );
-  }, []);
+        values: [...Object.values(stg.actual_data ?? {}), ...Object.values(stg.calculated_data ?? {})].map(
+          (v) => v.total,
+        ),
+        children: Object.values(forecast?.conversions ?? {})
+          .filter((conv) => conv.stage_from_id === stg.stage_id)
+          .map(formatConversion),
+      })) ?? [],
+    [],
+  );
 
   const handleModalClose = (): void => setIsInformationModal(false);
 
   useEffect(() => {
     if (isSuccess) {
-      const months = projectForecast?.segments?.[0]?.stages?.[0]?.data;
-      setRowData(formatForecastData(projectForecast));
+      const stage = projectForecast?.stages?.[0];
+      const months = [...Object.keys(stage?.actual_data ?? {}), ...Object.keys(stage?.calculated_data ?? {})];
 
-      setColumns(Object.keys(months));
+      setRowData(formatForecastData(projectForecast));
+      setColumns(months);
     }
   }, [projectForecast, isSuccess, formatForecastData]);
 

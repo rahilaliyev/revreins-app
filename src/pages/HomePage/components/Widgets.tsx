@@ -1,4 +1,4 @@
-import { type JSX, useState } from 'react';
+import type { JSX } from 'react';
 import { CRM_STATUS_COLOR_MAP } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ECRMStatus } from 'src/types/enums';

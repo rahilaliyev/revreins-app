@@ -74,19 +74,21 @@ const Row = ({ row, level = 0, onValueChange, columns }: ITableRowProps): JSX.El
         </TableCell>
 
         {columns.map((m, key) => {
+          const monthIndex = key + 1;
           const currentMonth = dayjs().month();
-          const isFutureMonth = key > currentMonth;
+          const isFutureMonth = monthIndex > currentMonth;
 
-          const className = key === currentMonth ? 'current-month' : isFutureMonth ? 'future-month' : '';
+          const className =
+            monthIndex === currentMonth ? 'current-month' : isFutureMonth ? 'future-month' : '';
 
           return (
             <TableCell key={m} align="right" className={className}>
               {isFutureMonth ? (
                 <StyledEditableCell
-                  value={row.values[key]}
+                  value={row.values[monthIndex]}
                   variant="standard"
                   size="small"
-                  onChange={(e) => handleValueChange(key, e.target.value)}
+                  onChange={(e) => handleValueChange(monthIndex, e.target.value)}
                   slotProps={{
                     input: {
                       disableUnderline: true,
@@ -94,7 +96,7 @@ const Row = ({ row, level = 0, onValueChange, columns }: ITableRowProps): JSX.El
                   }}
                 />
               ) : (
-                row.values[key]
+                row.values[monthIndex]
               )}
             </TableCell>
           );

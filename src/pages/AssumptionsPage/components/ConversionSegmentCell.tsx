@@ -1,7 +1,7 @@
 import { type ChangeEvent, type JSX, useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import { type SelectChangeEvent, Stack, TableCell, Typography } from '@mui/material';
+import { Stack, TableCell, Typography } from '@mui/material';
 
 import { CustomSelectField, CustomTextField } from 'src/components';
 

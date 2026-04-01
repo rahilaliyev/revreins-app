@@ -17,36 +17,42 @@ export interface IAssumptionGeneratePayload {
   stage_conversions: IStageConversionPayload[];
 }
 
-export interface IConversion {
-  conversion_id: number;
-  stage_from_id: number;
-  stage_to_id: number;
-  stage_from_name: string;
-  stage_to_name: string;
-  data: TForecastStage;
-}
-
-interface IForecastSegment {
-  anchor_month: string;
-  growth_rate: number;
+export interface ISegmentForecast {
   segment_id: number;
   segment_name: string;
-  conversions: IConversion[];
-  stages: { data: TForecastStage; stage_id: number; stage_name: string }[];
+  count: number;
 }
 
-type TForecastStage = Record<
-  string,
-  {
-    count: number;
-    is_projected: boolean;
-  }
->;
+export interface IMonthData {
+  total: number;
+  segments: ISegmentForecast[];
+}
+
+export interface IConversionMonthData extends IMonthData {
+  is_projected: boolean;
+}
+
+export interface IConversionForecast {
+  conversion_id: number;
+  stage_from_id: number;
+  stage_from_name: string;
+  stage_to_id: number;
+  stage_to_name: string;
+  data: Record<string, IConversionMonthData>;
+}
+
+export interface IStageForecast {
+  stage_id: number;
+  stage_name: string;
+  crm_object: string | null;
+  actual_data: Record<string, IMonthData>;
+  calculated_data: Record<string, IMonthData>;
+}
 
 export interface IForecast {
   generated_at: string;
   horizon_months: number;
   project_id: number;
-  segments: IForecastSegment[];
-  totals: TForecastStage[];
+  stages: IStageForecast[];
+  conversions: Record<string, IConversionForecast>;
 }

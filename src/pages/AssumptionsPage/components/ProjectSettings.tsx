@@ -16,7 +16,7 @@ import { Box, Stack, TableBody, TableCell, TableContainer, TableRow, Typography 
 import { CustomDatePickerField, CustomSelectField, CustomSwitchField, LoadingButton } from 'src/components';
 
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
-import { type TFormData, useAssumptionsFormContext } from '../validationSchema';
+import { useAssumptionsFormContext } from '../validationSchema';
 
 import SegmentTable from './SegmentTable';
 
