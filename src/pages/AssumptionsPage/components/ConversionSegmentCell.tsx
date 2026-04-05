@@ -12,6 +12,19 @@ interface IProps {
   segmentIdx: number;
 }
 
+const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
+  label: `${i + 1} Month${i > 0 ? 's' : ''}`,
+  value: i + 1,
+}));
+
+const RATE_MODE_ITEMS = [
+  ...Array.from({ length: 12 }, (_, i) => ({
+    label: `Average of Last ${i + 1} Month${i > 0 ? 's' : ''}`,
+    value: `last_${i + 1}_months`,
+  })),
+  { label: 'Manual Rate', value: 'manual_rate' },
+];
+
 const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element => {
   const { setValue, control } = useAssumptionsFormContext();
 
@@ -36,13 +49,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element =>
           defaultValue=""
           name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`}
           placeholder="Average of Last X Months"
-          items={[
-            ...Array.from({ length: 12 }, (_, i) => ({
-              label: `Last ${i + 1} Months`,
-              value: `last_${i + 1}_months`,
-            })),
-            { label: 'Manual Rate', value: 'manual_rate' },
-          ]}
+          items={RATE_MODE_ITEMS}
         />
         {rateMode === 'manual_rate' && (
           <CustomTextField
@@ -61,19 +68,12 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element =>
       </TableCell>
       <TableCell align="right" width={130}>
         <Stack gap={1}>
-          <CustomTextField
+          <CustomSelectField
             size="small"
             name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`}
-            placeholder="35"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setValue(
-                `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`,
-                Number(e.target.value),
-                { shouldDirty: true, shouldValidate: true },
-              )
-            }
+            placeholder="Months"
+            items={MONTH_ITEMS}
           />
-          <Typography fontWeight={500}>days</Typography>
         </Stack>
       </TableCell>
     </>

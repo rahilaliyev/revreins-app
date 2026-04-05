@@ -92,33 +92,38 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                     </Fragment>
                   ))
                 ) : (
-                  <TableCell align="left">
-                    <Typography
-                      fontWeight={600}
-                      display="flex"
-                      justifyContent="center"
-                      gap={1}
-                      color="text.secondary"
-                    >
-                      CTT
-                      <Tooltip
-                        placement="top-start"
-                        title={
-                          <Box>
-                            <Typography variant="caption2" fontWeight={700}>
-                              Cycle Transition Time
-                            </Typography>
-                            <br />
-                            <Typography variant="caption2" fontWeight={500}>
-                              The time it takes for a lead to transition from one stage to another
-                            </Typography>
-                          </Box>
-                        }
+                  <>
+                    <TableCell>
+                      <Typography fontWeight={600} />
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography
+                        fontWeight={600}
+                        display="flex"
+                        justifyContent="center"
+                        gap={1}
+                        color="text.secondary"
                       >
-                        <InformationLineIcon pathFill={colorPalette.other.icon} />
-                      </Tooltip>
-                    </Typography>
-                  </TableCell>
+                        CTT
+                        <Tooltip
+                          placement="top-start"
+                          title={
+                            <Box>
+                              <Typography variant="caption2" fontWeight={700}>
+                                Cycle Transition Time
+                              </Typography>
+                              <br />
+                              <Typography variant="caption2" fontWeight={500}>
+                                The time it takes for a lead to transition from one stage to another
+                              </Typography>
+                            </Box>
+                          }
+                        >
+                          <InformationLineIcon pathFill={colorPalette.other.icon} />
+                        </Tooltip>
+                      </Typography>
+                    </TableCell>
+                  </>
                 )}
               </TableRow>
             </TableHead>
@@ -137,16 +142,7 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                       <ConversionSegmentCell key={el.id} stageIdx={stageIdx} segmentIdx={segmentIdx} />
                     ))
                   ) : (
-                    <TableCell align="right" width={130}>
-                      <Stack gap={1}>
-                        <CustomTextField
-                          size="small"
-                          name={`stageConversions.${stageIdx}.conversionSegments.0.stageCycleMonths`}
-                          placeholder="35"
-                        />
-                        <Typography fontWeight={500}>days</Typography>
-                      </Stack>
-                    </TableCell>
+                    <ConversionSegmentCell stageIdx={stageIdx} segmentIdx={0} />
                   )}
                 </TableRow>
               ))}
