@@ -17,8 +17,6 @@ import {
   Typography,
 } from '@mui/material';
 
-import { CustomTextField } from 'src/components';
-
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
 
 import ConversionSegmentCell from './ConversionSegmentCell';
@@ -139,10 +137,21 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                   </TableCell>
                   {segmentData.length ? (
                     segmentData.map((el, segmentIdx) => (
-                      <ConversionSegmentCell key={el.id} stageIdx={stageIdx} segmentIdx={segmentIdx} />
+                      <ConversionSegmentCell
+                        key={el.id}
+                        stageIdx={stageIdx}
+                        segmentIdx={segmentIdx}
+                        stageFromId={stage?.stage_from?.id}
+                        stageToId={stage?.stage_to?.id}
+                      />
                     ))
                   ) : (
-                    <ConversionSegmentCell stageIdx={stageIdx} segmentIdx={0} />
+                    <ConversionSegmentCell
+                      stageIdx={stageIdx}
+                      segmentIdx={0}
+                      stageFromId={stage?.stage_from?.id}
+                      stageToId={stage?.stage_to?.id}
+                    />
                   )}
                 </TableRow>
               ))}

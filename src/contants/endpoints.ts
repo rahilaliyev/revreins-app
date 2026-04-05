@@ -85,6 +85,9 @@ export const endpoints = {
     get recalculate(): string {
       return `${this.base}/recalculate`;
     },
+    get conversationRate(): string {
+      return `${this.base}/conversation-rate`;
+    },
   },
   stageConversions: {
     base: 'api/tenant/stage-conversions',

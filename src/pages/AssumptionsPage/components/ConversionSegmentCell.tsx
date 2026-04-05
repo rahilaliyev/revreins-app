@@ -1,5 +1,8 @@
 import { type ChangeEvent, type JSX, useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+
+import { useConversationRateMutation } from 'src/apis/assumptions';
 
 import { Stack, TableCell, Typography } from '@mui/material';
 
@@ -10,6 +13,8 @@ import { useAssumptionsFormContext } from '../validationSchema';
 interface IProps {
   stageIdx: number;
   segmentIdx: number;
+  stageFromId?: number;
+  stageToId?: number;
 }
 
 const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
@@ -20,17 +25,23 @@ const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
 const RATE_MODE_ITEMS = [
   ...Array.from({ length: 12 }, (_, i) => ({
     label: `Average of Last ${i + 1} Month${i > 0 ? 's' : ''}`,
-    value: `last_${i + 1}_months`,
+    value: i + 1,
   })),
   { label: 'Manual Rate', value: 'manual_rate' },
 ];
 
-const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element => {
+const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }: IProps): JSX.Element => {
+  const { id } = useParams();
   const { setValue, control } = useAssumptionsFormContext();
+  const { mutateAsync: conversationRateMutation } = useConversationRateMutation();
 
-  const rateMode = useWatch({
+  const [rateMode, stageCycleMonths, manualRate] = useWatch({
     control,
-    name: `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`,
+    name: [
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`,
+    ],
   });
 
   useEffect(() => {
@@ -41,6 +52,38 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element =>
     }
   }, [rateMode, segmentIdx, stageIdx, setValue]);
 
+  useEffect(() => {
+    if (rateMode === 'manual_rate') {
+      return;
+    }
+
+    if (rateMode && stageCycleMonths) {
+      conversationRateMutation({
+        project_id: Number(id),
+        stage_from_id: stageFromId ?? 0,
+        stage_to_id: stageToId ?? 0,
+        stage_cycle_months: stageCycleMonths,
+        lookback_months: Number(rateMode),
+      }).then((res) => {
+        setValue(
+          `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`,
+          res.conversion_rate,
+          { shouldDirty: true, shouldValidate: true },
+        );
+      });
+    }
+  }, [
+    rateMode,
+    stageCycleMonths,
+    conversationRateMutation,
+    id,
+    stageFromId,
+    stageToId,
+    setValue,
+    segmentIdx,
+    stageIdx,
+  ]);
+
   return (
     <>
       <TableCell align="right" width={150}>
@@ -50,6 +93,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx }: IProps): JSX.Element =>
           name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`}
           placeholder="Average of Last X Months"
           items={RATE_MODE_ITEMS}
+          helperText={!!manualRate && rateMode !== 'manual_rate' ? `Conversion rate: ${manualRate} .` : ''}
         />
         {rateMode === 'manual_rate' && (
           <CustomTextField

@@ -5,7 +5,12 @@ import type { ICommonResponse } from 'src/types/interfaces';
 import { api } from '../axiosInstance';
 import type { IProjectResponse } from '../projects/types';
 
-import type { IAssumptionGeneratePayload, IForecast } from './types';
+import type {
+  IAssumptionGeneratePayload,
+  IConversationRatePayload,
+  IConversationRateResponse,
+  IForecast,
+} from './types';
 
 export const useGenerateAssumptionMutation = (): UseMutationResult<
   IProjectResponse,
@@ -30,4 +35,22 @@ export const useGetProjectForecast = (
       return res.data.data;
     },
     enabled: params && !!params.project_id,
+  });
+
+export const useConversationRateMutation = (): UseMutationResult<
+  IConversationRateResponse,
+  Error,
+  IConversationRatePayload
+> =>
+  useMutation<IConversationRateResponse, Error, IConversationRatePayload>({
+    mutationFn: async (payload: IConversationRatePayload) => {
+      const res = await api.post<ICommonResponse<IConversationRateResponse>>(
+        endpoints.assumptions.conversationRate,
+        payload,
+        {
+          skipNotification: true,
+        },
+      );
+      return res.data.data;
+    },
   });

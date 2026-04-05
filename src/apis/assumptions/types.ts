@@ -56,3 +56,15 @@ export interface IForecast {
   stages: IStageForecast[];
   conversions: Record<string, IConversionForecast>;
 }
+
+export interface IConversationRatePayload {
+  project_id: number;
+  stage_from_id: number;
+  stage_to_id: number;
+  stage_cycle_months: number;
+  lookback_months: number;
+}
+
+export interface IConversationRateResponse extends IConversationRatePayload {
+  conversion_rate: number;
+}
