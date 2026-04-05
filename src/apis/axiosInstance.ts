@@ -26,7 +26,7 @@ export const api = axios.create({
   headers: {
     Authorization: `Bearer ${authToken}`,
   },
-  paramsSerializer: (params) => qs.stringify(params, { indices: false }),
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'brackets' }),
 });
 
 const onRequestSend = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {

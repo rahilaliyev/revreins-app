@@ -24,7 +24,7 @@ const BasicSetupTab = (): JSX.Element => {
 
   const { data } = useGetCrmObjectFields({
     object_type: crmObject ?? ECRMObjectType.LEAD,
-    type: EDataType.DATE,
+    types: [EDataType.DATE, EDataType.DATETIME],
   });
 
   return (

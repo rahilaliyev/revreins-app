@@ -13,5 +13,6 @@ export interface ICRMObjects extends ID {
 
 export interface ICRMPayload {
   object_type: ECRMObjectType;
+  types: EDataType[];
   type: EDataType;
 }
