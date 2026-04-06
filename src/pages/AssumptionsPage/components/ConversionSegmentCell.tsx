@@ -2,9 +2,9 @@ import { type ChangeEvent, type JSX, useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-import { useConversationRateMutation } from 'src/apis/assumptions';
+import { useConversionRateMutation } from 'src/apis/assumptions';
 
-import { Stack, TableCell, Typography } from '@mui/material';
+import { Stack, TableCell } from '@mui/material';
 
 import { CustomSelectField, CustomTextField } from 'src/components';
 
@@ -33,7 +33,7 @@ const RATE_MODE_ITEMS = [
 const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }: IProps): JSX.Element => {
   const { id } = useParams();
   const { setValue, control } = useAssumptionsFormContext();
-  const { mutateAsync: conversationRateMutation } = useConversationRateMutation();
+  const { mutateAsync: conversionRateMutation } = useConversionRateMutation();
 
   const [rateMode, stageCycleMonths, manualRate] = useWatch({
     control,
@@ -58,7 +58,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
     }
 
     if (rateMode && stageCycleMonths) {
-      conversationRateMutation({
+      conversionRateMutation({
         project_id: Number(id),
         stage_from_id: stageFromId ?? 0,
         stage_to_id: stageToId ?? 0,
@@ -75,7 +75,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
   }, [
     rateMode,
     stageCycleMonths,
-    conversationRateMutation,
+    conversionRateMutation,
     id,
     stageFromId,
     stageToId,

@@ -7,8 +7,8 @@ import type { IProjectResponse } from '../projects/types';
 
 import type {
   IAssumptionGeneratePayload,
-  IConversationRatePayload,
-  IConversationRateResponse,
+  IConversionRatePayload,
+  IConversionRateResponse,
   IForecast,
 } from './types';
 
@@ -37,15 +37,15 @@ export const useGetProjectForecast = (
     enabled: params && !!params.project_id,
   });
 
-export const useConversationRateMutation = (): UseMutationResult<
-  IConversationRateResponse,
+export const useConversionRateMutation = (): UseMutationResult<
+  IConversionRateResponse,
   Error,
-  IConversationRatePayload
+  IConversionRatePayload
 > =>
-  useMutation<IConversationRateResponse, Error, IConversationRatePayload>({
-    mutationFn: async (payload: IConversationRatePayload) => {
-      const res = await api.post<ICommonResponse<IConversationRateResponse>>(
-        endpoints.assumptions.conversationRate,
+  useMutation<IConversionRateResponse, Error, IConversionRatePayload>({
+    mutationFn: async (payload: IConversionRatePayload) => {
+      const res = await api.post<ICommonResponse<IConversionRateResponse>>(
+        endpoints.assumptions.conversionRate,
         payload,
         {
           skipNotification: true,
