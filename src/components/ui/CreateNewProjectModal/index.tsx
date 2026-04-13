@@ -96,7 +96,7 @@ export const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IP
 
     mutate(payload, {
       onSuccess: (res) => {
-        navigate(`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH}/${res.project.id}`);
+        navigate(`${ROUTES.DEFAULT.PROJECTS.STAGES.PATH}/${res.project.id}`);
       },
     });
   };

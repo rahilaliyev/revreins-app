@@ -26,7 +26,7 @@ const Header = ({ projectName, stages, id }: IProps): JSX.Element => {
   };
 
   const handleNavigateAssumptions = (): void => {
-    navigate(`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}/${id}`, {
+    navigate(`${ROUTES.DEFAULT.PROJECTS.ASSUMPTIONS.PATH}/${id}`, {
       state: { name: location.state?.name },
     });
   };

@@ -62,16 +62,16 @@ const RouteComponents = (): JSX.Element => {
           <Route index element={suspenseFallback(ProjectsPage)} />
           <Route path={`${ROUTES.DEFAULT.PROJECTS.PATH}/:id`} element={suspenseFallback(ProjectDetailPage)} />
           <Route
-            path={`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH}/:id`}
+            path={`${ROUTES.DEFAULT.PROJECTS.STAGES.PATH}/:id`}
             element={suspenseFallback(NewProjectPage)}
           />
           <Route
-            path={`${ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.ASSUMPTIONS.PATH}/:id`}
+            path={`${ROUTES.DEFAULT.PROJECTS.ASSUMPTIONS.PATH}/:id`}
             element={suspenseFallback(AssumptionsPage)}
           />
           <Route
-            path={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.PATH}
-            element={<Navigate to={ROUTES.DEFAULT.PROJECTS.NEW_PROJECT.STAGES.PATH} />}
+            path={ROUTES.DEFAULT.PROJECTS.PATH}
+            element={<Navigate to={ROUTES.DEFAULT.PROJECTS.STAGES.PATH} />}
           />
         </Route>
         <Route path={ROUTES.DEFAULT.CRM_DATA.PATH} element={suspenseFallback(CRMDataPage)} />

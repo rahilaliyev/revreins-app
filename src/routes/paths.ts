@@ -6,14 +6,11 @@ export const ROUTES = {
     PATH: '/',
     PROJECTS: {
       PATH: `${BASE_PATH}/projects`,
-      NEW_PROJECT: {
-        PATH: `${BASE_PATH}/projects/new`,
-        STAGES: {
-          PATH: `${BASE_PATH}/projects/new/stages`,
-        },
-        ASSUMPTIONS: {
-          PATH: `${BASE_PATH}/projects/new/assumptions`,
-        },
+      STAGES: {
+        PATH: `${BASE_PATH}/projects/stages`,
+      },
+      ASSUMPTIONS: {
+        PATH: `${BASE_PATH}/projects/assumptions`,
       },
     },
     CRM_DATA: {
