@@ -56,11 +56,17 @@ const ProjectDetailPage = (): JSX.Element => {
     );
   };
 
-  const formatConversion = (conv: IConversionForecast): IRow => ({
-    id: conv.conversion_id,
-    label: `Moved to ${conv.stage_to_name}`,
-    values: Object.values(conv.data).map((v) => v.total),
-  });
+  const formatConversion = (conv: IConversionForecast): IRow => {
+    console.log(conv);
+
+    return {
+      id: conv?.conversion_id,
+      label: `Moved to ${conv?.stage_to_name}`,
+      values: [...Object.values(conv.actual_data ?? {}), ...Object.values(conv.calculated_data ?? {})].map(
+        (v) => v.total,
+      ),
+    };
+  };
 
   const formatForecastData = useCallback(
     (forecast: typeof projectForecast): IRow[] =>

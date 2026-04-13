@@ -38,7 +38,8 @@ export interface IConversionForecast {
   stage_from_name: string;
   stage_to_id: number;
   stage_to_name: string;
-  data: Record<string, IConversionMonthData>;
+  actual_data: Record<string, IMonthData>;
+  calculated_data: Record<string, IMonthData>;
 }
 
 export interface IStageForecast {
