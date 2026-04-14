@@ -36,6 +36,7 @@ const AssumptionsPage = (): JSX.Element => {
 
   const formBag = useForm<TFormData>({
     resolver: zodResolver(validationSchema),
+    mode: 'onChange',
     defaultValues: {
       currencyId: 1,
       startingDate: '',

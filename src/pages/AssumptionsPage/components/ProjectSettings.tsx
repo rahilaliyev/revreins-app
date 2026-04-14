@@ -35,7 +35,7 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
     projectData.id,
   );
 
-  const { control, getValues } = useAssumptionsFormContext();
+  const { control, getValues, trigger } = useAssumptionsFormContext();
 
   const enableProjectBreakdown = useWatch({
     control,
@@ -53,17 +53,45 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
     return [];
   }, [currencies]);
 
-  const handleCreateBreakdowns = (): void => {
+  const handleCreateBreakdowns = async (): Promise<void> => {
     const formData = getValues();
+
+    if (formData.enableProjectBreakdown && formData.segments?.length) {
+      const segmentFieldPaths = formData.segments.map(
+        (_, index) => `segments.${index}.crmLeadCustomFieldChoiceId` as const,
+      );
+
+      const isValid = await trigger(segmentFieldPaths);
+      if (!isValid) {
+        return;
+      }
+    }
+
+    const findingSegmentFields = leadCustomFields?.find(
+      (el) => el.id === Number(formData.businessType),
+    )?.choices;
+    const usedChoiceIds = new Set(formData.segments?.map((el) => el.crmLeadCustomFieldChoiceId));
+    const othersChoiceIds =
+      findingSegmentFields?.filter((el) => !usedChoiceIds.has(el.id)).map((el) => el.id) ?? [];
+    const mappedSegments = formData?.segments?.map((el) => ({
+      name: el.name,
+      crm_lead_custom_field_choice_ids: [el.crmLeadCustomFieldChoiceId],
+    }));
+
     const payload: IProjectBreakdownPayload = {
       project_id: Number(id),
       status: formData.enableProjectBreakdown ? 1 : 0,
       crm_lead_custom_field_id: formData.businessType,
       name: leadCustomFields?.find((el) => el.id === formData.businessType)?.name ?? '',
-      segments: formData?.segments?.map((el) => ({
-        name: el.name,
-        crm_lead_custom_field_choice_id: el.crmLeadCustomFieldChoiceId,
-      })),
+      segments: othersChoiceIds.length
+        ? [
+            {
+              name: 'Others',
+              crm_lead_custom_field_choice_ids: othersChoiceIds,
+            },
+            ...(mappedSegments ?? []),
+          ]
+        : (mappedSegments ?? []),
     };
 
     const updatingProjectPayload: IProjectUpdatePayload = {

@@ -18,7 +18,7 @@ interface IChoice extends ID {
 
 interface ISegment {
   name: string;
-  crm_lead_custom_field_choice_id: number;
+  crm_lead_custom_field_choice_ids: number[];
 }
 
 export interface IProjectBreakdownPayload {

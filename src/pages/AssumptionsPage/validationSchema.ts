@@ -2,8 +2,8 @@ import { useFormContext, type UseFormReturn } from 'react-hook-form';
 import z from 'zod';
 
 const segmentSchema = z.object({
-  name: z.string(),
-  crmLeadCustomFieldChoiceId: z.number(),
+  name: z.string().min(1, 'Segment name is required'),
+  crmLeadCustomFieldChoiceId: z.number().min(1, 'Segment field is required'),
 });
 
 const conversionSegmentSchema = z.object({

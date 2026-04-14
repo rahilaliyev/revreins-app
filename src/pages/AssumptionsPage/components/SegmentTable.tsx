@@ -6,7 +6,9 @@ import { ELeadCustomFieldType } from 'src/types/enums';
 import { useGetLeadCustomFields } from 'src/apis/breakdowns';
 
 import {
+  Box,
   Button,
+  Chip,
   IconButton,
   InputAdornment,
   Stack,
@@ -72,6 +74,8 @@ const SegmentTable = (): JSX.Element => {
     });
   };
 
+  console.log(fields);
+
   return (
     <TableContainer
       sx={{
@@ -112,7 +116,7 @@ const SegmentTable = (): JSX.Element => {
                   items={businessTypeChoises}
                   placeholder="Business Type"
                   loading={isLoading}
-                  sx={{ background: colorPalette.background.main }}
+                  sx={{ background: colorPalette.background.main, width: (theme) => theme.spacing(60) }}
                 />
               </Stack>
             </TableCell>
@@ -126,14 +130,16 @@ const SegmentTable = (): JSX.Element => {
             <TableCell align="right" width={200}>
               <Stack justifyContent="space-between">
                 <Typography fontWeight={600}>Segment Field</Typography>
-                <Button
-                  type="button"
-                  onClick={() => addSegmentField(fields.length)}
-                  size="small"
-                  sx={{ padding: 0, width: (theme) => theme.spacing(8) }}
-                >
-                  <AddLineIcon width={16} height={16} pathFill={colorPalette.primary.bgSecondary} />
-                </Button>
+                {segmentFieldOptions?.length !== fields?.length && (
+                  <Button
+                    type="button"
+                    onClick={() => addSegmentField(fields.length)}
+                    size="small"
+                    sx={{ padding: 0, width: (theme) => theme.spacing(8) }}
+                  >
+                    <AddLineIcon width={16} height={16} pathFill={colorPalette.primary.bgSecondary} />
+                  </Button>
+                )}
               </Stack>
             </TableCell>
           </TableRow>
@@ -174,7 +180,8 @@ const SegmentTable = (): JSX.Element => {
                     name={`segments.${index}.crmLeadCustomFieldChoiceId`}
                     items={segmentFieldOptions || []}
                     size="small"
-                    defaultValue=""
+                    defaultValue={``}
+                    sx={{ width: (theme) => theme.spacing(60) }}
                   />
                   <StyledDeleteIconWrapper onClick={() => remove(index)}>
                     <DeleteBinLineIcon width={16} height={16} pathFill={colorPalette.other.icon} />
@@ -183,6 +190,35 @@ const SegmentTable = (): JSX.Element => {
               </TableCell>
             </TableRow>
           ))}
+          {!!segmentFieldOptions?.length && segmentFieldOptions?.length !== fields?.length && (
+            <TableRow>
+              <TableCell>
+                <Box>
+                  <Chip
+                    variant="outlined"
+                    label={
+                      <Stack alignItems="center" gap={1}>
+                        <Typography variant="body2">Others</Typography>
+                        <Tooltip
+                          placement="top-start"
+                          title="All unused fields from the source will be grouped under others"
+                        >
+                          <InformationLineIcon width={16} height={16} />
+                        </Tooltip>
+                      </Stack>
+                    }
+                    size="small"
+                    sx={{ backgroundColor: 'white' }}
+                  />
+                </Box>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="caption1" fontWeight={500} color="textSecondary">
+                  {(segmentFieldOptions ?? [])?.length - fields?.length} fields
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </StyledAssumptionTable>
     </TableContainer>
