@@ -18,9 +18,9 @@ import { CustomFormProvider } from 'src/components/form/CustomFormProvider';
 import { ROUTES } from 'src/routes/paths';
 
 import Header from './components/Header';
-import NewClientAssumptions from './components/NewClientAssumptions';
 import ProjectSettings from './components/ProjectSettings';
 import RecurringRevenueAssumptions from './components/RecurringRevenueAssumptions';
+import StageConversions from './components/StageConversions';
 import { StyledContainer } from './styled';
 import { type TFormData, type TStageConversionField, validationSchema } from './validationSchema';
 
@@ -114,7 +114,7 @@ const AssumptionsPage = (): JSX.Element => {
         <Header name={data.name} isLoading={isGeneratePending} />
         <StyledContainer>
           <ProjectSettings setSegmentData={setSegmentData} />
-          <NewClientAssumptions segmentData={segmentData ?? []} />
+          <StageConversions segmentData={segmentData ?? []} />
 
           <RecurringRevenueAssumptions />
         </StyledContainer>

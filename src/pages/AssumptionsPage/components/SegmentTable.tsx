@@ -74,8 +74,6 @@ const SegmentTable = (): JSX.Element => {
     });
   };
 
-  console.log(fields);
-
   return (
     <TableContainer
       sx={{

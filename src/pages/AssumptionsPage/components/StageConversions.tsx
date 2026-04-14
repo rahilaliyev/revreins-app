@@ -27,7 +27,7 @@ interface IProps {
   segmentData: ISegmentResponse[];
 }
 
-const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
+const StageConversions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
@@ -92,7 +92,7 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                 ) : (
                   <>
                     <TableCell>
-                      <Typography fontWeight={600} />
+                      <Typography fontWeight={600}>Average</Typography>
                     </TableCell>
                     <TableCell align="left">
                       <Typography
@@ -140,18 +140,13 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
                       <ConversionSegmentCell
                         key={el.id}
                         stageIdx={stageIdx}
-                        segmentIdx={segmentIdx}
-                        stageFromId={stage?.stage_from?.id}
-                        stageToId={stage?.stage_to?.id}
+                        segmentIndex={segmentIdx}
+                        conversionId={stage?.id}
+                        segmentId={el.id}
                       />
                     ))
                   ) : (
-                    <ConversionSegmentCell
-                      stageIdx={stageIdx}
-                      segmentIdx={0}
-                      stageFromId={stage?.stage_from?.id}
-                      stageToId={stage?.stage_to?.id}
-                    />
+                    <ConversionSegmentCell stageIdx={stageIdx} segmentIndex={0} conversionId={stage?.id} />
                   )}
                 </TableRow>
               ))}
@@ -200,4 +195,4 @@ const NewClientAssumptions = ({ segmentData }: IProps): JSX.Element => {
   );
 };
 
-export default NewClientAssumptions;
+export default StageConversions;

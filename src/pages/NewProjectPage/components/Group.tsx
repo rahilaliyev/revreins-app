@@ -5,7 +5,7 @@ import { colorPalette } from 'src/theme/colorpalette';
 import { ELogicalOperator } from 'src/types/enums';
 
 import { useGetCrmObjectFields } from 'src/apis/crmObjectFields';
-import { useGetStageFilters } from 'src/apis/stages-filters';
+import { useGetStageFilters } from 'src/apis/stagesFilters';
 
 import { Box, Button, Chip, Grid, IconButton, Stack, Typography } from '@mui/material';
 

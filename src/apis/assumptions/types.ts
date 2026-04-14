@@ -58,14 +58,20 @@ export interface IForecast {
   conversions: Record<string, IConversionForecast>;
 }
 
-export interface IConversionRatePayload {
-  project_id: number;
-  stage_from_id: number;
-  stage_to_id: number;
+interface IConversionRateForSegment {
+  segment_id: number;
   stage_cycle_months: number;
-  lookback_months: number;
+  lookback_month: number;
 }
 
-export interface IConversionRateResponse extends IConversionRatePayload {
-  conversion_rate: number;
+export interface IConversionRatePayload {
+  project_id: number;
+  conversion_id: number;
+  lookback_months?: number;
+  stage_cycle_months?: number;
+  conversion_segments?: IConversionRateForSegment[];
+}
+
+export interface IConversionRateResponse {
+  conversion_rate: { rate: number };
 }

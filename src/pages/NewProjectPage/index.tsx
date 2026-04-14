@@ -7,7 +7,7 @@ import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 import { useGetProjectDetailById } from 'src/apis/projects';
 import type { IProject, IUiStage } from 'src/apis/projects/types';
 import { useAddStageMutation, useEditStageMutation } from 'src/apis/stages';
-import { useCreateStageFilterMutation } from 'src/apis/stages-filters';
+import { useCreateStageFilterMutation } from 'src/apis/stagesFilters';
 
 import { Box, Button, Stack, Tab, Tabs, Typography } from '@mui/material';
 

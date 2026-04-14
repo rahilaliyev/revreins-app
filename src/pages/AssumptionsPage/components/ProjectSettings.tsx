@@ -1,7 +1,8 @@
 import { type JSX, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT } from 'src/contants';
+import { useQueryClient } from '@tanstack/react-query';
+import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT, QUERY_KEYS } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
@@ -26,6 +27,7 @@ interface IProps {
 
 const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const { data: projectData = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
@@ -101,7 +103,12 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
     };
 
     createProjectBreakdownMutation(payload, {
-      onSuccess: (res) => setSegmentData(res.segments),
+      onSuccess: (res) => {
+        setSegmentData(res.segments);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
+        });
+      },
     });
 
     updateProjectMutation(updatingProjectPayload);

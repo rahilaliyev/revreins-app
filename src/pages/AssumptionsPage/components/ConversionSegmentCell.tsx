@@ -12,9 +12,9 @@ import { useAssumptionsFormContext } from '../validationSchema';
 
 interface IProps {
   stageIdx: number;
-  segmentIdx: number;
-  stageFromId?: number;
-  stageToId?: number;
+  segmentIndex: number;
+  conversionId: number;
+  segmentId?: number;
 }
 
 const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
@@ -25,12 +25,12 @@ const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
 const RATE_MODE_ITEMS = [
   ...Array.from({ length: 12 }, (_, i) => ({
     label: `Average of Last ${i + 1} Month${i > 0 ? 's' : ''}`,
-    value: i + 1,
+    value: (i + 1).toString(),
   })),
   { label: 'Manual Rate', value: 'manual_rate' },
 ];
 
-const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }: IProps): JSX.Element => {
+const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId }: IProps): JSX.Element => {
   const { id } = useParams();
   const { setValue, control } = useAssumptionsFormContext();
   const { mutateAsync: conversionRateMutation } = useConversionRateMutation();
@@ -38,19 +38,19 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
   const [rateMode, stageCycleMonths, manualRate] = useWatch({
     control,
     name: [
-      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`,
-      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`,
-      `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.rateMode`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.stageCycleMonths`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
     ],
   });
 
   useEffect(() => {
     if (rateMode !== 'manual_rate') {
-      setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`, null, {
+      setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`, null, {
         shouldDirty: true,
       });
     }
-  }, [rateMode, segmentIdx, stageIdx, setValue]);
+  }, [rateMode, segmentIndex, stageIdx, setValue]);
 
   useEffect(() => {
     if (rateMode === 'manual_rate') {
@@ -60,14 +60,21 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
     if (rateMode && stageCycleMonths) {
       conversionRateMutation({
         project_id: Number(id),
-        stage_from_id: stageFromId ?? 0,
-        stage_to_id: stageToId ?? 0,
-        stage_cycle_months: stageCycleMonths,
-        lookback_months: Number(rateMode),
+        conversion_id: conversionId,
+        ...(segmentId && {
+          conversion_segments: [
+            {
+              segment_id: segmentId,
+              stage_cycle_months: stageCycleMonths,
+              lookback_month: Number(rateMode),
+            },
+          ],
+        }),
+        ...(!segmentId && { stage_cycle_months: stageCycleMonths, lookback_months: Number(rateMode) }),
       }).then((res) => {
         setValue(
-          `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`,
-          res.conversion_rate,
+          `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
+          res.conversion_rate?.rate,
           { shouldDirty: true, shouldValidate: true },
         );
       });
@@ -77,11 +84,11 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
     stageCycleMonths,
     conversionRateMutation,
     id,
-    stageFromId,
-    stageToId,
     setValue,
-    segmentIdx,
+    segmentIndex,
     stageIdx,
+    conversionId,
+    segmentId,
   ]);
 
   return (
@@ -90,19 +97,19 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
         <CustomSelectField
           size="small"
           defaultValue=""
-          name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.rateMode`}
+          name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.rateMode`}
           placeholder="Average of Last X Months"
           items={RATE_MODE_ITEMS}
-          helperText={!!manualRate && rateMode !== 'manual_rate' ? `Conversion rate: ${manualRate} .` : ''}
+          helperText={rateMode === 'manual_rate' ? '' : `Conversion rate: ${manualRate ?? 0}`}
         />
         {rateMode === 'manual_rate' && (
           <CustomTextField
             size="small"
-            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`}
+            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`}
             placeholder="Enter rate"
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setValue(
-                `stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.manualRate`,
+                `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
                 Number(e.target.value),
                 { shouldDirty: true, shouldValidate: true },
               )
@@ -110,11 +117,11 @@ const ConversionSegmentCell = ({ stageIdx, segmentIdx, stageFromId, stageToId }:
           />
         )}
       </TableCell>
-      <TableCell align="right" width={130}>
+      <TableCell align="left" width={130} sx={{ verticalAlign: 'top' }}>
         <Stack gap={1}>
           <CustomSelectField
             size="small"
-            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIdx}.stageCycleMonths`}
+            name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.stageCycleMonths`}
             placeholder="Months"
             items={MONTH_ITEMS}
           />
