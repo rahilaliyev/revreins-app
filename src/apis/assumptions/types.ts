@@ -72,6 +72,14 @@ export interface IConversionRatePayload {
   conversion_segments?: IConversionRateForSegment[];
 }
 
+export interface IRate {
+  rate: number;
+}
+
+export interface IRateWithSegment extends IRate {
+  segment_id: number;
+}
+
 export interface IConversionRateResponse {
-  conversion_rate: { rate: number };
+  conversion_rate: IRate | IRateWithSegment[];
 }

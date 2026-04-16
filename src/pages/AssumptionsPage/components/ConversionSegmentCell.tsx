@@ -3,6 +3,7 @@ import { useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
 import { useConversionRateMutation } from 'src/apis/assumptions';
+import type { IRate, IRateWithSegment } from 'src/apis/assumptions/types';
 
 import { Stack, TableCell } from '@mui/material';
 
@@ -29,6 +30,18 @@ const RATE_MODE_ITEMS = [
   })),
   { label: 'Manual Rate', value: 'manual_rate' },
 ];
+
+const getConversionRate = (
+  conversionRate: IRate | IRateWithSegment[],
+  segmentId?: number,
+): number | undefined => {
+  if (segmentId) {
+    return Array.isArray(conversionRate)
+      ? conversionRate.find((r) => r.segment_id === segmentId)?.rate
+      : undefined;
+  }
+  return Array.isArray(conversionRate) ? undefined : conversionRate.rate;
+};
 
 const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId }: IProps): JSX.Element => {
   const { id } = useParams();
@@ -72,11 +85,12 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
         }),
         ...(!segmentId && { stage_cycle_months: stageCycleMonths, lookback_months: Number(rateMode) }),
       }).then((res) => {
-        setValue(
-          `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
-          res.conversion_rate?.rate,
-          { shouldDirty: true, shouldValidate: true },
-        );
+        const rate = getConversionRate(res.conversion_rate, segmentId);
+
+        setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`, rate, {
+          shouldDirty: true,
+          shouldValidate: true,
+        });
       });
     }
   }, [
