@@ -6,7 +6,11 @@ import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT, QUERY_KEYS } from 'src/contants'
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
-import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
+import {
+  useCreateProjectBreakdownMutation,
+  useGetLeadCustomFields,
+  useUpdateProjectBreakdownMutation,
+} from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
 import { useGetCurrencies } from 'src/apis/currencies';
 import { useGetProjectDetailById, useUpdateProjectMutation } from 'src/apis/projects';
@@ -33,6 +37,8 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { data: currencies } = useGetCurrencies();
   const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
+  const { mutate: updateProjectBreakdownMutation, isPending: isUpdateProjectBreakdownPending } =
+    useUpdateProjectBreakdownMutation();
   const { mutate: updateProjectMutation, isPending: isUpdateProjectPending } = useUpdateProjectMutation(
     projectData.id,
   );
@@ -102,14 +108,28 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
       currency_id: formData.currencyId,
     };
 
-    createProjectBreakdownMutation(payload, {
-      onSuccess: (res) => {
-        setSegmentData(res.segments);
-        queryClient.invalidateQueries({
-          queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
-        });
-      },
-    });
+    if (id) {
+      updateProjectBreakdownMutation(
+        { id: Number(id), ...payload },
+        {
+          onSuccess: (res) => {
+            setSegmentData(res.segments);
+            queryClient.invalidateQueries({
+              queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
+            });
+          },
+        },
+      );
+    } else {
+      createProjectBreakdownMutation(payload, {
+        onSuccess: (res) => {
+          setSegmentData(res.segments);
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
+          });
+        },
+      });
+    }
 
     updateProjectMutation(updatingProjectPayload);
   };
@@ -214,7 +234,7 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
           onClick={handleCreateBreakdowns}
           size="large"
           color="inherit"
-          loading={isPending || isUpdateProjectPending}
+          loading={isPending || isUpdateProjectPending || isUpdateProjectBreakdownPending}
           disabled={!enableProjectBreakdown}
         >
           Save

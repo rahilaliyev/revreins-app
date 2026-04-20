@@ -7,6 +7,7 @@ import { DATE_FORMAT } from 'src/contants';
 
 import { useGenerateAssumptionMutation } from 'src/apis/assumptions';
 import type { IAssumptionGeneratePayload } from 'src/apis/assumptions/types';
+import { useGetProjectBreakdowns } from 'src/apis/breakdowns';
 import type { ISegmentResponse } from 'src/apis/breakdowns/types';
 import { useGetProjectDetailById } from 'src/apis/projects';
 import type { IProject, IProjectResponse } from 'src/apis/projects/types';
@@ -30,7 +31,7 @@ const AssumptionsPage = (): JSX.Element => {
   const [segmentData, setSegmentData] = useState<ISegmentResponse[] | null>(null);
   const { data = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
-
+  const { data: { data: segments } = {} } = useGetProjectBreakdowns(id ?? '');
   const { mutate: generateAssumptionMutation, isPending: isGeneratePending } =
     useGenerateAssumptionMutation();
 
@@ -73,6 +74,26 @@ const AssumptionsPage = (): JSX.Element => {
 
     formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });
   }, [stageConversions, segmentData, formBag]);
+
+  useEffect(() => {
+    if (segments?.length) {
+      formBag.setValue('enableProjectBreakdown', true, { shouldDirty: false });
+      const lastSegment = segments.at(-1);
+      setSegmentData(lastSegment?.segments ?? []);
+      formBag.setValue('businessType', Number(lastSegment?.crm_lead_custom_field_id) || 0, {
+        shouldDirty: false,
+      });
+      const withoutOtherSegments = lastSegment?.segments.filter((el) => el.name !== 'Others');
+
+      formBag.setValue(
+        'segments',
+        withoutOtherSegments?.map((sgmnt) => ({
+          name: sgmnt.name,
+          crmLeadCustomFieldChoiceId: sgmnt.crm_lead_custom_field_choices?.[0]?.id ?? 0,
+        })) ?? [],
+      );
+    }
+  }, [formBag, segments]);
 
   const handleSuccessResponseGenerate = (res: IProjectResponse): void => {
     navigate(`${ROUTES.DEFAULT.PROJECTS.PATH}/${res.project.id}`);

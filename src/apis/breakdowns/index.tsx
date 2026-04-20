@@ -5,7 +5,12 @@ import type { ICommonResponse } from 'src/types/interfaces';
 
 import { api } from '../axiosInstance';
 
-import type { ILeadCustomField, IProjectBreakdownPayload, IProjectBreakdownResponse } from './types';
+import type {
+  ILeadCustomField,
+  IProjectBreakdownPayload,
+  IProjectBreakdownResponse,
+  TUpdateProjectBreakdownPayload,
+} from './types';
 
 export const useGetLeadCustomFields = (
   params?: Record<string, ELeadCustomFieldType>,
@@ -34,13 +39,33 @@ export const useCreateProjectBreakdownMutation = (): UseMutationResult<
     },
   });
 
-export const useGetProjectBreakdowns = (id: string): UseQueryResult<void, Error> =>
+export const useUpdateProjectBreakdownMutation = (): UseMutationResult<
+  IProjectBreakdownResponse,
+  Error,
+  TUpdateProjectBreakdownPayload
+> =>
+  useMutation<IProjectBreakdownResponse, Error, TUpdateProjectBreakdownPayload>({
+    mutationFn: async ({ id, ...data }: TUpdateProjectBreakdownPayload) => {
+      const res = await api.put<ICommonResponse<IProjectBreakdownResponse>>(
+        endpoints.tenant.projectBreakdownDetail(id.toString()),
+        data,
+      );
+      return res.data.data;
+    },
+  });
+
+export const useGetProjectBreakdowns = (
+  id: string,
+): UseQueryResult<ICommonResponse<IProjectBreakdownResponse[]>, Error> =>
   useQuery({
     queryKey: [QUERY_KEYS.PROJECT_BREAKDOWNS, id],
     queryFn: async () => {
-      const res = await api.get<void>(endpoints.tenant.projectBreakdowns, {
-        params: { project_id: id },
-      });
+      const res = await api.get<ICommonResponse<IProjectBreakdownResponse[]>>(
+        endpoints.tenant.projectBreakdowns,
+        {
+          params: { project_id: id },
+        },
+      );
       return res.data;
     },
   });

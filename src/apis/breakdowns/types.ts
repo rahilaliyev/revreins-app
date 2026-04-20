@@ -29,12 +29,21 @@ export interface IProjectBreakdownPayload {
   segments?: ISegment[];
 }
 
+export type TUpdateProjectBreakdownPayload = IProjectBreakdownPayload & ID;
+
+interface ICrmLeadCustomFieldChoice extends ID {
+  crm_lead_custom_field_id: number;
+  value: string;
+  sort_order: number;
+}
+
 export interface ISegmentResponse extends ISegment {
   created_at: string;
   id: number;
   name: string;
   project_breakdown_id: number;
   updated_at: string;
+  crm_lead_custom_field_choices: ICrmLeadCustomFieldChoice[];
 }
 
 export interface IProjectBreakdownResponse extends ID {
