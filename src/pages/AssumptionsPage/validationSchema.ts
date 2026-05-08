@@ -18,6 +18,11 @@ const growthRateSegmentSchema = z.object({
   growthRate: z.number().min(1).nullable(),
 });
 
+const averageOrderValueSegmentSchema = z.object({
+  segmentId: z.number().optional(),
+  value: z.number().min(1).nullable(),
+});
+
 const stageConversionSchema = z.object({
   stageFromId: z.number(),
   stageToId: z.number(),
@@ -35,7 +40,9 @@ export const validationSchema = z
     segments: z.array(segmentSchema).optional(),
     stageConversions: z.array(stageConversionSchema).optional(),
     growthRateValue: z.number().nullable().optional(),
+    averageOrderValue: z.number().nullable().optional(),
     growthRateSegments: z.array(growthRateSegmentSchema).optional(),
+    averageOrderValueSegments: z.array(averageOrderValueSegmentSchema).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.enableProjectBreakdown && !data.segments?.length) {

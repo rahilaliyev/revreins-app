@@ -222,6 +222,70 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
           </StyledAssumptionTable>
         </TableContainer>
       </Box>
+      <Box mt={8}>
+        <TableContainer
+          sx={{ border: `1px solid ${colorPalette.other.stroke}`, borderRadius: (theme) => theme.spacing(4) }}
+        >
+          <StyledAssumptionTable aria-label="table">
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography fontWeight={600}>Order Values</Typography>
+                </TableCell>
+                {segmentData.length ? (
+                  segmentData.map((el) => (
+                    <TableCell key={el?.id}>
+                      <Typography fontWeight={600}>{el.name}</Typography>
+                    </TableCell>
+                  ))
+                ) : (
+                  <TableCell>
+                    <Typography fontWeight={600}>Percent</Typography>
+                  </TableCell>
+                )}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Typography>{stageConversions?.[0]?.stage_from?.name}</Typography>
+                </TableCell>
+                {segmentData.length ? (
+                  segmentData.map((el, segmentIdx) => (
+                    <TableCell key={el?.id} width={200}>
+                      <CustomTextField
+                        size="small"
+                        name={`averageOrderValueSegments.${segmentIdx}.value`}
+                        placeholder="35"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          setValue(`averageOrderValueSegments.${segmentIdx}.value`, Number(e.target.value), {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          })
+                        }
+                      />
+                    </TableCell>
+                  ))
+                ) : (
+                  <TableCell align="right" width={200}>
+                    <CustomTextField
+                      size="small"
+                      name="averageOrderValue"
+                      placeholder="35"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setValue('averageOrderValue', Number(e.target.value), {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        })
+                      }
+                    />
+                  </TableCell>
+                )}
+              </TableRow>
+            </TableBody>
+          </StyledAssumptionTable>
+        </TableContainer>
+      </Box>
     </StyledComponentWrapper>
   );
 };

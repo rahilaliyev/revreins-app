@@ -29,6 +29,7 @@ export const StyledComponentWrapper = styled(Box)(({ theme }) => ({
   background: 'white',
   marginBottom: theme.spacing(4),
   borderRadius: theme.spacing(3.5),
+  maxWidth: `calc(100vw - ${theme.spacing(75)})`,
 }));
 
 export const StyledAssumptionTable = styled(Table)(({ theme }) => ({

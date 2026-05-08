@@ -78,8 +78,14 @@ const AssumptionsPage = (): JSX.Element => {
       growthRate: null,
     }));
 
+    const averageOrderValueSegments = (segmentData ?? []).map((sgmnt) => ({
+      segmentId: sgmnt.id,
+      value: null,
+    }));
+
     formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });
     formBag.setValue('growthRateSegments', growthRateSegments, { shouldDirty: false });
+    formBag.setValue('averageOrderValueSegments', averageOrderValueSegments, { shouldDirty: false });
   }, [stageConversions, segmentData, formBag]);
 
   useEffect(() => {
@@ -131,10 +137,17 @@ const AssumptionsPage = (): JSX.Element => {
           : [],
       })),
       growth_rate_value: enableBreakdown ? null : formData.growthRateValue,
+      average_order_value: enableBreakdown ? null : formData.averageOrderValue,
       growth_rate_segments: enableBreakdown
         ? formData.growthRateSegments?.map((seg) => ({
             segment_id: seg.segmentId ?? 0,
             growth_rate: seg.growthRate,
+          }))
+        : [],
+      average_order_segments: enableBreakdown
+        ? formData.averageOrderValueSegments?.map((seg) => ({
+            segment_id: seg.segmentId ?? 0,
+            value: seg.value,
           }))
         : [],
     };

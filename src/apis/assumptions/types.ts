@@ -17,11 +17,18 @@ interface IGrowthRateSegment {
   growth_rate: number | null;
 }
 
+interface IAverageOrderValueSegment {
+  segment_id: number;
+  value: number | null;
+}
+
 export interface IAssumptionGeneratePayload {
   project_id: number;
   stage_conversions: IStageConversionPayload[];
   growth_rate_value?: number | null;
   growth_rate_segments?: IGrowthRateSegment[];
+  average_order_value?: number | null;
+  average_order_segments?: IAverageOrderValueSegment[];
 }
 
 export interface ISegmentForecast {
