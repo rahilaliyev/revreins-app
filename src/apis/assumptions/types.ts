@@ -12,9 +12,16 @@ interface IStageConversionPayload {
   conversion_segments?: IConversionSegment[];
 }
 
+interface IGrowthRateSegment {
+  segment_id: number;
+  growth_rate: number | null;
+}
+
 export interface IAssumptionGeneratePayload {
   project_id: number;
   stage_conversions: IStageConversionPayload[];
+  growth_rate_value?: number | null;
+  growth_rate_segments?: IGrowthRateSegment[];
 }
 
 export interface ISegmentForecast {

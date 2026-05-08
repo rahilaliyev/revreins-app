@@ -7,10 +7,15 @@ const segmentSchema = z.object({
 });
 
 const conversionSegmentSchema = z.object({
-  segmentId: z.number(),
-  stageCycleMonths: z.number().min(1).nullable(),
+  segmentId: z.number().optional(),
+  stageCycleMonths: z.number().min(1).nullable().optional(),
   rateMode: z.string().nullable(),
-  manualRate: z.number().nullable(),
+  manualRate: z.string().nullable().optional(),
+});
+
+const growthRateSegmentSchema = z.object({
+  segmentId: z.number().optional(),
+  growthRate: z.number().min(1).nullable(),
 });
 
 const stageConversionSchema = z.object({
@@ -18,6 +23,7 @@ const stageConversionSchema = z.object({
   stageToId: z.number(),
   assumptionCategoryId: z.number().optional().nullable(),
   conversionSegments: z.array(conversionSegmentSchema),
+  conversionId: z.number(),
 });
 
 export const validationSchema = z
@@ -28,6 +34,8 @@ export const validationSchema = z
     enableProjectBreakdown: z.boolean(),
     segments: z.array(segmentSchema).optional(),
     stageConversions: z.array(stageConversionSchema).optional(),
+    growthRateValue: z.number().nullable().optional(),
+    growthRateSegments: z.array(growthRateSegmentSchema).optional(),
   })
   .superRefine((data, ctx) => {
     if (data.enableProjectBreakdown && !data.segments?.length) {

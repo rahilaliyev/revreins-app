@@ -87,10 +87,14 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
       }).then((res) => {
         const rate = getConversionRate(res.conversion_rate, segmentId);
 
-        setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`, rate, {
-          shouldDirty: true,
-          shouldValidate: true,
-        });
+        setValue(
+          `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
+          rate?.toString(),
+          {
+            shouldDirty: true,
+            shouldValidate: true,
+          },
+        );
       });
     }
   }, [
@@ -124,7 +128,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setValue(
                 `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
-                Number(e.target.value),
+                e.target.value,
                 { shouldDirty: true, shouldValidate: true },
               )
             }

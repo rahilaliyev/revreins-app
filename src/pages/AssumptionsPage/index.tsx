@@ -64,6 +64,7 @@ const AssumptionsPage = (): JSX.Element => {
       stageFromId: sc.stage_from_id,
       stageToId: sc.stage_to_id,
       assumptionCategoryId: sc.assumption_category_id ?? null,
+      conversionId: sc.id,
       conversionSegments: (segmentData ?? []).map((sgmnt) => ({
         segmentId: sgmnt.id,
         stageCycleMonths: null,
@@ -72,7 +73,13 @@ const AssumptionsPage = (): JSX.Element => {
       })),
     }));
 
+    const growthRateSegments = (segmentData ?? []).map((sgmnt) => ({
+      segmentId: sgmnt.id,
+      growthRate: null,
+    }));
+
     formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });
+    formBag.setValue('growthRateSegments', growthRateSegments, { shouldDirty: false });
   }, [stageConversions, segmentData, formBag]);
 
   useEffect(() => {
@@ -113,15 +120,23 @@ const AssumptionsPage = (): JSX.Element => {
         assumption_category_id: sc.assumptionCategoryId ?? null,
         stage_from_id: sc.stageFromId,
         stage_to_id: sc.stageToId,
+        conversion_id: sc.conversionId,
         conversion_segments: enableBreakdown
           ? sc.conversionSegments.map((seg) => ({
-              segment_id: seg.segmentId,
+              segment_id: seg.segmentId ?? 0,
               stage_cycle_months: seg.stageCycleMonths ?? 0,
               rate_mode: seg.rateMode === 'manual_rate' ? null : `last_${seg.rateMode}_months`,
-              manual_rate: seg.manualRate ?? null,
+              manual_rate: Number(seg.manualRate),
             }))
           : [],
       })),
+      growth_rate_value: enableBreakdown ? null : formData.growthRateValue,
+      growth_rate_segments: enableBreakdown
+        ? formData.growthRateSegments?.map((seg) => ({
+            segment_id: seg.segmentId ?? 0,
+            growth_rate: seg.growthRate,
+          }))
+        : [],
     };
 
     generateAssumptionMutation(payload, {

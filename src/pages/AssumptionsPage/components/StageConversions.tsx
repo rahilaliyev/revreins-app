@@ -1,4 +1,4 @@
-import { Fragment, type JSX } from 'react';
+import { type ChangeEvent, Fragment, type JSX } from 'react';
 import { useParams } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
 
@@ -17,7 +17,10 @@ import {
   Typography,
 } from '@mui/material';
 
+import { CustomTextField } from 'src/components';
+
 import { StyledAssumptionTable, StyledComponentWrapper } from '../styled';
+import { useAssumptionsFormContext } from '../validationSchema';
 
 import ConversionSegmentCell from './ConversionSegmentCell';
 
@@ -29,6 +32,7 @@ interface IProps {
 
 const StageConversions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
+  const { setValue } = useAssumptionsFormContext();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
 
@@ -154,10 +158,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
           </StyledAssumptionTable>
         </TableContainer>
       </Box>
-      {/* <Box mt={8}>
-        <Typography fontWeight={700} mb={4}>
-          Revenue Quota
-        </Typography>
+      <Box mt={8}>
         <TableContainer
           sx={{ border: `1px solid ${colorPalette.other.stroke}`, borderRadius: (theme) => theme.spacing(4) }}
         >
@@ -165,32 +166,62 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography fontWeight={600}>Monthly Target</Typography>
+                  <Typography fontWeight={600}>Growth Rate</Typography>
                 </TableCell>
-                <TableCell>
-                  <Typography fontWeight={600}>Enterprise</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography fontWeight={600}>Mid-Market</Typography>
-                </TableCell>
+                {segmentData.length ? (
+                  segmentData.map((el) => (
+                    <TableCell key={el?.id}>
+                      <Typography fontWeight={600}>{el.name}</Typography>
+                    </TableCell>
+                  ))
+                ) : (
+                  <TableCell>
+                    <Typography fontWeight={600}>Percent</Typography>
+                  </TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography>Bookings Achieved</Typography>
+                  <Typography>{stageConversions?.[0]?.stage_from?.name}</Typography>
                 </TableCell>
-                <TableCell align="center" width={150}>
-                  <CustomTextField size="small" name="bookingEnterprise" placeholder="35" />
-                </TableCell>
-                <TableCell align="center" width={150}>
-                  <CustomTextField size="small" name="bookingMidMarket" placeholder="35" />
-                </TableCell>
+                {segmentData.length ? (
+                  segmentData.map((el, segmentIdx) => (
+                    <TableCell key={el?.id} width={200}>
+                      <CustomTextField
+                        size="small"
+                        name={`growthRateSegments.${segmentIdx}.growthRate`}
+                        placeholder="35"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                          setValue(`growthRateSegments.${segmentIdx}.growthRate`, Number(e.target.value), {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          })
+                        }
+                      />
+                    </TableCell>
+                  ))
+                ) : (
+                  <TableCell align="right" width={200}>
+                    <CustomTextField
+                      size="small"
+                      name="growthRateValue"
+                      placeholder="35"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setValue('growthRateValue', Number(e.target.value), {
+                          shouldDirty: true,
+                          shouldValidate: true,
+                        })
+                      }
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             </TableBody>
           </StyledAssumptionTable>
         </TableContainer>
-      </Box> */}
+      </Box>
     </StyledComponentWrapper>
   );
 };
