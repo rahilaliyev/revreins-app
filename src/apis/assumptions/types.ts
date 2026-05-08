@@ -1,7 +1,7 @@
 export interface IConversionSegment {
   segment_id: number;
   stage_cycle_months: number;
-  rate_mode: string | null;
+  average_month: number | null;
   manual_rate: number | null;
 }
 

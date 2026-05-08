@@ -68,7 +68,7 @@ const AssumptionsPage = (): JSX.Element => {
       conversionSegments: (segmentData ?? []).map((sgmnt) => ({
         segmentId: sgmnt.id,
         stageCycleMonths: null,
-        rateMode: null,
+        averageMonth: null,
         manualRate: null,
       })),
     }));
@@ -125,7 +125,7 @@ const AssumptionsPage = (): JSX.Element => {
           ? sc.conversionSegments.map((seg) => ({
               segment_id: seg.segmentId ?? 0,
               stage_cycle_months: seg.stageCycleMonths ?? 0,
-              rate_mode: seg.rateMode === 'manual_rate' ? null : `last_${seg.rateMode}_months`,
+              average_month: seg.averageMonth === 'manual_rate' ? null : Number(seg.averageMonth),
               manual_rate: Number(seg.manualRate),
             }))
           : [],

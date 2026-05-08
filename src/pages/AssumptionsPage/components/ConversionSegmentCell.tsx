@@ -23,7 +23,7 @@ const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
   value: i + 1,
 }));
 
-const RATE_MODE_ITEMS = [
+const AVERAGE_MONTH_ITEMS = [
   ...Array.from({ length: 12 }, (_, i) => ({
     label: `Average of Last ${i + 1} Month${i > 0 ? 's' : ''}`,
     value: (i + 1).toString(),
@@ -48,29 +48,29 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
   const { setValue, control } = useAssumptionsFormContext();
   const { mutateAsync: conversionRateMutation } = useConversionRateMutation();
 
-  const [rateMode, stageCycleMonths, manualRate] = useWatch({
+  const [averageMonth, stageCycleMonths, manualRate] = useWatch({
     control,
     name: [
-      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.rateMode`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.averageMonth`,
       `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.stageCycleMonths`,
       `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
     ],
   });
 
   useEffect(() => {
-    if (rateMode !== 'manual_rate') {
+    if (averageMonth !== 'manual_rate') {
       setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`, null, {
         shouldDirty: true,
       });
     }
-  }, [rateMode, segmentIndex, stageIdx, setValue]);
+  }, [averageMonth, segmentIndex, stageIdx, setValue]);
 
   useEffect(() => {
-    if (rateMode === 'manual_rate') {
+    if (averageMonth === 'manual_rate') {
       return;
     }
 
-    if (rateMode && stageCycleMonths) {
+    if (averageMonth && stageCycleMonths) {
       conversionRateMutation({
         project_id: Number(id),
         conversion_id: conversionId,
@@ -79,11 +79,11 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
             {
               segment_id: segmentId,
               stage_cycle_months: stageCycleMonths,
-              lookback_month: Number(rateMode),
+              lookback_month: Number(averageMonth),
             },
           ],
         }),
-        ...(!segmentId && { stage_cycle_months: stageCycleMonths, lookback_months: Number(rateMode) }),
+        ...(!segmentId && { stage_cycle_months: stageCycleMonths, lookback_months: Number(averageMonth) }),
       }).then((res) => {
         const rate = getConversionRate(res.conversion_rate, segmentId);
 
@@ -98,7 +98,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
       });
     }
   }, [
-    rateMode,
+    averageMonth,
     stageCycleMonths,
     conversionRateMutation,
     id,
@@ -115,12 +115,12 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
         <CustomSelectField
           size="small"
           defaultValue=""
-          name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.rateMode`}
+          name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.averageMonth`}
           placeholder="Average of Last X Months"
-          items={RATE_MODE_ITEMS}
-          helperText={rateMode === 'manual_rate' ? '' : `Conversion rate: ${manualRate ?? 0}`}
+          items={AVERAGE_MONTH_ITEMS}
+          helperText={averageMonth === 'manual_rate' ? '' : `Conversion rate: ${manualRate ?? 0}`}
         />
-        {rateMode === 'manual_rate' && (
+        {averageMonth === 'manual_rate' && (
           <CustomTextField
             size="small"
             name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`}
