@@ -9,6 +9,7 @@ import { ELeadCustomFieldType } from 'src/types/enums';
 import {
   useCreateProjectBreakdownMutation,
   useGetLeadCustomFields,
+  useGetProjectBreakdowns,
   useUpdateProjectBreakdownMutation,
 } from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
@@ -36,6 +37,8 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
   const { data: projectData = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { data: currencies } = useGetCurrencies();
+  const { data: { data: projectBreakdowns } = {} } = useGetProjectBreakdowns(id ?? '');
+
   const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
   const { mutate: updateProjectBreakdownMutation, isPending: isUpdateProjectBreakdownPending } =
     useUpdateProjectBreakdownMutation();
@@ -108,7 +111,7 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
       currency_id: formData.currencyId,
     };
 
-    if (id) {
+    if (projectBreakdowns?.length) {
       updateProjectBreakdownMutation(
         { id: Number(id), ...payload },
         {
