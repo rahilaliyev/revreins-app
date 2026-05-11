@@ -3,6 +3,7 @@ export interface IConversionSegment {
   stage_cycle_months: number;
   average_month: number | null;
   manual_rate: number | null;
+  calculated_rate: number | null;
 }
 
 interface IStageConversionPayload {

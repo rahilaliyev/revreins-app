@@ -70,6 +70,7 @@ const AssumptionsPage = (): JSX.Element => {
         stageCycleMonths: null,
         averageMonth: null,
         manualRate: null,
+        calculatedRate: null,
       })),
     }));
 
@@ -133,6 +134,7 @@ const AssumptionsPage = (): JSX.Element => {
               stage_cycle_months: seg.stageCycleMonths ?? 0,
               average_month: seg.averageMonth === 'manual_rate' ? null : Number(seg.averageMonth),
               manual_rate: Number(seg.manualRate),
+              calculated_rate: Number(seg.calculatedRate),
             }))
           : [],
       })),

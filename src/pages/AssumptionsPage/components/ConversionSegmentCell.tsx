@@ -48,18 +48,18 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
   const { setValue, control } = useAssumptionsFormContext();
   const { mutateAsync: conversionRateMutation } = useConversionRateMutation();
 
-  const [averageMonth, stageCycleMonths, manualRate] = useWatch({
+  const [averageMonth, stageCycleMonths, calculatedRate] = useWatch({
     control,
     name: [
       `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.averageMonth`,
       `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.stageCycleMonths`,
-      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
+      `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.calculatedRate`,
     ],
   });
 
   useEffect(() => {
     if (averageMonth !== 'manual_rate') {
-      setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`, null, {
+      setValue(`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.calculatedRate`, null, {
         shouldDirty: true,
       });
     }
@@ -88,7 +88,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
         const rate = getConversionRate(res.conversion_rate, segmentId);
 
         setValue(
-          `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.manualRate`,
+          `stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.calculatedRate`,
           rate?.toString(),
           {
             shouldDirty: true,
@@ -118,7 +118,7 @@ const ConversionSegmentCell = ({ stageIdx, segmentIndex, conversionId, segmentId
           name={`stageConversions.${stageIdx}.conversionSegments.${segmentIndex}.averageMonth`}
           placeholder="Average of Last X Months"
           items={AVERAGE_MONTH_ITEMS}
-          helperText={averageMonth === 'manual_rate' ? '' : `Conversion rate: ${manualRate ?? 0}`}
+          helperText={averageMonth === 'manual_rate' ? '' : `Conversion rate: ${calculatedRate ?? 0}`}
         />
         {averageMonth === 'manual_rate' && (
           <CustomTextField

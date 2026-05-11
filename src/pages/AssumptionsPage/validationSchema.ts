@@ -11,6 +11,7 @@ const conversionSegmentSchema = z.object({
   stageCycleMonths: z.number().min(1).nullable().optional(),
   averageMonth: z.string().nullable(),
   manualRate: z.string().nullable().optional(),
+  calculatedRate: z.string().nullable(),
 });
 
 const growthRateSegmentSchema = z.object({
