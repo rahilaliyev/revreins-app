@@ -76,12 +76,12 @@ const AssumptionsPage = (): JSX.Element => {
 
     const growthRateSegments = (segmentData ?? []).map((sgmnt) => ({
       segmentId: sgmnt.id,
-      growthRate: null,
+      growthRate: sgmnt.growth_rate,
     }));
 
     const averageOrderValueSegments = (segmentData ?? []).map((sgmnt) => ({
       segmentId: sgmnt.id,
-      value: null,
+      value: sgmnt.order_value,
     }));
 
     formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });

@@ -39,11 +39,13 @@ interface ICrmLeadCustomFieldChoice extends ID {
 
 export interface ISegmentResponse extends ISegment {
   created_at: string;
+  crm_lead_custom_field_choices: ICrmLeadCustomFieldChoice[];
+  growth_rate: number;
   id: number;
   name: string;
+  order_value: number;
   project_breakdown_id: number;
   updated_at: string;
-  crm_lead_custom_field_choices: ICrmLeadCustomFieldChoice[];
 }
 
 export interface IProjectBreakdownResponse extends ID {

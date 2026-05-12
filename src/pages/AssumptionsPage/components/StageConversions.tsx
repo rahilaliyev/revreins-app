@@ -248,7 +248,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography>{stageConversions?.[0]?.stage_from?.name}</Typography>
+                  <Typography>Average Order Values</Typography>
                 </TableCell>
                 {segmentData.length ? (
                   segmentData.map((el, segmentIdx) => (
