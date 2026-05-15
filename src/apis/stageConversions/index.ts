@@ -18,4 +18,5 @@ export const useGetStageConversions = (id: string): UseQueryResult<IStageConvers
       );
       return res.data.data;
     },
+    staleTime: 0,
   });

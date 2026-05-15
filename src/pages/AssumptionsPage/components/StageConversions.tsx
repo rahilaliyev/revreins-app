@@ -72,7 +72,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
                           gap={1}
                           color="text.secondary"
                         >
-                          CTT
+                          Cycle
                           <Tooltip
                             placement="top-start"
                             title={
@@ -106,7 +106,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
                         gap={1}
                         color="text.secondary"
                       >
-                        CTT
+                        Cycle
                         <Tooltip
                           placement="top-start"
                           title={

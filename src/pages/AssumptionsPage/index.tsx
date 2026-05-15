@@ -65,13 +65,14 @@ const AssumptionsPage = (): JSX.Element => {
       stageToId: sc.stage_to_id,
       assumptionCategoryId: sc.assumption_category_id ?? null,
       conversionId: sc.id,
-      conversionSegments: (segmentData ?? []).map((sgmnt) => ({
-        segmentId: sgmnt.id,
-        stageCycleMonths: null,
-        averageMonth: null,
-        manualRate: null,
-        calculatedRate: null,
-      })),
+      conversionSegments:
+        sc.conversion_segments?.map((sgmnt) => ({
+          segmentId: sgmnt.segment_id,
+          stageCycleMonths: sgmnt.stage_cycle_months,
+          averageMonth: sgmnt.average_month?.toString() ?? null,
+          manualRate: sgmnt.manual_rate?.toString() ?? null,
+          calculatedRate: sgmnt.calculated_rate?.toString() ?? null,
+        })) ?? [],
     }));
 
     const growthRateSegments = (segmentData ?? []).map((sgmnt) => ({

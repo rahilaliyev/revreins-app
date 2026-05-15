@@ -68,6 +68,7 @@ export const useGetProjectBreakdowns = (
       );
       return res.data;
     },
+    staleTime: 0,
   });
 
 export const useGetProjectBreakdownDetail = (id: string): UseQueryResult<void, Error> =>
