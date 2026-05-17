@@ -6,12 +6,7 @@ import { DATE_FORMAT, MONTH_LETTER_YEAR_FORMAT, QUERY_KEYS } from 'src/contants'
 import { colorPalette } from 'src/theme/colorpalette';
 import { ELeadCustomFieldType } from 'src/types/enums';
 
-import {
-  useCreateProjectBreakdownMutation,
-  useGetLeadCustomFields,
-  useGetProjectBreakdowns,
-  useUpdateProjectBreakdownMutation,
-} from 'src/apis/breakdowns';
+import { useCreateProjectBreakdownMutation, useGetLeadCustomFields } from 'src/apis/breakdowns';
 import type { IProjectBreakdownPayload, ISegmentResponse } from 'src/apis/breakdowns/types';
 import { useGetCurrencies } from 'src/apis/currencies';
 import { useGetProjectDetailById, useUpdateProjectMutation } from 'src/apis/projects';
@@ -37,11 +32,7 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
   const { data: projectData = {} as IProject } = useGetProjectDetailById(id ?? '');
   const { data: leadCustomFields } = useGetLeadCustomFields({ type: ELeadCustomFieldType.CHOICES });
   const { data: currencies } = useGetCurrencies();
-  const { data: { data: projectBreakdowns } = {} } = useGetProjectBreakdowns(id ?? '');
-
   const { mutate: createProjectBreakdownMutation, isPending } = useCreateProjectBreakdownMutation();
-  const { mutate: updateProjectBreakdownMutation, isPending: isUpdateProjectBreakdownPending } =
-    useUpdateProjectBreakdownMutation();
   const { mutate: updateProjectMutation, isPending: isUpdateProjectPending } = useUpdateProjectMutation(
     projectData.id,
   );
@@ -223,7 +214,7 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
           onClick={handleCreateBreakdowns}
           size="large"
           color="inherit"
-          loading={isPending || isUpdateProjectPending || isUpdateProjectBreakdownPending}
+          loading={isPending || isUpdateProjectPending}
           disabled={!enableProjectBreakdown}
         >
           Save
