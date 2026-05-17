@@ -70,7 +70,7 @@ const SegmentTable = (): JSX.Element => {
   const addSegmentField = (index: number): void => {
     append({
       name: `Segment ${index + 1}`,
-      crmLeadCustomFieldChoiceId: 0,
+      crmLeadCustomFieldChoiceId: [],
     });
   };
 
@@ -180,6 +180,7 @@ const SegmentTable = (): JSX.Element => {
                     size="small"
                     defaultValue={``}
                     sx={{ width: (theme) => theme.spacing(60) }}
+                    multiple
                   />
                   <StyledDeleteIconWrapper onClick={() => remove(index)}>
                     <DeleteBinLineIcon width={16} height={16} pathFill={colorPalette.other.icon} />

@@ -81,12 +81,12 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
     const findingSegmentFields = leadCustomFields?.find(
       (el) => el.id === Number(formData.businessType),
     )?.choices;
-    const usedChoiceIds = new Set(formData.segments?.map((el) => el.crmLeadCustomFieldChoiceId));
+    const usedChoiceIds = new Set(formData.segments?.flatMap((el) => el.crmLeadCustomFieldChoiceId));
     const othersChoiceIds =
       findingSegmentFields?.filter((el) => !usedChoiceIds.has(el.id)).map((el) => el.id) ?? [];
     const mappedSegments = formData?.segments?.map((el) => ({
       name: el.name,
-      crm_lead_custom_field_choice_ids: [el.crmLeadCustomFieldChoiceId],
+      crm_lead_custom_field_choice_ids: el.crmLeadCustomFieldChoiceId,
     }));
 
     const payload: IProjectBreakdownPayload = {
@@ -111,28 +111,14 @@ const ProjectSettings = ({ setSegmentData }: IProps): JSX.Element => {
       currency_id: formData.currencyId,
     };
 
-    if (projectBreakdowns?.length) {
-      updateProjectBreakdownMutation(
-        { id: Number(id), ...payload },
-        {
-          onSuccess: (res) => {
-            setSegmentData(res.segments);
-            queryClient.invalidateQueries({
-              queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
-            });
-          },
-        },
-      );
-    } else {
-      createProjectBreakdownMutation(payload, {
-        onSuccess: (res) => {
-          setSegmentData(res.segments);
-          queryClient.invalidateQueries({
-            queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
-          });
-        },
-      });
-    }
+    createProjectBreakdownMutation(payload, {
+      onSuccess: (res) => {
+        setSegmentData(res.segments);
+        queryClient.invalidateQueries({
+          queryKey: [QUERY_KEYS.STAGE_CONVERSIONS, id],
+        });
+      },
+    });
 
     updateProjectMutation(updatingProjectPayload);
   };

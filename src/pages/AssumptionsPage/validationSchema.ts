@@ -3,7 +3,7 @@ import z from 'zod';
 
 const segmentSchema = z.object({
   name: z.string().min(1, 'Segment name is required'),
-  crmLeadCustomFieldChoiceId: z.number().min(1, 'Segment field is required'),
+  crmLeadCustomFieldChoiceId: z.array(z.number()).min(1, 'Segment field is required'),
 });
 
 const conversionSegmentSchema = z.object({

@@ -65,6 +65,9 @@ export const chipTheme: Components = {
         backgroundColor: 'transparent',
         border: 'none',
       },
+      deleteIcon: {
+        marginLeft: 4,
+      },
     },
   },
 };

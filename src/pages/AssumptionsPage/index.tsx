@@ -42,7 +42,7 @@ const AssumptionsPage = (): JSX.Element => {
       currencyId: 1,
       startingDate: '',
       enableProjectBreakdown: false,
-      segments: [{ name: 'Segment 1', crmLeadCustomFieldChoiceId: 0 }],
+      segments: [{ name: 'Segment 1', crmLeadCustomFieldChoiceId: [] }],
     },
   });
 
@@ -104,7 +104,7 @@ const AssumptionsPage = (): JSX.Element => {
         'segments',
         withoutOtherSegments?.map((sgmnt) => ({
           name: sgmnt.name,
-          crmLeadCustomFieldChoiceId: sgmnt.crm_lead_custom_field_choices?.[0]?.id ?? 0,
+          crmLeadCustomFieldChoiceId: sgmnt.crm_lead_custom_field_choices?.map((choice) => choice.id) ?? [],
         })) ?? [],
       );
     }
