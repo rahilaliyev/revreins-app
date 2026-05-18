@@ -18,7 +18,7 @@ const InviteUserPage = lazy(() => import('src/pages/InviteUserPage'));
 const HomePage = lazy(() => import('src/pages/HomePage'));
 const ProjectsPage = lazy(() => import('src/pages/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('src/pages/ProjectDetailPage'));
-const NewProjectPage = lazy(() => import('src/pages/NewProjectPage'));
+const StagesPage = lazy(() => import('src/pages/StagesPage'));
 const AssumptionsPage = lazy(() => import('src/pages/AssumptionsPage'));
 const CRMDataPage = lazy(() => import('src/pages/CRMDataPage'));
 const SettingPage = lazy(() => import('src/pages/SettingPage'));
@@ -61,10 +61,7 @@ const RouteComponents = (): JSX.Element => {
         <Route path={ROUTES.DEFAULT.PROJECTS.PATH}>
           <Route index element={suspenseFallback(ProjectsPage)} />
           <Route path={`${ROUTES.DEFAULT.PROJECTS.PATH}/:id`} element={suspenseFallback(ProjectDetailPage)} />
-          <Route
-            path={`${ROUTES.DEFAULT.PROJECTS.STAGES.PATH}/:id`}
-            element={suspenseFallback(NewProjectPage)}
-          />
+          <Route path={`${ROUTES.DEFAULT.PROJECTS.STAGES.PATH}/:id`} element={suspenseFallback(StagesPage)} />
           <Route
             path={`${ROUTES.DEFAULT.PROJECTS.ASSUMPTIONS.PATH}/:id`}
             element={suspenseFallback(AssumptionsPage)}

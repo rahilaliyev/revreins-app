@@ -18,9 +18,9 @@ interface IProps {
   segmentId?: number;
 }
 
-const MONTH_ITEMS = Array.from({ length: 12 }, (_, i) => ({
-  label: `${i + 1} Month${i > 0 ? 's' : ''}`,
-  value: i + 1,
+const MONTH_ITEMS = Array.from({ length: 13 }, (_, i) => ({
+  label: `${i} Month${i > 1 ? 's' : ''}`,
+  value: i,
 }));
 
 const AVERAGE_MONTH_ITEMS = [

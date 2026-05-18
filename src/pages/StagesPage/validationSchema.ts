@@ -16,7 +16,7 @@ const groupSchema = z.object({
 export const validationSchema = z.object({
   name: z.string().min(1, 'Required field'),
   crmObject: z.enum(ECRMObjectType),
-  dateField: z.number().min(1, 'Required field'),
+  dateField: z.number(),
   groups: z.array(groupSchema),
 });
 

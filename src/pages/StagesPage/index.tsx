@@ -24,7 +24,7 @@ import LeftSidebar from './components/LeftSidebar';
 import { StyledContainer, StyledStagesSidebar } from './styled';
 import { type TFormData, validationSchema } from './validationSchema';
 
-const NewProjectPage = (): JSX.Element => {
+const StagesPage = (): JSX.Element => {
   const { id } = useParams();
 
   const [value, setValue] = useState(0);
@@ -105,10 +105,15 @@ const NewProjectPage = (): JSX.Element => {
     const currentStage = stages.find((el) => el.id === activeStage);
 
     if (currentStage?.mode === EStageAddEditMode.EDIT && activeStage) {
-      editStageMutation({
-        stageId: activeStage,
-        ...setupPayload,
-      });
+      editStageMutation(
+        {
+          stageId: activeStage,
+          ...setupPayload,
+        },
+        {
+          onSuccess: () => handleSuccessFormSubmit(data.name),
+        },
+      );
     } else if (currentStage?.mode === EStageAddEditMode.ADD && activeStage) {
       addStageMutation(setupPayload, {
         onSuccess: (res) => {
@@ -117,8 +122,24 @@ const NewProjectPage = (): JSX.Element => {
             groups: data.groups,
             stageId: res.project_stage.id,
           });
+          handleSuccessFormSubmit(data.name);
         },
       });
+    }
+  };
+
+  const handleSuccessFormSubmit = (name: string): void => {
+    const stage = data.stages?.find((el) => el.id === activeStage);
+
+    if (stage?.name !== name) {
+      setStages((prev) =>
+        prev.map((el) => {
+          if (el.id === activeStage) {
+            return { ...el, name };
+          }
+          return el;
+        }),
+      );
     }
   };
 
@@ -175,4 +196,4 @@ const NewProjectPage = (): JSX.Element => {
     </Box>
   );
 };
-export default NewProjectPage;
+export default StagesPage;
