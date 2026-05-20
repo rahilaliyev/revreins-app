@@ -47,7 +47,7 @@ export interface IConversionMonthData extends IMonthData {
   is_projected: boolean;
 }
 
-export interface IConversionForecast {
+interface IConversionForecast {
   conversion_id: number;
   stage_from_id: number;
   stage_from_name: string;
@@ -66,7 +66,6 @@ export interface IStageForecast {
 }
 
 export interface IForecast {
-  generated_at: string;
   horizon_months: number;
   project_id: number;
   stages: IStageForecast[];

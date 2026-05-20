@@ -28,6 +28,7 @@ interface IRow {
   label: string;
   values: (number | string)[];
   children?: IRow[];
+  isConversion?: boolean;
 }
 
 interface ITableRowProps {
@@ -35,6 +36,7 @@ interface ITableRowProps {
   level?: number;
   onValueChange?: (rowId: string, monthIndex: number, value: string | number) => void;
   columns: string[];
+  isConversion?: boolean;
 }
 
 interface IAccordionTableProps {
@@ -43,7 +45,13 @@ interface IAccordionTableProps {
   columns: string[];
 }
 
-const Row = ({ row, level = 0, onValueChange, columns }: ITableRowProps): JSX.Element => {
+const Row = ({
+  row,
+  level = 0,
+  onValueChange,
+  columns,
+  isConversion = false,
+}: ITableRowProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const hasChildren = Boolean(row.children?.length);
 
@@ -55,7 +63,7 @@ const Row = ({ row, level = 0, onValueChange, columns }: ITableRowProps): JSX.El
 
   return (
     <>
-      <TableRow hover className={level === 0 ? 'root-row' : 'child-row'}>
+      <TableRow hover className={level === 0 && !isConversion ? 'root-row' : 'child-row'}>
         <TableCell>
           <Box display="flex" alignItems="center" pl={level * 3}>
             {hasChildren && (
@@ -162,7 +170,13 @@ export const AccordionTable = ({ data, onChange, columns }: IAccordionTableProps
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <Row key={row.id} row={row} onValueChange={onChange} columns={columns} />
+              <Row
+                key={row.id}
+                row={row}
+                onValueChange={onChange}
+                columns={columns}
+                isConversion={row.isConversion}
+              />
             ))}
           </TableBody>
         </StyledAccordionTable>

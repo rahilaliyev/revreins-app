@@ -8,7 +8,7 @@ const segmentSchema = z.object({
 
 const conversionSegmentSchema = z.object({
   segmentId: z.number().optional(),
-  stageCycleMonths: z.number().min(1).nullable().optional(),
+  stageCycleMonths: z.number().nullable().optional(),
   averageMonth: z.string().nullable(),
   manualRate: z.string().nullable().optional(),
   calculatedRate: z.string().nullable(),

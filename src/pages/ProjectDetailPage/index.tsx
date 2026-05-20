@@ -2,7 +2,7 @@ import { type JSX, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProjectForecast } from 'src/apis/assumptions';
-import type { IConversionForecast } from 'src/apis/assumptions/types';
+import type { ISegmentForecast } from 'src/apis/assumptions/types';
 import { useGetProjectDetailById } from 'src/apis/projects';
 
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
@@ -22,6 +22,7 @@ interface IRow {
   label: string;
   values: (number | string)[];
   children?: IRow[];
+  isConversion?: boolean;
 }
 
 const ProjectDetailPage = (): JSX.Element => {
@@ -56,26 +57,58 @@ const ProjectDetailPage = (): JSX.Element => {
     );
   };
 
-  const formatConversion = (conv: IConversionForecast): IRow => ({
-    id: conv?.conversion_id,
-    label: `Moved to ${conv?.stage_to_name}`,
-    values: [...Object.values(conv.actual_data ?? {}), ...Object.values(conv.calculated_data ?? {})].map(
-      (v) => v.total,
-    ),
-  });
+  const formatSegmentData = (combinedData: ReturnType<typeof Object.values>): IRow[] => {
+    const segmentMap = new Map<number, IRow>();
+
+    combinedData.forEach((dataPoint) => {
+      dataPoint.segments?.forEach((sgm: ISegmentForecast) => {
+        if (!segmentMap.has(sgm.segment_id)) {
+          segmentMap.set(sgm.segment_id, {
+            id: sgm.segment_id,
+            label: sgm.segment_name,
+            values: [],
+          });
+        }
+        segmentMap.get(sgm.segment_id)?.values.push(sgm.count);
+      });
+    });
+
+    return Array.from(segmentMap.values());
+  };
 
   const formatForecastData = useCallback(
     (forecast: typeof projectForecast): IRow[] =>
-      forecast?.stages?.map((stg) => ({
-        id: stg.stage_id,
-        label: stg.stage_name,
-        values: [...Object.values(stg.actual_data ?? {}), ...Object.values(stg.calculated_data ?? {})].map(
-          (v) => v.total,
-        ),
-        children: Object.values(forecast?.conversions ?? {})
-          .filter((conv) => conv.stage_from_id === stg.stage_id)
-          .map(formatConversion),
-      })) ?? [],
+      forecast?.stages?.flatMap((stg, index) => {
+        const combinedStageData = [
+          ...Object.values(stg.actual_data ?? {}),
+          ...Object.values(stg.calculated_data ?? {}),
+        ];
+
+        const conversionRows = Object.values(forecast?.conversions ?? {})[index];
+
+        const combinedConversionData = [
+          ...Object.values(conversionRows?.actual_data ?? {}),
+          ...Object.values(conversionRows?.calculated_data ?? {}),
+        ];
+
+        const stageRow: IRow = {
+          id: stg.stage_id,
+          label: stg.stage_name,
+          values: combinedStageData.map((v) => v.total),
+          children: formatSegmentData(combinedStageData),
+        };
+
+        const conversionRow: IRow = {
+          id: conversionRows?.conversion_id,
+          label: `Moved to ${conversionRows?.stage_to_name}`,
+          values: combinedConversionData.map((v) => v?.total),
+          children: formatSegmentData(combinedConversionData) || [],
+          isConversion: true,
+        };
+
+        return conversionRows ? [stageRow, conversionRow] : [stageRow];
+      }) ?? [],
+
     [],
   );
 
