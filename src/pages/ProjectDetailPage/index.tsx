@@ -69,7 +69,7 @@ const ProjectDetailPage = (): JSX.Element => {
             values: [],
           });
         }
-        segmentMap.get(sgm.segment_id)?.values.push(sgm.count);
+        segmentMap.get(sgm.segment_id)?.values.push(sgm.conversion_rate);
       });
     });
 
@@ -100,8 +100,8 @@ const ProjectDetailPage = (): JSX.Element => {
 
         const conversionRow: IRow = {
           id: conversionRows?.conversion_id,
-          label: `Moved to ${conversionRows?.stage_to_name}`,
-          values: combinedConversionData.map((v) => v?.total),
+          label: 'Conversion Rate',
+          values: combinedConversionData.map((v) => v?.conversion_rate),
           children: formatSegmentData(combinedConversionData) || [],
           isConversion: true,
         };

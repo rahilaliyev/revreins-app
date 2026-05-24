@@ -36,10 +36,12 @@ export interface ISegmentForecast {
   segment_id: number;
   segment_name: string;
   count: number;
+  conversion_rate: number;
 }
 
 export interface IMonthData {
   total: number;
+  conversion_rate: number;
   segments: ISegmentForecast[];
 }
 
