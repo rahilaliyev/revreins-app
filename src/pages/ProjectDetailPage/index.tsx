@@ -69,7 +69,7 @@ const ProjectDetailPage = (): JSX.Element => {
             values: [],
           });
         }
-        segmentMap.get(sgm.segment_id)?.values.push(sgm.conversion_rate);
+        segmentMap.get(sgm.segment_id)?.values.push(sgm.count);
       });
     });
 
