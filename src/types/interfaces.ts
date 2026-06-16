@@ -11,6 +11,7 @@ export interface IIconProps {
   height?: number;
   svgFill?: string;
   pathFill?: string;
+  stroke?: string;
 }
 
 export interface IInvitingMembers {
@@ -60,4 +61,5 @@ export interface IStage {
   name: string;
   project_id: number;
   updated_at: string;
+  order: number;
 }

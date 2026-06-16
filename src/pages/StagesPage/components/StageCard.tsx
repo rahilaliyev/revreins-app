@@ -1,4 +1,5 @@
-import type { Dispatch, JSX, SetStateAction } from 'react';
+import { type Dispatch, type JSX, type SetStateAction, useRef, useState } from 'react';
+import { useSortable } from '@dnd-kit/react/sortable';
 import { EStageAddEditMode } from 'src/types/enums';
 
 import type { IUiStage } from 'src/apis/projects/types';
@@ -8,39 +9,7 @@ import { CircularProgress, IconButton, Stack, Typography } from '@mui/material';
 
 import { StyledNumberQueue, StyledStageCard } from '../styled';
 
-const TrashIcon = (): JSX.Element => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 4H14" stroke="#99A1AF" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round" />
-    <path
-      d="M12.6666 4V13.3333C12.6666 14 11.9999 14.6667 11.3333 14.6667H4.66659C3.99992 14.6667 3.33325 14 3.33325 13.3333V4"
-      stroke="#99A1AF"
-      strokeWidth="1.33333"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M5.33325 4.00001V2.66668C5.33325 2.00001 5.99992 1.33334 6.66659 1.33334H9.33325C9.99992 1.33334 10.6666 2.00001 10.6666 2.66668V4.00001"
-      stroke="#99A1AF"
-      strokeWidth="1.33333"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M6.66675 7.33334V11.3333"
-      stroke="#99A1AF"
-      strokeWidth="1.33333"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M9.33325 7.33334V11.3333"
-      stroke="#99A1AF"
-      strokeWidth="1.33333"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+import { DragIcon, TrashIcon } from 'src/assets/icons';
 
 interface IProps {
   stages: IUiStage[];
@@ -59,6 +28,16 @@ const StageCard = ({
   stage,
   setActiveStage,
 }: IProps): JSX.Element => {
+  const [element, setElement] = useState<Element | null>(null);
+  const handleRef = useRef<HTMLButtonElement | null>(null);
+
+  useSortable({
+    id: stage?.id || 0,
+    index: stage?.order || 0,
+    element,
+    handle: handleRef,
+  });
+
   const { mutate: deleteStage, isPending } = useDeleteStageMutation(projectId);
 
   const handleDeleteStage = (id: number): void => {
@@ -84,9 +63,13 @@ const StageCard = ({
       mt={3}
       isActive={activeStage === stage.id}
       onClick={() => stage?.id && setActiveStage?.(stage.id)}
+      ref={setElement}
     >
       <Stack justifyContent="space-between">
         <Stack gap={2}>
+          <IconButton ref={handleRef}>
+            <DragIcon stroke="#99A1AF" />
+          </IconButton>
           <StyledNumberQueue>
             <Typography variant="caption2" fontWeight={500} component="p">
               {stages.indexOf(stage) + 1}

@@ -1,4 +1,7 @@
 import type { Dispatch, JSX, SetStateAction } from 'react';
+import type { UniqueIdentifier } from '@dnd-kit/abstract';
+import { move } from '@dnd-kit/helpers';
+import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
 import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import type { IUiStage } from 'src/apis/projects/types';
@@ -30,6 +33,7 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
       id: tempId,
       name: 'New stage',
       mode: EStageAddEditMode.ADD,
+      order: stages.length,
     };
 
     setStages((prev) => [...prev, newStage]);
@@ -41,20 +45,32 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
     setActiveStage?.(tempId);
   };
 
+  const handleDragEnd = (event: DragEndEvent): void => {
+    setStages((prev) => {
+      const reordered = move(prev as unknown as { id: UniqueIdentifier }[], event) as IUiStage[];
+      return reordered.map((stage, index) => ({
+        ...stage,
+        order: index,
+      }));
+    });
+  };
+
   return (
     <StyledStagesSidebar width="31%">
       <Typography fontWeight={500}>Pipeline Stages</Typography>
-      {stages?.map((stage) => (
-        <StageCard
-          key={stage.id}
-          stages={stages}
-          activeStage={activeStage}
-          setActiveStage={setActiveStage}
-          projectId={projectId}
-          setStages={setStages}
-          stage={stage}
-        />
-      ))}
+      <DragDropProvider onDragEnd={handleDragEnd}>
+        {stages?.map((stage) => (
+          <StageCard
+            key={stage.id}
+            stages={stages}
+            activeStage={activeStage}
+            setActiveStage={setActiveStage}
+            projectId={projectId}
+            setStages={setStages}
+            stage={stage}
+          />
+        ))}
+      </DragDropProvider>
       <Box mt={7.5}>
         <Button
           variant="outlined"

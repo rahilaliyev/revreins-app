@@ -10,6 +10,7 @@ export interface IProjectPayload {
 
 export interface IUiStage extends Partial<IStage> {
   mode: EStageAddEditMode;
+  order: number;
 }
 
 export interface IProject {
@@ -21,6 +22,7 @@ export interface IProject {
   start_date: string;
   updated_at: string;
   user_id: number;
+  order: number;
 }
 
 export interface IProjectResponse {

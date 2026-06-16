@@ -53,6 +53,7 @@ const StagesPage = (): JSX.Element => {
     const mappedStages = data.stages.map((el) => ({
       ...el,
       mode: EStageAddEditMode.EDIT,
+      order: el.order,
     }));
 
     setStages(mappedStages);
