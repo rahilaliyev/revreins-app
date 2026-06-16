@@ -73,6 +73,9 @@ export const endpoints = {
     get currencies(): string {
       return `${this.base}/currencies`;
     },
+    get reorder(): string {
+      return `${this.base}/reorder`;
+    },
   },
   assumptions: {
     base: 'api/tenant/assumptions',

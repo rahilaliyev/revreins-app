@@ -89,7 +89,7 @@ export const CreateNewProjectModal = ({ isOpenNewProjectModal, handleClose }: IP
   const handleSubmit = (data: TFormData): void => {
     const payload = {
       name: data.name,
-      stages: data.stages.map((el) => ({ name: el.value })),
+      stages: data.stages.map((el, index) => ({ name: el.value, order: index })),
       start_date: dayjs().format(DATE_FORMAT),
       currency_id: 1,
     };

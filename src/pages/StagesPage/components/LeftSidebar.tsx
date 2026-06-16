@@ -5,6 +5,7 @@ import { DragDropProvider, type DragEndEvent } from '@dnd-kit/react';
 import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import type { IUiStage } from 'src/apis/projects/types';
+import { useReorderStageMutation } from 'src/apis/stages';
 
 import { Box, Button, Typography } from '@mui/material';
 
@@ -25,6 +26,7 @@ interface IProps {
 
 const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages }: IProps): JSX.Element => {
   const { reset } = useStageFormContext();
+  const { mutate: reorderStageMutation } = useReorderStageMutation();
 
   const handleAddStage = (): void => {
     const tempId = Date.now();
@@ -53,6 +55,12 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
         order: index,
       }));
     });
+
+    const payloadRequest = stages.map((stage) => ({
+      id: stage.id ?? 0,
+      order: stage.order ?? 0,
+    }));
+    reorderStageMutation(payloadRequest);
   };
 
   return (

@@ -24,3 +24,7 @@ export interface IProjectStageResponse extends ID {
 export interface IProjectStageMutationResponse {
   project_stage: IProjectStageResponse;
 }
+
+export interface IReorderStagePayload extends ID {
+  order: number;
+}

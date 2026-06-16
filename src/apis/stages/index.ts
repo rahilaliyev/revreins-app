@@ -4,7 +4,12 @@ import type { ICommonResponse } from 'src/types/interfaces';
 
 import { api } from '../axiosInstance';
 
-import type { IProjectStage, IProjectStageMutationResponse, IProjectStagePayload } from './types';
+import type {
+  IProjectStage,
+  IProjectStageMutationResponse,
+  IProjectStagePayload,
+  IReorderStagePayload,
+} from './types';
 
 export const useDeleteStageMutation = (projectId: number): UseMutationResult<void, Error, string> => {
   const queryClient = useQueryClient();
@@ -61,3 +66,12 @@ export const useAddStageMutation = (): UseMutationResult<
     },
   });
 };
+
+export const useReorderStageMutation = (): UseMutationResult<void, Error, IReorderStagePayload[]> =>
+  useMutation<void, Error, IReorderStagePayload[]>({
+    mutationFn: async (body: IReorderStagePayload[]) => {
+      await api.post(endpoints.tenant.reorder, body, {
+        skipNotification: true,
+      });
+    },
+  });
