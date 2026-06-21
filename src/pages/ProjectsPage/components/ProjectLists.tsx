@@ -1,8 +1,12 @@
 import { type JSX, type MouseEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { UI_DATE_FORMAT } from 'src/contants';
 import { colorPalette } from 'src/theme/colorpalette';
 import { EProjectStatus } from 'src/types/enums';
+
+import { useGetProjects } from 'src/apis/projects';
+import type { IProject } from 'src/apis/projects/types';
 
 import {
   Avatar,
@@ -39,99 +43,98 @@ import {
   More2FillIcon,
 } from 'src/assets/icons';
 
-const MOCK_DATA = [
-  {
-    status: EProjectStatus.PUBLISHED,
-    name: 'Toronto Market Forecast',
-    teamMembers: [
-      {
-        avatar: null,
-      },
-    ],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 2,
-  },
-  {
-    status: EProjectStatus.PUBLISHED,
-    name: 'Vancouver Market Forecast',
-    teamMembers: [
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-    ],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 3,
-  },
-  {
-    status: EProjectStatus.PUBLISHED,
-    name: 'International Markets',
-    teamMembers: [
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-    ],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 1,
-  },
-  {
-    status: EProjectStatus.DRAFT,
-    name: 'Q4 Revenue Projections',
-    teamMembers: [],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 0,
-  },
-  {
-    status: EProjectStatus.PUBLISHED,
-    name: 'APAC Expansion Forecast',
-    teamMembers: [
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-    ],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 4,
-  },
-  {
-    status: EProjectStatus.DRAFT,
-    name: 'New Product Launch',
-    teamMembers: [
-      {
-        avatar: null,
-      },
-      {
-        avatar: null,
-      },
-    ],
-    lastUpdated: '2026-03-03T00:00:00.000000Z',
-    forecasts: 0,
-  },
-];
+// const MOCK_DATA = [
+//   {
+//     status: EProjectStatus.PUBLISHED,
+//     name: 'Toronto Market Forecast',
+//     teamMembers: [
+//       {
+//         avatar: null,
+//       },
+//     ],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 2,
+//   },
+//   {
+//     status: EProjectStatus.PUBLISHED,
+//     name: 'Vancouver Market Forecast',
+//     teamMembers: [
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//     ],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 3,
+//   },
+//   {
+//     status: EProjectStatus.PUBLISHED,
+//     name: 'International Markets',
+//     teamMembers: [
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//     ],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 1,
+//   },
+//   {
+//     status: EProjectStatus.DRAFT,
+//     name: 'Q4 Revenue Projections',
+//     teamMembers: [],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 0,
+//   },
+//   {
+//     status: EProjectStatus.PUBLISHED,
+//     name: 'APAC Expansion Forecast',
+//     teamMembers: [
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//     ],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 4,
+//   },
+//   {
+//     status: EProjectStatus.DRAFT,
+//     name: 'New Product Launch',
+//     teamMembers: [
+//       {
+//         avatar: null,
+//       },
+//       {
+//         avatar: null,
+//       },
+//     ],
+//     lastUpdated: '2026-03-03T00:00:00.000000Z',
+//     forecasts: 0,
+//   },
+// ];
 
 const ProjectLists = (): JSX.Element => {
   const [isConfirmModal, setIsConfirmModal] = useState(false);
   const [isOpenNewProjectModal, setIsOpenNewProjectModal] = useState(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const data = MOCK_DATA;
+  const { data: { data = [] as IProject[] } = {} } = useGetProjects();
 
   const handleCreateModalOpen = (): void => setIsOpenNewProjectModal(true);
   const handleCreateModalClose = (): void => setIsOpenNewProjectModal(false);
@@ -184,20 +187,23 @@ const ProjectLists = (): JSX.Element => {
                     <StyledIconWrapper>
                       <InsertChartIcon
                         pathFill={
-                          row.status === EProjectStatus.PUBLISHED
-                            ? colorPalette.primary.main
-                            : colorPalette.other.icon
+                          // row.status === EProjectStatus.PUBLISHED
+                          //   ? colorPalette.primary.main
+                          //   :
+                          colorPalette.other.icon
                         }
                       />
                     </StyledIconWrapper>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" fontWeight={500}>
-                      {row.name}
-                    </Typography>
+                    <Link to={`/projects/${row.id}`} style={{ textDecoration: 'underline' }}>
+                      <Typography variant="body2" fontWeight={500}>
+                        {row.name}
+                      </Typography>
+                    </Link>
                   </TableCell>
                   <TableCell width={120}>
-                    <Chip
+                    {/* <Chip
                       variant={row.status === EProjectStatus.PUBLISHED ? 'filled' : 'outlined'}
                       label={
                         <Typography variant="body2">
@@ -215,23 +221,23 @@ const ProjectLists = (): JSX.Element => {
                           }
                         />
                       }
-                    />
+                    /> */}
                   </TableCell>
                   <TableCell width={150}>
-                    <AvatarGroup max={3} total={row.teamMembers?.length}>
+                    {/* <AvatarGroup max={3} total={row.teamMembers?.length}>
                       {row.teamMembers.length ? (
                         row.teamMembers?.map((el, key) => <Avatar key={key} alt="A" src={el.avatar ?? ''} />)
                       ) : (
                         <Avatar>0</Avatar>
                       )}
-                    </AvatarGroup>
+                    </AvatarGroup> */}
                   </TableCell>
                   <TableCell width={160}>
                     <Typography variant="body2" color="text.secondary">
-                      {dayjs(row.lastUpdated).format(UI_DATE_FORMAT)}
+                      {dayjs(row.updated_at).format(UI_DATE_FORMAT)}
                     </Typography>
                   </TableCell>
-                  <TableCell width={150}>{row.forecasts}</TableCell>
+                  {/* <TableCell width={150}>{row.forecasts}</TableCell> */}
                   <TableCell width={60}>
                     <StyledMoreIconButton
                       id="basic-button"
