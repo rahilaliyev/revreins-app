@@ -50,18 +50,21 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
   const handleDragEnd = (event: DragEndEvent): void => {
     setStages((prev) => {
       const reordered = move(prev as unknown as { id: UniqueIdentifier }[], event) as IUiStage[];
-      return reordered.map((stage, index) => ({
+
+      const updatedStages = reordered.map((stage, index) => ({
         ...stage,
         order: index,
       }));
+
+      const payloadRequest = updatedStages.map((stage) => ({
+        id: stage.id ?? 0,
+        order: stage.order ?? 0,
+      }));
+
+      reorderStageMutation({ stages: payloadRequest });
+
+      return updatedStages;
     });
-
-    const payloadRequest = stages.map((stage) => ({
-      id: stage.id ?? 0,
-      order: stage.order ?? 0,
-    }));
-
-    reorderStageMutation({ stages: payloadRequest });
   };
 
   return (
