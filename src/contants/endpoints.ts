@@ -49,6 +49,9 @@ export const endpoints = {
     get projectStages(): string {
       return `${this.base}/project-stages`;
     },
+    get reorder(): string {
+      return `${this.projectStages}/reorder`;
+    },
     get projectBreakdowns(): string {
       return `${this.base}/project-breakdowns`;
     },
@@ -72,9 +75,6 @@ export const endpoints = {
     },
     get currencies(): string {
       return `${this.base}/currencies`;
-    },
-    get reorder(): string {
-      return `${this.base}/reorder`;
     },
   },
   assumptions: {

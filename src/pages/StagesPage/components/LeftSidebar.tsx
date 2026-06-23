@@ -60,7 +60,8 @@ const LeftSidebar = ({ stages, activeStage, setActiveStage, projectId, setStages
       id: stage.id ?? 0,
       order: stage.order ?? 0,
     }));
-    reorderStageMutation(payloadRequest);
+
+    reorderStageMutation({ stages: payloadRequest });
   };
 
   return (

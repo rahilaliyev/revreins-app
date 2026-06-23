@@ -67,9 +67,9 @@ export const useAddStageMutation = (): UseMutationResult<
   });
 };
 
-export const useReorderStageMutation = (): UseMutationResult<void, Error, IReorderStagePayload[]> =>
-  useMutation<void, Error, IReorderStagePayload[]>({
-    mutationFn: async (body: IReorderStagePayload[]) => {
+export const useReorderStageMutation = (): UseMutationResult<void, Error, IReorderStagePayload> =>
+  useMutation<void, Error, IReorderStagePayload>({
+    mutationFn: async (body: IReorderStagePayload) => {
       await api.post(endpoints.tenant.reorder, body, {
         skipNotification: true,
       });
