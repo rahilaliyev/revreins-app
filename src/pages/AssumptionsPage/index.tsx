@@ -65,14 +65,22 @@ const AssumptionsPage = (): JSX.Element => {
       stageToId: sc.stage_to_id,
       assumptionCategoryId: sc.assumption_category_id ?? null,
       conversionId: sc.id,
-      conversionSegments:
-        sc.conversion_segments?.map((sgmnt) => ({
-          segmentId: sgmnt.segment_id,
-          stageCycleMonths: sgmnt.stage_cycle_months,
-          averageMonth: sgmnt.average_month?.toString() ?? null,
-          manualRate: sgmnt.manual_rate?.toString() ?? null,
-          calculatedRate: sgmnt.calculated_rate?.toString() ?? null,
-        })) ?? [],
+      conversionSegments: sc.conversion_segments?.length
+        ? sc.conversion_segments?.map((sgmnt) => ({
+            segmentId: sgmnt.segment_id,
+            stageCycleMonths: sgmnt.stage_cycle_months,
+            averageMonth: sgmnt.average_month?.toString() ?? null,
+            manualRate: sgmnt.manual_rate?.toString() ?? null,
+            calculatedRate: sgmnt.calculated_rate?.toString() ?? null,
+          }))
+        : [
+            {
+              stageCycleMonths: sc.stage_cycle_months,
+              averageMonth: sc.average_month?.toString() ?? null,
+              manualRate: sc.manual_rate?.toString() ?? null,
+              calculatedRate: sc.calculated_rate?.toString() ?? null,
+            },
+          ],
     }));
 
     const growthRateSegments = (segmentData ?? []).map((sgmnt) => ({
@@ -87,8 +95,10 @@ const AssumptionsPage = (): JSX.Element => {
 
     formBag.setValue('stageConversions', seededConversions, { shouldDirty: false });
     formBag.setValue('growthRateSegments', growthRateSegments, { shouldDirty: false });
+    formBag.setValue('growthRateValue', data?.growth_rate, { shouldDirty: false });
+    formBag.setValue('averageOrderValue', data?.order_value, { shouldDirty: false });
     formBag.setValue('averageOrderValueSegments', averageOrderValueSegments, { shouldDirty: false });
-  }, [stageConversions, segmentData, formBag]);
+  }, [stageConversions, segmentData, formBag, data?.growth_rate, data?.order_value]);
 
   useEffect(() => {
     if (segments?.length) {
@@ -138,6 +148,15 @@ const AssumptionsPage = (): JSX.Element => {
               calculated_rate: Number(seg.calculatedRate),
             }))
           : [],
+        ...(!enableBreakdown && {
+          stage_cycle_months: sc.conversionSegments[0]?.stageCycleMonths ?? 0,
+          average_month:
+            sc.conversionSegments[0]?.averageMonth === 'manual_rate'
+              ? null
+              : Number(sc.conversionSegments[0]?.averageMonth),
+          manual_rate: Number(sc.conversionSegments[0]?.manualRate),
+          calculated_rate: Number(sc.conversionSegments[0]?.calculatedRate),
+        }),
       })),
       growth_rate_value: enableBreakdown ? null : formData.growthRateValue,
       average_order_value: enableBreakdown ? null : formData.averageOrderValue,

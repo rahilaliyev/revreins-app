@@ -23,6 +23,8 @@ export interface IProject {
   updated_at: string;
   user_id: number;
   order: number;
+  growth_rate: number | null;
+  order_value: number | null;
 }
 
 export interface IProjectResponse {

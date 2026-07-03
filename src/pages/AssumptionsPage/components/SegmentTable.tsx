@@ -178,7 +178,7 @@ const SegmentTable = (): JSX.Element => {
                     name={`segments.${index}.crmLeadCustomFieldChoiceId`}
                     items={segmentFieldOptions || []}
                     size="small"
-                    defaultValue={``}
+                    defaultValue=""
                     sx={{ width: (theme) => theme.spacing(60) }}
                     multiple
                   />

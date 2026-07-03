@@ -1,8 +1,9 @@
-import type { ID, IStage } from 'src/types/interfaces';
+import type { IStage } from 'src/types/interfaces';
 
 import type { IConversionSegment } from '../assumptions/types';
 
-interface IStageConversion extends ID {
+interface IStageConversion extends Omit<IConversionSegment, 'segment_id'> {
+  id: number;
   assumption_category_id: number;
   stage_from: IStage;
   stage_from_id: number;

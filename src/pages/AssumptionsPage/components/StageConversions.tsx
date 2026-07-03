@@ -1,4 +1,5 @@
 import { type ChangeEvent, Fragment, type JSX } from 'react';
+import { useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { colorPalette } from 'src/theme/colorpalette';
 
@@ -32,9 +33,14 @@ interface IProps {
 
 const StageConversions = ({ segmentData }: IProps): JSX.Element => {
   const { id } = useParams();
-  const { setValue } = useAssumptionsFormContext();
+  const { setValue, control } = useAssumptionsFormContext();
 
   const { data: { stage_conversions: stageConversions } = {} } = useGetStageConversions(id ?? '');
+
+  const enableProjectBreakdown = useWatch({
+    control,
+    name: 'enableProjectBreakdown',
+  });
 
   return (
     <StyledComponentWrapper>
@@ -58,7 +64,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
                 <TableCell>
                   <Typography fontWeight={600}>Stage Name</Typography>
                 </TableCell>
-                {segmentData.length ? (
+                {segmentData.length && enableProjectBreakdown ? (
                   segmentData.map((el) => (
                     <Fragment key={el.id}>
                       <TableCell>
@@ -139,7 +145,7 @@ const StageConversions = ({ segmentData }: IProps): JSX.Element => {
                       <Typography>{stage?.stage_to?.name}</Typography>
                     </Stack>
                   </TableCell>
-                  {segmentData.length ? (
+                  {segmentData.length && enableProjectBreakdown ? (
                     segmentData.map((el, segmentIdx) => (
                       <ConversionSegmentCell
                         key={el.id}
