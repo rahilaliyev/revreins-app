@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import type { EUserRole } from './enums';
+import type { ECRMObjectType, EUserRole } from './enums';
 
 export interface ID {
   id: number;
@@ -54,6 +54,7 @@ export interface INotificationActionMapColor {
 
 export interface IStage {
   created_at: string;
+  crm_object: ECRMObjectType;
   crm_object_id: number;
   date_field_id: number;
   deleted_at: string;

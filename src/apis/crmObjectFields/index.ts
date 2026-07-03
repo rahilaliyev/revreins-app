@@ -16,4 +16,5 @@ export const useGetCrmObjectFields = (
       });
       return res.data;
     },
+    staleTime: 0,
   });

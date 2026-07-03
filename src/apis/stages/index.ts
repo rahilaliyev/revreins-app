@@ -26,29 +26,19 @@ export const useDeleteStageMutation = (projectId: number): UseMutationResult<voi
   });
 };
 
-export const useEditStageMutation = (): UseMutationResult<void, Error, IProjectStagePayload> => {
-  const queryClient = useQueryClient();
-
-  return useMutation<void, Error, IProjectStagePayload>({
+export const useEditStageMutation = (): UseMutationResult<void, Error, IProjectStagePayload> =>
+  useMutation<void, Error, IProjectStagePayload>({
     mutationFn: async ({ stageId, ...body }: IProjectStagePayload) => {
       await api.put(`${endpoints.tenant.projectStages}/${stageId}`, body);
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.PROJECTS, variables.project_id],
-      });
-    },
   });
-};
 
 export const useAddStageMutation = (): UseMutationResult<
   IProjectStageMutationResponse,
   Error,
   IProjectStage
-> => {
-  const queryClient = useQueryClient();
-
-  return useMutation<IProjectStageMutationResponse, Error, IProjectStage>({
+> =>
+  useMutation<IProjectStageMutationResponse, Error, IProjectStage>({
     mutationFn: async (body: IProjectStage) => {
       const res = await api.post<ICommonResponse<IProjectStageMutationResponse>>(
         endpoints.tenant.projectStages,
@@ -59,13 +49,7 @@ export const useAddStageMutation = (): UseMutationResult<
       );
       return res.data.data;
     },
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.PROJECTS, variables.project_id],
-      });
-    },
   });
-};
 
 export const useReorderStageMutation = (): UseMutationResult<void, Error, IReorderStagePayload> =>
   useMutation<void, Error, IReorderStagePayload>({

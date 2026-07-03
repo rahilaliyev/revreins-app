@@ -2,6 +2,8 @@ import { type JSX, type SyntheticEvent, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from 'src/contants';
 import { ECRMObjectType, EStageAddEditMode } from 'src/types/enums';
 
 import { useGetProjectDetailById } from 'src/apis/projects';
@@ -26,6 +28,7 @@ import { type TFormData, validationSchema } from './validationSchema';
 
 const StagesPage = (): JSX.Element => {
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const [value, setValue] = useState(0);
   const [isInformationModal, setIsInformationModal] = useState(false);
@@ -76,7 +79,7 @@ const StagesPage = (): JSX.Element => {
     if (stage) {
       formBag.reset({
         name: stage.name,
-        crmObject: stage.crm_object_id?.toString() as ECRMObjectType,
+        crmObject: stage.crm_object,
         dateField: stage.date_field_id ?? 0,
         groups: [],
       });
@@ -112,7 +115,7 @@ const StagesPage = (): JSX.Element => {
           ...setupPayload,
         },
         {
-          onSuccess: () => handleSuccessFormSubmit(data.name),
+          onSuccess: () => handleSuccessFormSubmit(),
         },
       );
     } else if (currentStage?.mode === EStageAddEditMode.ADD && activeStage) {
@@ -123,25 +126,16 @@ const StagesPage = (): JSX.Element => {
             groups: data.groups,
             stageId: res.project_stage.id,
           });
-          handleSuccessFormSubmit(data.name);
+          handleSuccessFormSubmit();
         },
       });
     }
   };
 
-  const handleSuccessFormSubmit = (name: string): void => {
-    const stage = data.stages?.find((el) => el.id === activeStage);
-
-    if (stage?.name !== name) {
-      setStages((prev) =>
-        prev.map((el) => {
-          if (el.id === activeStage) {
-            return { ...el, name };
-          }
-          return el;
-        }),
-      );
-    }
+  const handleSuccessFormSubmit = (): void => {
+    queryClient.invalidateQueries({
+      queryKey: [QUERY_KEYS.PROJECTS, id],
+    });
   };
 
   return (
