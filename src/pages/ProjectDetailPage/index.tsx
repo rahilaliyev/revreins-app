@@ -62,7 +62,7 @@ const ProjectDetailPage = (): JSX.Element => {
 
     combinedData.forEach((dataPoint) => {
       dataPoint.segments?.forEach((sgm: ISegmentForecast) => {
-        if (!segmentMap.has(sgm.segment_id)) {
+        if (!segmentMap.has(sgm.segment_id) && sgm.segment_id !== null) {
           segmentMap.set(sgm.segment_id, {
             id: sgm.segment_id,
             label: sgm.segment_name,
