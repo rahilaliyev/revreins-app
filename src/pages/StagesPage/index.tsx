@@ -101,7 +101,7 @@ const StagesPage = (): JSX.Element => {
   const handleSubmit = (data: TFormData): void => {
     const setupPayload = {
       name: data.name,
-      crm_object_id: Number(data.crmObject),
+      crm_object: data.crmObject,
       date_field_id: data.dateField,
       project_id: Number(id),
     };
